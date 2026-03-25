@@ -349,8 +349,8 @@ function SwapIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
       strokeLinecap="round" strokeLinejoin="round" style={{ width: 20, height: 20 }}>
-      <path d="M7 16V4m0 0L3 8m4-4l4 4"/>
-      <path d="M17 8v12m0 0l4-4m-4 4l-4-4"/>
+      <path d="M18 8H6m12 0l-3-3m3 3l-3 3"/>
+      <path d="M6 16h12M6 16l3-3M6 16l3 3"/>
     </svg>
   )
 }
