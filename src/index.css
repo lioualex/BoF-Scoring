@@ -463,21 +463,29 @@ body {
 }
 .score-zone.zone-winner .score-num { color: var(--div-accent, var(--gold)); }
 
-/* Swap button between scorer columns */
-.swap-col {
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0; padding-top: 28px; /* align with zones */
+/* Team names row with swap button */
+.scorer-names-row {
+  display: flex; align-items: center; gap: 8px;
+  padding: 16px 20px 8px;
 }
+.scorer-names-row .scorer-team-name { flex: 1; }
+
+/* Score zones side by side */
+.scorer-zones {
+  display: flex; gap: 10px; padding: 0 20px;
+}
+
+/* Swap button between scorer columns */
 .swap-btn {
-  width: 40px; height: 40px; border-radius: 50%;
-  background: var(--card); border: 1px solid var(--border);
-  color: var(--text2); cursor: pointer; display: flex;
-  align-items: center; justify-content: center;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: transparent; border: none;
+  color: var(--text3); cursor: pointer; display: flex;
+  align-items: center; justify-content: center; flex-shrink: 0;
   -webkit-tap-highlight-color: transparent;
-  transition: transform 0.35s ease, color 0.15s;
+  transition: color 0.15s;
 }
 .swap-btn:active { color: var(--div-accent, var(--gold)); }
-.swap-btn.flipped { transform: rotate(180deg); }
+.swap-btn.swapped { color: var(--text2); }
 
 /* Confetti celebration */
 .confetti-container {

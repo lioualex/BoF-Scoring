@@ -62,7 +62,6 @@ export default function SchedulePage({
     setAnimKey(k => k + 1)
     onDivChange(d)
     setWeek(d === 'adv' ? editableWeekAdv : editableWeekInt)
-    localStorage.setItem(DIV_KEY, d)
   }
 
   function handleCourtClick(wkData, slotIdx, courtNum) {

@@ -1,8 +1,7 @@
 import { useState, useMemo } from 'react'
 import { computeStandings, getSchedule, getTeamName, getWeekDuties, gameKey } from '../data/league'
 
-export default function LeaderboardPage({ gameResults, onDivChange }) {
-  const [div, setDiv]           = useState('adv')
+export default function LeaderboardPage({ div, gameResults, onDivChange }) {
   const [selectedTeam, setSelectedTeam] = useState(null)
 
   const standings = useMemo(
@@ -11,7 +10,6 @@ export default function LeaderboardPage({ gameResults, onDivChange }) {
   )
 
   function switchDiv(d) {
-    setDiv(d)
     onDivChange?.(d)
   }
 

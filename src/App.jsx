@@ -13,9 +13,13 @@ import GameScorerModal from './components/GameScorerModal'
 const DIV_KEY = 'bof_last_div'
 
 export default function App() {
-  const [tab, setTab]               = useState('leaderboard')
-  const [scheduleDiv, setScheduleDiv] = useState(() => localStorage.getItem(DIV_KEY) || 'adv')
-  const [lbDiv,       setLbDiv]       = useState('adv')
+  const [tab, setTab] = useState('leaderboard')
+  const [div, setDiv] = useState(() => localStorage.getItem(DIV_KEY) || 'adv')
+
+  function handleDivChange(d) {
+    setDiv(d)
+    localStorage.setItem(DIV_KEY, d)
+  }
 
   // Keyed by game_key string
   const [gameResults, setGameResults] = useState({})
@@ -152,12 +156,12 @@ export default function App() {
 
       <div className="page">
         {tab === 'leaderboard' && (
-          <LeaderboardPage gameResults={gameResults} onDivChange={setLbDiv} />
+          <LeaderboardPage div={div} gameResults={gameResults} onDivChange={handleDivChange} />
         )}
         {tab === 'schedule' && (
           <SchedulePage
-            div={scheduleDiv}
-            onDivChange={setScheduleDiv}
+            div={div}
+            onDivChange={handleDivChange}
             gameResults={gameResults}
             editableWeekAdv={editableWeekAdv}
             editableWeekInt={editableWeekInt}
@@ -169,8 +173,8 @@ export default function App() {
       <Navigation
         tab={tab}
         setTab={setTab}
-        scheduleAccent={scheduleDiv === 'int' ? '#2EC4B6' : '#C8A946'}
-        lbAccent={lbDiv === 'int' ? '#2EC4B6' : '#C8A946'}
+        scheduleAccent={div === 'int' ? '#2EC4B6' : '#C8A946'}
+        lbAccent={div === 'int' ? '#2EC4B6' : '#C8A946'}
       />
     </div>
   )
