@@ -9,11 +9,14 @@ import Navigation    from './components/Navigation'
 import LeaderboardPage from './components/LeaderboardPage'
 import SchedulePage    from './components/SchedulePage'
 import GameScorerModal from './components/GameScorerModal'
+import AllStarsPage    from './components/AllStarsPage'
 
 const DIV_KEY = 'bof_last_div'
 
 export default function App() {
-  const [tab, setTab] = useState('leaderboard')
+  const [tab, setTab] = useState(() =>
+    window.location.hash === '#allstars' ? 'allstars' : 'leaderboard'
+  )
   const [div, setDiv] = useState(() => localStorage.getItem(DIV_KEY) || 'adv')
 
   function handleDivChange(d) {
@@ -168,13 +171,16 @@ export default function App() {
             onSelectGame={setSelectedGame}
           />
         )}
+        {tab === 'allstars' && (
+          <AllStarsPage div={div} allStars={allStars} onDivChange={handleDivChange} />
+        )}
       </div>
 
       <Navigation
         tab={tab}
         setTab={setTab}
-        scheduleAccent={div === 'int' ? '#2EC4B6' : '#C8A946'}
-        lbAccent={div === 'int' ? '#2EC4B6' : '#C8A946'}
+        scheduleAccent={div === 'int' ? '#16A34A' : '#2563EB'}
+        lbAccent={div === 'int' ? '#16A34A' : '#2563EB'}
       />
     </div>
   )

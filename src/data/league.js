@@ -122,6 +122,7 @@ export const gameKey = (div, week, slotIdx, court) =>
   `${div}_w${week}_s${slotIdx}_c${court}`;
 
 export function checkWinner(sA, sB) {
+  if (sA >= 27 && sB >= 27) return 'T';
   if (sA >= 27) return 'A';
   if (sB >= 27) return 'B';
   if (sA >= 25 && sA - sB >= 2) return 'A';
@@ -135,24 +136,20 @@ export function checkWinner(sA, sB) {
  */
 export function getEditableWeek(div) {
   const schedule = getSchedule(div);
-  const today = new Date();
-  today.setHours(12, 0, 0, 0);
+  // Use PST so the day-before defaulting works regardless of device timezone
+  const now = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }));
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
-  let closest = schedule[0].week;
-  let minDiff = Infinity;
-
+  // Return the first week whose game date is today or in the future
   for (const wk of schedule) {
     const [, datePart] = wk.date.split(' ');
     const [m, d] = datePart.split('/');
     const gameDate = new Date(2026, parseInt(m, 10) - 1, parseInt(d, 10));
-    gameDate.setHours(12, 0, 0, 0);
-    const diff = Math.abs(gameDate - today);
-    if (diff < minDiff) {
-      minDiff = diff;
-      closest = wk.week;
-    }
+    if (gameDate >= today) return wk.week;
   }
-  return closest;
+
+  // All games are in the past — show last week
+  return schedule[schedule.length - 1].week;
 }
 
 /**
@@ -189,12 +186,20 @@ export function computeStandings(div, results) {
         const g = slot[ct];
         if (!g) return;
         const k = gameKey(div, wk.week, si, ci + 1);
-        const r = results[k];
-        if (r?.winner) {
-          const winnerId = r.winner === 'A' ? g.a : g.b;
-          const loserId  = r.winner === 'A' ? g.b : g.a;
-          if (rec[winnerId]) rec[winnerId].wins++;
-          if (rec[loserId])  rec[loserId].losses++;
+        // Count both set 1 and set 2 separately
+        for (const rk of [k, k + '_s2']) {
+          const r = results[rk];
+          if (r?.winner) {
+            if (r.winner === 'T') {
+              if (rec[g.a]) rec[g.a].wins++;
+              if (rec[g.b]) rec[g.b].wins++;
+            } else {
+              const winnerId = r.winner === 'A' ? g.a : g.b;
+              const loserId  = r.winner === 'A' ? g.b : g.a;
+              if (rec[winnerId]) rec[winnerId].wins++;
+              if (rec[loserId])  rec[loserId].losses++;
+            }
+          }
         }
       });
     });

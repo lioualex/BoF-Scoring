@@ -5,6 +5,24 @@ const DIV_KEY = 'bof_last_div'
 
 const fmtTime = t => `${t} pm`
 
+function WhistleIcon() {
+  // Pencil with scribble (matches nav scoring icon)
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" style={{ width: 12, height: 12, flexShrink: 0 }}>
+      <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4z"/>
+    </svg>
+  )
+}
+
+function ChevronTiny() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
+      strokeLinecap="round" strokeLinejoin="round" className="court-chevron" style={{ width: 13, height: 13 }}>
+      <path d="m9 18 6-6-6-6"/>
+    </svg>
+  )
+}
+
 function isToday(dateStr) {
   const [, datePart] = dateStr.split(' ')
   const [m, d] = datePart.split('/')
@@ -93,11 +111,11 @@ export default function SchedulePage({
 
   return (
     <div className={`sched-wrap div-${div}`}>
-      {/* ── Header ── */}
+{/* ── Header ── */}
       <div className="sched-header">
         <div className="sched-title-row">
           <div>
-            <div className="sched-title">Schedule</div>
+            <div className="sched-title">Scoring</div>
             <div className="sched-sub">Spring 2026</div>
           </div>
           <div className="div-toggle-mini">
@@ -204,11 +222,14 @@ export default function SchedulePage({
                           className={`full-court court-${courtNum}${g && isEditable ? ' clickable' : ''}`}
                           onClick={() => g && isEditable && handleCourtClick(wkData, si, courtNum)}
                         >
-                          {/* Ref row — no court number */}
+                          {/* Ref row — whistle icon + court number + chevron */}
                           {g && (
                             <div className="full-court-ref">
-                              Ref: {getTeamName(div, g.ref)}
+                              <WhistleIcon />
+                              {getTeamName(div, g.ref)}
                               {live && <span className={`score-dot dot-${courtNum}`} />}
+                              <span className="court-label">Court {courtNum}</span>
+                              {isEditable && <ChevronTiny />}
                             </div>
                           )}
 

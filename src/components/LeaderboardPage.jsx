@@ -33,9 +33,10 @@ export default function LeaderboardPage({ div, gameResults, onDivChange }) {
 
       {standings.map((team, idx) => (
         <div key={team.id} className="team-card" onClick={() => setSelectedTeam(team)}>
-          <div className={`rank-badge ${idx === 0 ? 'top1' : idx === 1 ? 'top2' : idx === 2 ? 'top3' : ''}`}>
-            {idx + 1}
-          </div>
+          {idx < 3
+            ? <span className="medal-badge">{['🥇','🥈','🥉'][idx]}</span>
+            : <div className="rank-badge">{idx + 1}</div>
+          }
           <div style={{ flex: 1 }}>
             <div className="team-name">{team.name}</div>
           </div>
@@ -74,6 +75,7 @@ function TeamModal({ div, team, standings, gameResults, onClose }) {
   // Build match history grouped by week
   const byWeek = {}
   let totalWins = 0, totalLosses = 0
+  let totalPts = 0, totalPtsAgainst = 0
 
   schedule.forEach(wk => {
     wk.slots.forEach((slot, si) => {
@@ -88,8 +90,13 @@ function TeamModal({ div, team, standings, gameResults, onClose }) {
         const side = g.a === team.id ? 'A' : 'B'
         const oppId = g.a === team.id ? g.b : g.a
 
-        if (r1?.winner) r1.winner === side ? totalWins++ : totalLosses++
-        if (r2?.winner) r2.winner === side ? totalWins++ : totalLosses++
+        if (r1?.winner) { if (r1.winner === 'T' || r1.winner === side) totalWins++; else totalLosses++ }
+        if (r2?.winner) { if (r2.winner === 'T' || r2.winner === side) totalWins++; else totalLosses++ }
+
+        const hasR1 = r1 && (r1.winner || r1.score_a !== 4 || r1.score_b !== 4)
+        const hasR2 = r2 && (r2.winner || r2.score_a !== 4 || r2.score_b !== 4)
+        if (hasR1) { totalPts += side === 'A' ? r1.score_a : r1.score_b; totalPtsAgainst += side === 'A' ? r1.score_b : r1.score_a }
+        if (hasR2) { totalPts += side === 'A' ? r2.score_a : r2.score_b; totalPtsAgainst += side === 'A' ? r2.score_b : r2.score_a }
 
         if (!byWeek[wk.week]) byWeek[wk.week] = { wk, matches: [] }
         byWeek[wk.week].matches.push({ oppId, side, r1, r2 })
@@ -121,11 +128,12 @@ function TeamModal({ div, team, standings, gameResults, onClose }) {
           <div className="team-modal-name">{team.name}</div>
           <div className="team-modal-record">
             {rankOf(team.id) && <><span className="record-rank">#{rankOf(team.id)}</span><span className="record-sep"> · </span></>}
+            <span className="record-label">Record: </span>
             <span className="record-win">{totalWins}</span>
-            <span className="record-sep"> · </span>
+            <span className="record-sep"> – </span>
             <span className="record-loss">{totalLosses}</span>
-            {totalWins + totalLosses > 0 && (
-              <span className="record-pct"> · {Math.round(totalWins / (totalWins + totalLosses) * 100)}%</span>
+            {totalPts + totalPtsAgainst > 0 && (
+              <span className="record-pct"> · {Math.round(totalPts / (totalPts + totalPtsAgainst) * 100)}% pts won</span>
             )}
           </div>
         </div>
@@ -166,8 +174,8 @@ function TeamModal({ div, team, standings, gameResults, onClose }) {
                 const theirS1 = side === 'A' ? r1?.score_b : r1?.score_a
                 const myS2    = side === 'A' ? r2?.score_a : r2?.score_b
                 const theirS2 = side === 'A' ? r2?.score_b : r2?.score_a
-                const w1 = r1?.winner ? (r1.winner === side ? 'W' : 'L') : null
-                const w2 = r2?.winner ? (r2.winner === side ? 'W' : 'L') : null
+                const w1 = r1?.winner ? (r1.winner === 'T' || r1.winner === side ? 'W' : 'L') : null
+                const w2 = r2?.winner ? (r2.winner === 'T' || r2.winner === side ? 'W' : 'L') : null
                 const hasAnyResult = r1?.winner || r2?.winner
 
                 return (
@@ -180,14 +188,14 @@ function TeamModal({ div, team, standings, gameResults, onClose }) {
                         <div className="result-set-line">
                           <span className="result-set-tag">S1</span>
                           <span className="result-set-scores">{myS1}–{theirS1}</span>
-                          {w1 && <span className={`wl-dot wl-${w1}`}>{w1}</span>}
+                          <span className={`wl-dot${w1 ? ` wl-${w1}` : ' wl-empty'}`}>{w1 ?? ''}</span>
                         </div>
                       ) : null}
                       {(r2?.winner || (r2 && (r2.score_a !== 4 || r2.score_b !== 4))) ? (
                         <div className="result-set-line">
                           <span className="result-set-tag">S2</span>
                           <span className="result-set-scores">{myS2}–{theirS2}</span>
-                          {w2 && <span className={`wl-dot wl-${w2}`}>{w2}</span>}
+                          <span className={`wl-dot${w2 ? ` wl-${w2}` : ' wl-empty'}`}>{w2 ?? ''}</span>
                         </div>
                       ) : null}
                     </div>

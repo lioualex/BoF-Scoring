@@ -42,6 +42,7 @@ export default function GameScorerModal({
 
   const [activeSet,  setActiveSet]  = useState(1)
   const [flipped,    setFlipped]    = useState(false)
+  const [flipping,   setFlipping]   = useState(false)
   const [celebrating, setCelebrating] = useState(false)
   const [starBurstA, setStarBurstA] = useState(false)
   const [starBurstB, setStarBurstB] = useState(false)
@@ -49,7 +50,12 @@ export default function GameScorerModal({
 
   // Auto-flip when switching sets (teams switch sides in volleyball)
   useEffect(() => {
-    setFlipped(activeSet === 2)
+    setFlipping(true)
+    const t = setTimeout(() => {
+      setFlipped(activeSet === 2)
+      setFlipping(false)
+    }, 180)
+    return () => clearTimeout(t)
   }, [activeSet])
 
   // Auto-advance to set 2 when set 1 is won
@@ -79,8 +85,8 @@ export default function GameScorerModal({
   const rightTeam  = flipped ? getTeam(game.div, game.match.a) : getTeam(game.div, game.match.b)
   const leftScore  = flipped ? scoreB : scoreA
   const rightScore = flipped ? scoreA : scoreB
-  const leftWin    = winner === leftSide
-  const rightWin   = winner === rightSide
+  const leftWin    = winner === leftSide || winner === 'T'
+  const rightWin   = winner === rightSide || winner === 'T'
 
   // Set button labels — scores shown in display order (left–right)
   const s1ScoreLeft  = flipped ? scoreB_s1 : scoreA_s1
@@ -202,7 +208,7 @@ export default function GameScorerModal({
       {/* Ref box */}
       <div className="scorer-duty-row">
         <div className="duty-inline scorer-ref-box">
-          <span className="duty-inline-label">Reffing</span>
+          <WhistleIcon />
           <div className="duty-inline-teams">
             <div className="duty-inline-team">{refName}</div>
           </div>
@@ -220,7 +226,7 @@ export default function GameScorerModal({
         {/* Win banner */}
         {winner && (
           <div className="win-banner">
-            {leftWin ? leftTeam?.name : rightTeam?.name} wins Set {activeSet}!
+            {winner === 'T' ? `Tie — both teams win Set ${activeSet}!` : `${leftWin ? leftTeam?.name : rightTeam?.name} wins Set ${activeSet}!`}
           </div>
         )}
 
@@ -241,7 +247,7 @@ export default function GameScorerModal({
         </div>
 
         {/* Team names row with swap button between them */}
-        <div className="scorer-names-row">
+        <div className={`scorer-names-row${flipping ? ' side-flipping' : ''}`}>
           <div className={`scorer-team-name${leftWin ? ' name-winner' : ''}`}>{leftTeam?.name}</div>
           <button
             className={`swap-btn${flipped ? ' swapped' : ''}`}
@@ -254,7 +260,7 @@ export default function GameScorerModal({
         </div>
 
         {/* Score zones */}
-        <div className="scorer-zones">
+        <div className={`scorer-zones${flipping ? ' side-flipping' : ''}`}>
           <div
             className={`score-zone${leftWin ? ' zone-winner' : ''}`}
             onClick={e => tap(leftSide, e)}
@@ -307,9 +313,11 @@ export default function GameScorerModal({
 
         {/* Other court — shows active set scores */}
         {game.otherMatch && otherTeamA && (
+          <>
+          <div className="other-court-eyebrow">Other live scores:</div>
           <div className="other-court-box">
             <div className="other-court-header">
-              Court {game.court === 1 ? 2 : 1} · Set {activeSet}
+              <span className="other-court-meta">Court {game.court === 1 ? 2 : 1} · Set {activeSet}</span>
             </div>
             <div className="other-court-scores">
               <span className="other-team-name">{otherTeamA?.name}</span>
@@ -319,6 +327,7 @@ export default function GameScorerModal({
               <span className="other-team-name right">{otherTeamB?.name}</span>
             </div>
           </div>
+          </>
         )}
 
         <div className="scorer-done-spacer" />
@@ -351,6 +360,16 @@ function SwapIcon() {
       strokeLinecap="round" strokeLinejoin="round" style={{ width: 20, height: 20 }}>
       <path d="M18 8H6m12 0l-3-3m3 3l-3 3"/>
       <path d="M6 16h12M6 16l3-3M6 16l3 3"/>
+    </svg>
+  )
+}
+
+function WhistleIcon() {
+  // Pencil with scribble (matches nav scoring icon)
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor"
+      style={{ width: 16, height: 16, flexShrink: 0, color: 'var(--div-accent)' }}>
+      <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4z"/>
     </svg>
   )
 }
