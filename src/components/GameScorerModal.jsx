@@ -124,7 +124,6 @@ export default function GameScorerModal({
   }
 
   function adjust(side, delta) {
-    // Always allow score corrections even after a winner
     const newA = side === 'A' ? Math.max(0, Math.min(27, scoreA + delta)) : scoreA
     const newB = side === 'B' ? Math.max(0, Math.min(27, scoreB + delta)) : scoreB
     pushUpdate(newA, newB)
@@ -156,7 +155,6 @@ export default function GameScorerModal({
     })
   }
 
-  // Generate confetti pieces with stable random values
   const confettiPieces = useRef(
     Array.from({ length: 22 }, (_, i) => ({
       x:        (i * 4.7 + Math.sin(i * 1.3) * 8 + 50) % 95,
@@ -192,7 +190,7 @@ export default function GameScorerModal({
         </div>
       )}
 
-      {/* Header */}
+      {/* Header — match info left, ref + close right */}
       <div className="scorer-header">
         <div>
           <div className="scorer-match-title">
@@ -202,62 +200,32 @@ export default function GameScorerModal({
             Week {game.week} · {wkDate}
           </div>
         </div>
-        <button className="modal-close" onClick={onClose}>✕</button>
-      </div>
-
-      {/* Ref box */}
-      <div className="scorer-duty-row">
-        <div className="duty-inline scorer-ref-box">
-          <WhistleIcon />
-          <div className="duty-inline-teams">
-            <div className="duty-inline-team">{refName}</div>
+        <div className="scorer-header-right">
+          <div className="scorer-ref-inline">
+            <WhistleIcon />
+            <span>{refName}</span>
           </div>
+          <button className="modal-close" onClick={onClose}>✕</button>
         </div>
       </div>
 
-      {/* Score rules */}
-      <div className="score-note-top">
-        Start 4-4 · Win by 2 from 25 · Cap 27
+      {/* ── FROZEN (non-scrolling) section ── */}
+
+      {/* Team names — right below header */}
+      <div className={`scorer-names-row${flipping ? ' side-flipping' : ''}`}>
+        <div className={`scorer-team-name${leftWin ? ' name-winner' : ''}`}>{leftTeam?.name}</div>
+        <button
+          className={`swap-btn${flipped ? ' swapped' : ''}`}
+          onClick={() => setFlipped(f => !f)}
+          title="Swap sides"
+        >
+          <SwapIcon />
+        </button>
+        <div className={`scorer-team-name${rightWin ? ' name-winner' : ''}`}>{rightTeam?.name}</div>
       </div>
 
-      {/* Scrollable body */}
+      {/* ── SCROLLABLE body ── */}
       <div className="scorer-body">
-
-        {/* Win banner */}
-        {winner && (
-          <div className="win-banner">
-            {winner === 'T' ? `Tie — both teams win Set ${activeSet}!` : `${leftWin ? leftTeam?.name : rightTeam?.name} wins Set ${activeSet}!`}
-          </div>
-        )}
-
-        {/* Set toggle */}
-        <div className="set-toggle">
-          <button
-            className={`set-btn${activeSet === 1 ? ' active' : ''}${winnerS1 ? ' done' : ''}`}
-            onClick={() => setActiveSet(1)}
-          >
-            Set 1{winnerS1 ? ` · ${s1ScoreLeft}–${s1ScoreRight}` : ''}
-          </button>
-          <button
-            className={`set-btn${activeSet === 2 ? ' active' : ''}${winnerS2 ? ' done' : ''}`}
-            onClick={() => setActiveSet(2)}
-          >
-            Set 2{winnerS2 ? ` · ${s2ScoreLeft}–${s2ScoreRight}` : ''}
-          </button>
-        </div>
-
-        {/* Team names row with swap button between them */}
-        <div className={`scorer-names-row${flipping ? ' side-flipping' : ''}`}>
-          <div className={`scorer-team-name${leftWin ? ' name-winner' : ''}`}>{leftTeam?.name}</div>
-          <button
-            className={`swap-btn${flipped ? ' swapped' : ''}`}
-            onClick={() => setFlipped(f => !f)}
-            title="Swap sides"
-          >
-            <SwapIcon />
-          </button>
-          <div className={`scorer-team-name${rightWin ? ' name-winner' : ''}`}>{rightTeam?.name}</div>
-        </div>
 
         {/* Score zones */}
         <div className={`scorer-zones${flipping ? ' side-flipping' : ''}`}>
@@ -278,6 +246,34 @@ export default function GameScorerModal({
             <div className="score-zone-bot"><MinusIcon /></div>
           </div>
         </div>
+
+        {/* Set toggle */}
+        <div className="set-toggle">
+          <button
+            className={`set-btn${activeSet === 1 ? ' active' : ''}${winnerS1 ? ' done' : ''}`}
+            onClick={() => setActiveSet(1)}
+          >
+            Set 1{winnerS1 ? ` · ${s1ScoreLeft}–${s1ScoreRight}` : ''}
+          </button>
+          <button
+            className={`set-btn${activeSet === 2 ? ' active' : ''}${winnerS2 ? ' done' : ''}`}
+            onClick={() => setActiveSet(2)}
+          >
+            Set 2{winnerS2 ? ` · ${s2ScoreLeft}–${s2ScoreRight}` : ''}
+          </button>
+        </div>
+
+        {/* Score rules */}
+        <div className="score-note-top">
+          Start 4-4 · Win by 2 from 25 · Cap 27
+        </div>
+
+        {/* Win banner */}
+        {winner && (
+          <div className="win-banner">
+            {winner === 'T' ? `Tie — both teams win Set ${activeSet}!` : `${leftWin ? leftTeam?.name : rightTeam?.name} wins Set ${activeSet}!`}
+          </div>
+        )}
 
         {/* All-Stars — hidden for past weeks */}
         {!isPast && (
@@ -314,19 +310,19 @@ export default function GameScorerModal({
         {/* Other court — shows active set scores */}
         {game.otherMatch && otherTeamA && (
           <>
-          <div className="other-court-eyebrow">Other live scores:</div>
-          <div className="other-court-box">
-            <div className="other-court-header">
-              <span className="other-court-meta">Court {game.court === 1 ? 2 : 1} · Set {activeSet}</span>
+            <div className="other-court-eyebrow">Other live scores:</div>
+            <div className="other-court-box">
+              <div className="other-court-header">
+                <span className="other-court-meta">Court {game.court === 1 ? 2 : 1} · Set {activeSet}</span>
+              </div>
+              <div className="other-court-scores">
+                <span className="other-team-name">{otherTeamA?.name}</span>
+                <span className="other-score">{otherResultCur?.score_a ?? 4}</span>
+                <span className="other-vs">—</span>
+                <span className="other-score">{otherResultCur?.score_b ?? 4}</span>
+                <span className="other-team-name right">{otherTeamB?.name}</span>
+              </div>
             </div>
-            <div className="other-court-scores">
-              <span className="other-team-name">{otherTeamA?.name}</span>
-              <span className="other-score">{otherResultCur?.score_a ?? 4}</span>
-              <span className="other-vs">—</span>
-              <span className="other-score">{otherResultCur?.score_b ?? 4}</span>
-              <span className="other-team-name right">{otherTeamB?.name}</span>
-            </div>
-          </div>
           </>
         )}
 
@@ -365,7 +361,6 @@ function SwapIcon() {
 }
 
 function WhistleIcon() {
-  // Pencil with scribble (matches nav scoring icon)
   return (
     <svg viewBox="0 0 24 24" fill="currentColor"
       style={{ width: 16, height: 16, flexShrink: 0, color: 'var(--div-accent)' }}>

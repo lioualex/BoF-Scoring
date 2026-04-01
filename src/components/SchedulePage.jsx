@@ -5,6 +5,21 @@ const DIV_KEY = 'bof_last_div'
 
 const fmtTime = t => `${t} pm`
 
+const DAY_MAP = { Thu: 'Thur', Mon: 'Mon', Tue: 'Tue', Wed: 'Wed', Fri: 'Fri', Sat: 'Sat', Sun: 'Sun' }
+const MONTHS  = ['January','February','March','April','May','June','July','August','September','October','November','December']
+function ordinal(n) {
+  if (n % 10 === 1 && n !== 11) return `${n}st`
+  if (n % 10 === 2 && n !== 12) return `${n}nd`
+  if (n % 10 === 3 && n !== 13) return `${n}rd`
+  return `${n}th`
+}
+function fmtDropdownDate(dateStr) {
+  const [dayAbbr, datePart] = dateStr.split(' ')
+  if (!datePart) return dateStr
+  const [m, d] = datePart.split('/').map(Number)
+  return `${DAY_MAP[dayAbbr] ?? dayAbbr}, ${MONTHS[m - 1]} ${ordinal(d)}`
+}
+
 function WhistleIcon() {
   // Pencil with scribble (matches nav scoring icon)
   return (
@@ -112,31 +127,26 @@ export default function SchedulePage({
   return (
     <div className={`sched-wrap div-${div}`}>
 {/* ── Header ── */}
-      <div className="sched-header">
-        <div className="sched-title-row">
-          <div>
-            <div className="sched-title">Scoring</div>
-            <div className="sched-sub">Spring 2026</div>
-          </div>
-          <div className="div-toggle-mini">
-            <button className={`div-btn-mini ${div === 'adv' ? 'active' : ''}`} onClick={() => switchDiv('adv')}>ADV</button>
-            <button className={`div-btn-mini ${div === 'int' ? 'active' : ''}`} onClick={() => switchDiv('int')}>INT</button>
-          </div>
+      <div className="header sched-header-inline">
+        <div className="app-title">BoF <span>Scoring</span></div>
+        <div className="div-toggle-mini">
+          <button className={`div-btn-mini ${div === 'adv' ? 'active' : ''}`} onClick={() => switchDiv('adv')}>ADV</button>
+          <button className={`div-btn-mini ${div === 'int' ? 'active' : ''}`} onClick={() => switchDiv('int')}>INT</button>
         </div>
+      </div>
 
-        <div className="sched-week-row">
-          <select
-            className="week-select"
-            value={week}
-            onChange={e => setWeek(Number(e.target.value))}
-          >
-            {schedule.map(w => (
-              <option key={w.week} value={w.week}>
-                Week {w.week} — {w.date}{w.week === editableWeek ? '  ★' : ''}
-              </option>
-            ))}
-          </select>
-        </div>
+      <div className="sched-week-select">
+        <select
+          className="week-select"
+          value={week}
+          onChange={e => setWeek(Number(e.target.value))}
+        >
+          {schedule.map(w => (
+            <option key={w.week} value={w.week}>
+              Week {w.week} · {fmtDropdownDate(w.date)}{w.week === editableWeek ? '  ★' : ''}
+            </option>
+          ))}
+        </select>
       </div>
 
       {/* ── Schedule content ── */}
@@ -146,7 +156,7 @@ export default function SchedulePage({
 
             {/* Net setup box */}
             {duties?.setup.length > 0 && (
-              <div className="duty-inline duty-inline-setup">
+              <div className="duty-inline duty-inline-setup duty-block">
                 <span className="duty-inline-label">Net Setup</span>
                 <div className="duty-inline-teams">
                   {duties.setup.map(id => (
@@ -155,6 +165,8 @@ export default function SchedulePage({
                 </div>
               </div>
             )}
+
+            <div className="section-label">Scoring</div>
 
             {wkData.slots.map((slot, si) => {
               const live       = gameDay && isSlotLive(slot.time)
@@ -268,7 +280,7 @@ export default function SchedulePage({
 
             {/* Nets down box */}
             {duties?.teardown.length > 0 && (
-              <div className="duty-inline duty-inline-teardown">
+              <div className="duty-inline duty-inline-teardown duty-block">
                 <span className="duty-inline-label">Nets Down</span>
                 <div className="duty-inline-teams">
                   {duties.teardown.map(id => (

@@ -106,6 +106,18 @@ function TeamModal({ div, team, standings, gameResults, onClose }) {
 
   const weekNums = Object.keys(byWeek).map(Number).sort((a, b) => a - b)
 
+  // Role sequence per week: P = playing, R = reffing, O = off
+  const weekRoles = {}
+  schedule.forEach(wk => {
+    const roles = wk.slots.map(slot => {
+      const courts = ['court1', 'court2'].map(ct => slot[ct]).filter(Boolean)
+      if (courts.some(g => g.a === team.id || g.b === team.id)) return 'P'
+      if (courts.some(g => g.ref === team.id)) return 'R'
+      return 'O'
+    })
+    weekRoles[wk.week] = roles
+  })
+
   // Net duties — find the next upcoming one
   const allDuties = []
   schedule.forEach(wk => {
@@ -146,10 +158,10 @@ function TeamModal({ div, team, standings, gameResults, onClose }) {
         {/* Next duty */}
         {nextDuty && (
           <>
-            <div className="section-label" style={{ paddingTop: 16 }}>Next Duty</div>
+            <div className="section-label" style={{ paddingTop: 8 }}>Next Duty</div>
             <div className="result-match-row">
               <div className="result-opp">{nextDuty.type}</div>
-              <div style={{ fontSize: 13, color: 'var(--text3)' }}>Wk {nextDuty.week} · {nextDuty.date}</div>
+              <div style={{ color: 'var(--text3)' }}>Wk {nextDuty.week} · {nextDuty.date}</div>
             </div>
           </>
         )}
@@ -167,7 +179,16 @@ function TeamModal({ div, team, standings, gameResults, onClose }) {
 
           return (
             <div key={wkNum} className="result-week-group">
-              <div className="result-week-header">Week {wkNum} · {datePart}</div>
+              <div className="result-week-header">
+                <span>Week {wkNum} · {datePart}</span>
+                {weekRoles[wkNum] && (
+                  <span className="week-role-tags">
+                    {weekRoles[wkNum].map((r, i) => (
+                      <span key={i} className={`week-role-tag week-role-${r}`}>{r}</span>
+                    ))}
+                  </span>
+                )}
+              </div>
 
               {matches.map(({ oppId, side, r1, r2 }, i) => {
                 const myS1    = side === 'A' ? r1?.score_a : r1?.score_b
