@@ -17,7 +17,7 @@ export default function LeaderboardPage({ div, gameResults, onDivChange }) {
     <div className={`lb-wrap div-${div}`}>
       <div className="header">
         <div className="app-title">BoF <span>Scoring</span></div>
-        <div className="app-sub">Spring 2026 · St. Mary's Rec Center</div>
+        <div className="app-sub">Summer 2026 · St. Mary's Rec Center</div>
       </div>
 
       <div className="div-toggle">

@@ -1,113 +1,116 @@
 // =================== TEAMS ===================
 
 export const ADV_TEAMS = [
-  { id: 1, name: 'Trader Hoes',        players: ['Chen-Chen Huo','Aidan Dillon','Thomas Leech','Patrick Godfrey','Cody Howard','Chris Im','Immy Martiniano','Ruan Poindexter'] },
-  { id: 2, name: "Weiner's Circle",    players: ['Ricardo Alves','Alex Bast','Garrick Monaghan','Nick Wise','Ben Beyer','Alberto Chun','Xavier Tenorio','Johnathan Wang'] },
-  { id: 3, name: 'Zaddy Please',       players: ['Iris Brewer','Dorian Dorsey','Jimmy Leyden','Jamil Al-Ghosein','Jocelyn Ho','Matt Merritt','David Pena-Guzman','Tali Swisher'] },
-  { id: 4, name: 'Harmonious Hoes',    players: ['Andrew Fischer','Alex Schlick','Ryan Grassell','Connor Graflund','Cesar Arada','Teddy Luther','Christian Monaghan','Kae Saeturn'] },
-  { id: 5, name: 'Fourth Alternate',   players: ['Joe Barkus','Jason Giblin','Trey Godfrey','James Prietto','Enzo Arada','Nathan Draper','Dan Fraguglia','Kyle Reiley'] },
-  { id: 6, name: 'Mabuhay Beki Divas', players: ['Rhenard LeClair','James Cardenas','Ethan Dressen','Matt Gelsomino','Jack Connolly','Manit Limlamai','Finn MacDonald','Alex Wu'] },
-  { id: 7, name: 'Chicas Divertidas',  players: ['Oscar Ramos','Danyion Reagan','Spencer Bundoc','Franco Rossi','Levon Kalustyan','Arslan Kasimov','Alan Zhu'] },
+  { id: 1, name: 'Team 1', players: ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5', 'Player 6', 'Player 7', 'Player 8'] },
+  { id: 2, name: 'Team 2', players: ['Player 9', 'Player 10', 'Player 11', 'Player 12', 'Player 13', 'Player 14', 'Player 15', 'Player 16'] },
+  { id: 3, name: 'Team 3', players: ['Player 17', 'Player 18', 'Player 19', 'Player 20', 'Player 21', 'Player 22', 'Player 23', 'Player 24'] },
+  { id: 4, name: 'Team 4', players: ['Player 25', 'Player 26', 'Player 27', 'Player 28', 'Player 29', 'Player 30', 'Player 31', 'Player 32'] },
+  { id: 5, name: 'Team 5', players: ['Player 33', 'Player 34', 'Player 35', 'Player 36', 'Player 37', 'Player 38', 'Player 39', 'Player 40'] },
+  { id: 6, name: 'Team 6', players: ['Player 41', 'Player 42', 'Player 43', 'Player 44', 'Player 45', 'Player 46', 'Player 47', 'Player 48'] },
+  { id: 7, name: 'Team 7', players: ['Player 49', 'Player 50', 'Player 51', 'Player 52', 'Player 53', 'Player 54', 'Player 55', 'Player 56'] },
+  { id: 8, name: 'Team 8', players: ['Player 57', 'Player 58', 'Player 59', 'Player 60', 'Player 61', 'Player 62', 'Player 63', 'Player 64'] },
 ];
 
 export const INT_TEAMS = [
-  { id: 1, name: 'Cottage Crew',              players: ['Kyle Rosenthal','Alex Liou','Austin Lam','Vigo Jiang','Andrew Aquino','Derrick Hau','Liza Justo','Tony Tran'] },
-  { id: 2, name: 'K Pop D Hunters',           players: ['Tim Dy Guani','Son Dinh','Brett Kellaher','Danny Chin','Jessica Anderson','Joel Bodilly','AJ Martins','Abel Reyna'] },
-  { id: 3, name: 'White Lotus: Season Whore', players: ['Eric Ricker','Sia Assar','Go Takei','DaShaunn Woolard','Ben Ng','Tony Wu','Brenda Young'] },
-  { id: 4, name: 'NKOTB',                     players: ['Thang Huynh','Travis Beck','Rob Peralta','Jihwan Kim','Felipe De Bedout','Eric Gaudet','Mark Salzer','Weston White'] },
-  { id: 5, name: 'The Gays of Whoremuz',      players: ['JJ Chun','Jeremy Wang','James Mullen','TJ Bleichner','Abby Arcilla','Ari Fontanilla','Jason Malabed'] },
-  { id: 6, name: 'Textbook Volleyball',       players: ['Shayne O\'Brien','Robbie Wise','Rich Sucre','David Sechko','Jake Castrejon','Jonny Hsieh','Lorenzo Labitigon','Chhun Tov'] },
+  { id: 1, name: 'Team 1', players: ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5', 'Player 6', 'Player 7', 'Player 8'] },
+  { id: 2, name: 'Team 2', players: ['Player 9', 'Player 10', 'Player 11', 'Player 12', 'Player 13', 'Player 14', 'Player 15', 'Player 16'] },
+  { id: 3, name: 'Team 3', players: ['Player 17', 'Player 18', 'Player 19', 'Player 20', 'Player 21', 'Player 22', 'Player 23', 'Player 24'] },
+  { id: 4, name: 'Team 4', players: ['Player 25', 'Player 26', 'Player 27', 'Player 28', 'Player 29', 'Player 30', 'Player 31', 'Player 32'] },
+  { id: 5, name: 'Team 5', players: ['Player 33', 'Player 34', 'Player 35', 'Player 36', 'Player 37', 'Player 38', 'Player 39', 'Player 40'] },
+  { id: 6, name: 'Team 6', players: ['Player 41', 'Player 42', 'Player 43', 'Player 44', 'Player 45', 'Player 46', 'Player 47', 'Player 48'] },
+  { id: 7, name: 'Team 7', players: ['Player 49', 'Player 50', 'Player 51', 'Player 52', 'Player 53', 'Player 54', 'Player 55', 'Player 56'] },
+  { id: 8, name: 'Team 8', players: ['Player 57', 'Player 58', 'Player 59', 'Player 60', 'Player 61', 'Player 62', 'Player 63', 'Player 64'] },
 ];
 
 // =================== SCHEDULES ===================
 
 export const ADV_SCHEDULE = [
-  { week: 1, date: 'Wed 03/25', firstRefs: [1,2], lastRefs: [3], slots: [
-    { time: '6:20', court1: { a:2, b:4, ref:7 }, court2: { a:6, b:1, ref:3 } },
-    { time: '7:00', court1: { a:4, b:6, ref:2 }, court2: { a:1, b:3, ref:5 } },
-    { time: '7:40', court1: { a:7, b:2, ref:4 }, court2: { a:3, b:5, ref:1 } },
-    { time: '8:20', court1: { a:1, b:2, ref:6 }, court2: { a:5, b:7, ref:3 } },
+  { week: 1, date: 'Wed 06/17', slots: [
+    { time: '6:20', court1: { a:1, b:8, ref:7 }, court2: null },
+    { time: '7:00', court1: { a:2, b:7, ref:3 }, court2: null },
+    { time: '7:40', court1: { a:3, b:6, ref:5 }, court2: null },
+    { time: '8:20', court1: { a:4, b:5, ref:1 }, court2: null },
   ]},
-  { week: 2, date: 'Wed 04/01', firstRefs: [3,4], lastRefs: [7], slots: [
-    { time: '6:20', court1: { a:2, b:3, ref:5 }, court2: { a:4, b:7, ref:6 } },
-    { time: '7:00', court1: { a:7, b:2, ref:1 }, court2: { a:3, b:5, ref:4 } },
-    { time: '7:40', court1: { a:5, b:6, ref:3 }, court2: { a:1, b:4, ref:7 } },
-    { time: '8:20', court1: { a:6, b:1, ref:2 }, court2: { a:3, b:4, ref:7 } },
+  { week: 2, date: 'Wed 06/24', slots: [
+    { time: '6:20', court1: { a:1, b:7, ref:2 }, court2: null },
+    { time: '7:00', court1: { a:8, b:6, ref:4 }, court2: null },
+    { time: '7:40', court1: { a:2, b:5, ref:1 }, court2: null },
+    { time: '8:20', court1: { a:3, b:4, ref:6 }, court2: null },
   ]},
-  { week: 3, date: 'Wed 04/08', firstRefs: [5,6], lastRefs: [4], slots: [
-    { time: '6:20', court1: { a:6, b:2, ref:7 }, court2: { a:3, b:5, ref:4 } },
-    { time: '7:00', court1: { a:1, b:5, ref:6 }, court2: { a:2, b:3, ref:4 } },
-    { time: '7:40', court1: { a:7, b:1, ref:2 }, court2: { a:4, b:6, ref:5 } },
-    { time: '8:20', court1: { a:6, b:7, ref:1 }, court2: { a:4, b:5, ref:3 } },
+  { week: 3, date: 'Wed 07/01', slots: [
+    { time: '6:20', court1: { a:1, b:6, ref:3 }, court2: null },
+    { time: '7:00', court1: { a:7, b:5, ref:1 }, court2: null },
+    { time: '7:40', court1: { a:8, b:4, ref:5 }, court2: null },
+    { time: '8:20', court1: { a:2, b:3, ref:8 }, court2: null },
   ]},
-  { week: 4, date: 'Wed 04/15', firstRefs: [1,7], lastRefs: [6], slots: [
-    { time: '6:20', court1: { a:1, b:3, ref:2 }, court2: { a:6, b:7, ref:5 } },
-    { time: '7:00', court1: { a:3, b:5, ref:7 }, court2: { a:6, b:1, ref:4 } },
-    { time: '7:40', court1: { a:5, b:7, ref:1 }, court2: { a:2, b:4, ref:6 } },
-    { time: '8:20', court1: { a:7, b:1, ref:3 }, court2: { a:2, b:4, ref:6 } },
+  { week: 4, date: 'Wed 07/08', slots: [
+    { time: '6:20', court1: { a:1, b:5, ref:6 }, court2: null },
+    { time: '7:00', court1: { a:6, b:4, ref:3 }, court2: null },
+    { time: '7:40', court1: { a:7, b:3, ref:8 }, court2: null },
+    { time: '8:20', court1: { a:8, b:2, ref:5 }, court2: null },
   ]},
-  { week: 5, date: 'Wed 04/22', firstRefs: [2,3], lastRefs: [5], slots: [
-    { time: '6:20', court1: { a:2, b:3, ref:6 }, court2: { a:7, b:1, ref:5 } },
-    { time: '7:00', court1: { a:5, b:7, ref:3 }, court2: { a:1, b:2, ref:4 } },
-    { time: '7:40', court1: { a:6, b:3, ref:7 }, court2: { a:4, b:5, ref:2 } },
-    { time: '8:20', court1: { a:2, b:3, ref:1 }, court2: { a:4, b:6, ref:5 } },
+  { week: 5, date: 'Wed 07/15', slots: [
+    { time: '6:20', court1: { a:1, b:4, ref:2 }, court2: null },
+    { time: '7:00', court1: { a:5, b:3, ref:7 }, court2: null },
+    { time: '7:40', court1: { a:6, b:2, ref:4 }, court2: null },
+    { time: '8:20', court1: { a:7, b:8, ref:5 }, court2: null },
   ]},
-  { week: 6, date: 'Wed 04/29', firstRefs: [4,5], lastRefs: [2], slots: [
-    { time: '6:20', court1: { a:5, b:6, ref:1 }, court2: { a:2, b:4, ref:7 } },
-    { time: '7:00', court1: { a:6, b:1, ref:3 }, court2: { a:2, b:5, ref:4 } },
-    { time: '7:40', court1: { a:1, b:3, ref:5 }, court2: { a:4, b:7, ref:2 } },
-    { time: '8:20', court1: { a:7, b:3, ref:6 }, court2: { a:4, b:5, ref:2 } },
+  { week: 6, date: 'Wed 07/22', slots: [
+    { time: '6:20', court1: { a:1, b:3, ref:6 }, court2: null },
+    { time: '7:00', court1: { a:4, b:2, ref:3 }, court2: null },
+    { time: '7:40', court1: { a:5, b:8, ref:4 }, court2: null },
+    { time: '8:20', court1: { a:6, b:7, ref:8 }, court2: null },
   ]},
-  { week: 7, date: 'Wed 05/06', firstRefs: [6,7], lastRefs: [1], slots: [
-    { time: '6:20', court1: { a:7, b:1, ref:5 }, court2: { a:3, b:6, ref:4 } },
-    { time: '7:00', court1: { a:1, b:3, ref:2 }, court2: { a:5, b:7, ref:6 } },
-    { time: '7:40', court1: { a:6, b:2, ref:7 }, court2: { a:4, b:5, ref:1 } },
-    { time: '8:20', court1: { a:6, b:7, ref:3 }, court2: { a:2, b:4, ref:1 } },
+  { week: 7, date: 'Wed 07/29', slots: [
+    { time: '6:20', court1: { a:1, b:2, ref:8 }, court2: null },
+    { time: '7:00', court1: { a:3, b:8, ref:4 }, court2: null },
+    { time: '7:40', court1: { a:4, b:7, ref:6 }, court2: null },
+    { time: '8:20', court1: { a:5, b:6, ref:1 }, court2: null },
   ]},
 ];
 
 export const INT_SCHEDULE = [
-  { week: 1, date: 'Thu 03/26', firstRefs: [1,3], lastRefs: [5], slots: [
-    { time: '6:20', court1: { a:1, b:2, ref:5 }, court2: { a:3, b:4, ref:6 } },
-    { time: '7:00', court1: { a:1, b:5, ref:3 }, court2: null },
-    { time: '7:40', court1: { a:2, b:4, ref:5 }, court2: { a:3, b:6, ref:1 } },
-    { time: '8:20', court1: { a:5, b:6, ref:2 }, court2: { a:1, b:3, ref:4 } },
+  { week: 1, date: 'Thu 06/18', slots: [
+    { time: '6:20', court1: { a:1, b:8, ref:7 }, court2: null },
+    { time: '7:00', court1: { a:2, b:7, ref:3 }, court2: null },
+    { time: '7:40', court1: { a:3, b:6, ref:5 }, court2: null },
+    { time: '8:20', court1: { a:4, b:5, ref:1 }, court2: null },
   ]},
-  { week: 2, date: 'Thu 04/02', firstRefs: [4,5], lastRefs: [6], slots: [
-    { time: '6:20', court1: { a:1, b:6, ref:3 }, court2: { a:2, b:5, ref:4 } },
-    { time: '7:00', court1: { a:2, b:3, ref:6 }, court2: { a:4, b:5, ref:1 } },
-    { time: '7:40', court1: { a:4, b:6, ref:5 }, court2: null },
-    { time: '8:20', court1: { a:1, b:4, ref:6 }, court2: { a:3, b:5, ref:2 } },
+  { week: 2, date: 'Thu 06/25', slots: [
+    { time: '6:20', court1: { a:1, b:7, ref:2 }, court2: null },
+    { time: '7:00', court1: { a:8, b:6, ref:4 }, court2: null },
+    { time: '7:40', court1: { a:2, b:5, ref:1 }, court2: null },
+    { time: '8:20', court1: { a:3, b:4, ref:6 }, court2: null },
   ]},
-  { week: 3, date: 'Thu 04/09', firstRefs: [3,6], lastRefs: [2], slots: [
-    { time: '6:20', court1: { a:1, b:3, ref:4 }, court2: { a:5, b:6, ref:2 } },
-    { time: '7:00', court1: { a:1, b:5, ref:3 }, court2: { a:2, b:4, ref:6 } },
-    { time: '7:40', court1: { a:3, b:6, ref:2 }, court2: null },
-    { time: '8:20', court1: { a:2, b:3, ref:5 }, court2: { a:4, b:6, ref:1 } },
+  { week: 3, date: 'Thu 07/02', slots: [
+    { time: '6:20', court1: { a:1, b:6, ref:3 }, court2: null },
+    { time: '7:00', court1: { a:7, b:5, ref:1 }, court2: null },
+    { time: '7:40', court1: { a:8, b:4, ref:5 }, court2: null },
+    { time: '8:20', court1: { a:2, b:3, ref:8 }, court2: null },
   ]},
-  { week: 4, date: 'Thu 04/16', firstRefs: [1,2], lastRefs: [3,4], slots: [
-    { time: '6:20', court1: { a:1, b:6, ref:5 }, court2: { a:2, b:4, ref:3 } },
-    { time: '7:00', court1: null,                court2: { a:1, b:3, ref:4 } },
-    { time: '7:40', court1: { a:4, b:5, ref:1 }, court2: { a:2, b:6, ref:3 } },
-    { time: '8:20', court1: { a:1, b:2, ref:6 }, court2: { a:3, b:5, ref:4 } },
+  { week: 4, date: 'Thu 07/09', slots: [
+    { time: '6:20', court1: { a:1, b:5, ref:6 }, court2: null },
+    { time: '7:00', court1: { a:6, b:4, ref:3 }, court2: null },
+    { time: '7:40', court1: { a:7, b:3, ref:8 }, court2: null },
+    { time: '8:20', court1: { a:8, b:2, ref:5 }, court2: null },
   ]},
-  { week: 5, date: 'Thu 04/23', firstRefs: [3,4,5,6], lastRefs: [1,2], slots: [
-    { time: '6:20', court1: { a:1, b:4, ref:2 }, court2: { a:3, b:6, ref:5 } },
-    { time: '7:00', court1: { a:2, b:3, ref:4 }, court2: { a:5, b:6, ref:1 } },
-    { time: '7:40', court1: { a:1, b:5, ref:6 }, court2: { a:2, b:4, ref:3 } },
-    { time: '8:20', court1: { a:4, b:6, ref:2 }, court2: { a:3, b:5, ref:1 } },
+  { week: 5, date: 'Thu 07/16', slots: [
+    { time: '6:20', court1: { a:1, b:4, ref:2 }, court2: null },
+    { time: '7:00', court1: { a:5, b:3, ref:7 }, court2: null },
+    { time: '7:40', court1: { a:6, b:2, ref:4 }, court2: null },
+    { time: '8:20', court1: { a:7, b:8, ref:5 }, court2: null },
   ]},
-  { week: 6, date: 'Thu 04/30', firstRefs: [1,2,5,6], lastRefs: [3,4], slots: [
-    { time: '6:20', court1: { a:1, b:2, ref:4 }, court2: { a:3, b:5, ref:6 } },
-    { time: '7:00', court1: { a:4, b:6, ref:1 }, court2: { a:2, b:5, ref:3 } },
-    { time: '7:40', court1: { a:1, b:6, ref:4 }, court2: { a:2, b:3, ref:5 } },
-    { time: '8:20', court1: { a:1, b:4, ref:2 }, court2: { a:5, b:6, ref:3 } },
+  { week: 6, date: 'Thu 07/23', slots: [
+    { time: '6:20', court1: { a:1, b:3, ref:6 }, court2: null },
+    { time: '7:00', court1: { a:4, b:2, ref:3 }, court2: null },
+    { time: '7:40', court1: { a:5, b:8, ref:4 }, court2: null },
+    { time: '8:20', court1: { a:6, b:7, ref:8 }, court2: null },
   ]},
-  { week: 7, date: 'Thu 05/07', firstRefs: [2,4], lastRefs: [5], slots: [
-    { time: '6:20', court1: { a:3, b:4, ref:1 }, court2: { a:2, b:6, ref:5 } },
-    { time: '7:00', court1: { a:1, b:5, ref:4 }, court2: { a:2, b:6, ref:3 } },
-    { time: '7:40', court1: { a:4, b:5, ref:2 }, court2: null },
-    { time: '8:20', court1: { a:1, b:3, ref:6 }, court2: { a:2, b:4, ref:5 } },
+  { week: 7, date: 'Thu 07/30', slots: [
+    { time: '6:20', court1: { a:1, b:2, ref:8 }, court2: null },
+    { time: '7:00', court1: { a:3, b:8, ref:4 }, court2: null },
+    { time: '7:40', court1: { a:4, b:7, ref:6 }, court2: null },
+    { time: '8:20', court1: { a:5, b:6, ref:1 }, court2: null },
   ]},
 ];
 
