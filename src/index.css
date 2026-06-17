@@ -645,7 +645,7 @@ body {
   font-size: 16px; font-weight: 700; letter-spacing: 0.12em;
   text-transform: uppercase; color: var(--div-accent, var(--gold)); margin-bottom: 4px;
 }
-.team-modal-name { font-size: 32px; font-weight: 800; color: var(--text); }
+.team-modal-name { font-size: 30px; font-weight: 800; color: var(--text); }
 .team-modal-record { margin-top: 6px; font-size: 20px; font-weight: 700; }
 .record-win  { color: var(--div-accent, var(--green)); }
 .record-loss { color: var(--text2); }
