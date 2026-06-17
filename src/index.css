@@ -400,7 +400,7 @@ body {
   margin-top: 6px;
 }
 .scorer-match-title {
-  font-size: 26px; font-weight: 800; color: var(--text); letter-spacing: -0.3px;
+  font-size: 26px; font-weight: 800; color: var(--div-accent, var(--gold)); letter-spacing: -0.3px;
 }
 .scorer-match-sub {
   font-size: 18px; font-weight: 600; color: var(--text2); margin-top: 3px;
