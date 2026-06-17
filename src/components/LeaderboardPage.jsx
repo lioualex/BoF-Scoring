@@ -113,7 +113,11 @@ function TeamModal({ div, team, standings, gameResults, onClose, onSelectGame })
         })
         if (reffing) {
           const courtNum = reffing === 'court1' ? 1 : 2
-          Object.assign(slotEntry, { type: 'ref', courtNum })
+          const g = slot[reffing]
+          const bk = gameKey(div, wk.week, si, courtNum)
+          const r1 = gameResults[bk] ?? null
+          const r2 = gameResults[bk + '_s2'] ?? null
+          Object.assign(slotEntry, { type: 'ref', courtNum, g, r1, r2, slotIdx: si })
         }
       }
 
@@ -249,10 +253,25 @@ function TeamModal({ div, team, standings, gameResults, onClose, onSelectGame })
                 }
 
                 if (slot.type === 'ref') {
+                  const handleRefClick = onSelectGame && slot.g ? () => {
+                    const schedSlot = wk.slots[slot.slotIdx]
+                    const otherKey = slot.courtNum === 1 ? 'court2' : 'court1'
+                    const otherMatch = schedSlot[otherKey] ?? null
+                    const gk = gameKey(div, wkNum, slot.slotIdx, slot.courtNum)
+                    const otherGk = otherMatch ? gameKey(div, wkNum, slot.slotIdx, slot.courtNum === 1 ? 2 : 1) : null
+                    onClose()
+                    onSelectGame({
+                      div, week: wkNum, slotIdx: slot.slotIdx, court: slot.courtNum,
+                      match: slot.g, otherMatch,
+                      gameKey: gk, gameKey2: gk + '_s2',
+                      otherGameKey: otherGk, otherGameKey2: otherGk ? otherGk + '_s2' : null,
+                      time: schedSlot.time,
+                    })
+                  } : null
                   return (
-                    <div key={i} className="result-match-row" style={{ color: 'var(--text3)' }}>
-                      <div className="result-opp">Ref</div>
-                      <span className="match-court-label" style={{ color: 'var(--text3)' }}>Court {slot.courtNum}</span>
+                    <div key={i} className={`result-match-row${handleRefClick ? ' clickable' : ''}`} onClick={handleRefClick ?? undefined}>
+                      <div className="result-opp" style={{ color: 'var(--text3)', fontWeight: 400 }}>Ref</div>
+                      <span className="match-court-label">Court {slot.courtNum}{handleRefClick && <ChevronRight />}</span>
                     </div>
                   )
                 }
