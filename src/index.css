@@ -255,11 +255,20 @@ body {
   box-shadow: 0 0 0 1px var(--div-accent-dim, var(--gold-dim));
 }
 .full-slot-time {
+  position: relative;
   padding: 12px 16px; background: var(--surface);
   font-size: 22px; font-weight: 700; letter-spacing: 0.06em;
   color: var(--text2);
   border-bottom: 1px solid var(--border);
   display: flex; align-items: center; gap: 8px;
+}
+.full-slot-time::after {
+  content: '';
+  position: absolute; left: 50%; bottom: -8px; transform: translateX(-50%);
+  width: 0; height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid var(--surface);
 }
 .slot-time-live {
   color: var(--div-accent, var(--gold));
