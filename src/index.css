@@ -100,13 +100,13 @@ body {
   height: 0;
   overflow: visible;
   z-index: 500;
+  margin-bottom: 8px;
 }
 .scorer-tooltip-fixed {
   position: absolute;
-  left: 16px;
-  right: 16px;
-  bottom: 8px;
-  transform: translateY(-100%);
+  left: 0;
+  right: 0;
+  top: 0;
   z-index: 500;
 }
 .scorer-tooltip {

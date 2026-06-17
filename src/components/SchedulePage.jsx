@@ -190,6 +190,18 @@ export default function SchedulePage({
 
             <div className="section-label">Scoring</div>
 
+            {showTooltip && (
+              <div className="scorer-tooltip-anchor">
+                <div className="scorer-tooltip-fixed" onClick={dismissTooltip}>
+                  <div className="scorer-tooltip">
+                    <div className="scorer-tooltip-text">Tap any match card to enter scores and all-stars live!</div>
+                    <button className="scorer-tooltip-btn" onClick={e => { e.stopPropagation(); dismissTooltip() }}>Got it</button>
+                    <div className="scorer-tooltip-arrow" />
+                  </div>
+                </div>
+              </div>
+            )}
+
             {wkData.slots.map((slot, si) => {
               const live       = gameDay && isSlotLive(slot.time)
               // Only collapse past slots once the full game day is over (not mid-day)
@@ -232,17 +244,6 @@ export default function SchedulePage({
               // ── Full slot ──
               return (
                 <div key={si} className={`full-slot${live ? ' slot-live' : ''}`}>
-                  {si === 0 && showTooltip && (
-                    <div className="scorer-tooltip-anchor">
-                      <div className="scorer-tooltip-fixed" onClick={dismissTooltip}>
-                        <div className="scorer-tooltip">
-                          <div className="scorer-tooltip-text">Tap any match card to enter scores and all-stars live!</div>
-                          <button className="scorer-tooltip-btn" onClick={e => { e.stopPropagation(); dismissTooltip() }}>Got it</button>
-                          <div className="scorer-tooltip-arrow" />
-                        </div>
-                      </div>
-                    </div>
-                  )}
                   <div className={`full-slot-time${live ? ' slot-time-live' : ''}`}>
                     {fmtTime(slot.time)}
                     {live && (
