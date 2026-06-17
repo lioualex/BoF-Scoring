@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { getSchedule, getTeamName, getWeekDuties, gameKey } from '../data/league'
 import { isMyTeam } from '../lib/myTeam'
 
@@ -95,6 +95,14 @@ export default function SchedulePage({
     try { return !localStorage.getItem('bof_scorer_tooltip_seen') }
     catch { return true }
   })
+  const [tooltipTop, setTooltipTop] = useState(null)
+  const firstCardRef = useRef(null)
+
+  useEffect(() => {
+    if (!showTooltip || !firstCardRef.current) return
+    const rect = firstCardRef.current.getBoundingClientRect()
+    setTooltipTop(rect.top)
+  }, [showTooltip])
 
   function dismissTooltip() {
     try { localStorage.setItem('bof_scorer_tooltip_seen', '1') } catch {}
@@ -241,13 +249,6 @@ export default function SchedulePage({
                     )}
                   </div>
                   <div className="full-slot-courts">
-                    {si === 0 && showTooltip && (
-                      <div className="scorer-tooltip">
-                        <div className="scorer-tooltip-text">Tap any match card to enter scores and all-stars live!</div>
-                        <button className="scorer-tooltip-btn" onClick={dismissTooltip}>Got it</button>
-                        <div className="scorer-tooltip-arrow" />
-                      </div>
-                    )}
                     {[1, 2].map(courtNum => {
                       const ctKey   = courtNum === 1 ? 'court1' : 'court2'
                       const g       = slot[ctKey]
@@ -262,6 +263,7 @@ export default function SchedulePage({
                       return (
                         <div
                           key={courtNum}
+                          ref={si === 0 && courtNum === 1 ? firstCardRef : null}
                           className={`full-court court-${courtNum}${g && isEditable ? ' clickable' : ''}${live && g && !hasScore(resultS1) && !hasScore(resultS2) && !visitedGames.has(k) ? ' court-needs-score' : ''}${courtHasMine ? ' my-team' : ''}`}
                           onClick={() => g && isEditable && handleCourtClick(wkData, si, courtNum)}
                         >
@@ -323,6 +325,15 @@ export default function SchedulePage({
                 </div>
               </div>
             )}
+          </div>
+        </div>
+      )}
+      {showTooltip && tooltipTop !== null && (
+        <div className="scorer-tooltip-fixed" style={{ top: tooltipTop - 8 }} onClick={dismissTooltip}>
+          <div className="scorer-tooltip">
+            <div className="scorer-tooltip-text">Tap any match card to enter scores and all-stars live!</div>
+            <button className="scorer-tooltip-btn" onClick={e => { e.stopPropagation(); dismissTooltip() }}>Got it</button>
+            <div className="scorer-tooltip-arrow" />
           </div>
         </div>
       )}
