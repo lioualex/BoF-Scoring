@@ -406,6 +406,7 @@ body {
 .court-chevron {
   color: var(--text3);
   flex-shrink: 0;
+  align-self: center;
 }
 .full-vs-row {
   display: flex; align-items: center; justify-content: space-between;
@@ -421,7 +422,7 @@ body {
 /* Match layout: team names + vs on the left, combined scores + chevron on the right */
 .full-match-layout {
   width: 100%; position: relative;
-  display: flex; align-items: center; gap: 10px;
+  display: flex; align-items: stretch; gap: 10px;
 }
 .full-match-info { flex: 1; min-width: 0; }
 .full-match-team-row {
@@ -435,10 +436,13 @@ body {
 .full-vs {
   font-size: 14px; font-weight: 600; color: var(--text3);
 }
-/* Combined per-set score display, stacked Set 1 over Set 2 (matches Teams page styling) */
+/* Combined per-set score display — Set 1 aligned with team A's row, Set 2 with team B's row */
 .full-combined-scores {
-  display: flex; flex-direction: column; align-items: flex-end; gap: 5px;
+  display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end;
   flex-shrink: 0;
+}
+.full-combined-score-line {
+  display: flex; align-items: center; gap: 6px;
 }
 .full-combined-score {
   font-size: 20px; font-weight: 700; color: var(--text); line-height: 1;

@@ -261,6 +261,10 @@ export default function SchedulePage({
                       const resultS1 = k  ? gameResults[k]  : null
                       const resultS2 = k2 ? gameResults[k2] : null
                       const hasScore = r => r && (r.winner || r.score_a !== 4 || r.score_b !== 4)
+                      const matchDone = !!(resultS1?.winner || resultS2?.winner)
+                      const perspective = g ? (mine(g.a) ? 'A' : mine(g.b) ? 'B' : 'A') : 'A'
+                      const wl1 = resultS1?.winner ? (resultS1.winner === 'T' || resultS1.winner === perspective ? 'W' : 'L') : null
+                      const wl2 = resultS2?.winner ? (resultS2.winner === 'T' || resultS2.winner === perspective ? 'W' : 'L') : null
 
                       const courtHasMine = g && (mine(g.a) || mine(g.b) || mine(g.ref))
 
@@ -279,7 +283,7 @@ className={`full-court court-${courtNum}${g && isEditable ? ' clickable' : ''}${
                               <WhistleIcon />
                               {getTeamName(div, g.ref)}
                               {live && <span className={`score-dot dot-${courtNum}`} />}
-                              <span className="court-label">Court {courtNum}</span>
+                              {!matchDone && <span className="court-label">Court {courtNum}</span>}
                             </div>
                           )}
 
@@ -298,8 +302,18 @@ className={`full-court court-${courtNum}${g && isEditable ? ' clickable' : ''}${
                               </div>
                               {(hasScore(resultS1) || hasScore(resultS2)) && (
                                 <div className="full-combined-scores">
-                                  {hasScore(resultS1) && <span className="full-combined-score">{resultS1.score_a}–{resultS1.score_b}</span>}
-                                  {hasScore(resultS2) && <span className="full-combined-score">{resultS2.score_a}–{resultS2.score_b}</span>}
+                                  {hasScore(resultS1) && (
+                                    <div className="full-combined-score-line">
+                                      <span className={`wl-dot${wl1 ? ` wl-${wl1}` : ' wl-empty'}`}>{wl1 ?? ''}</span>
+                                      <span className="full-combined-score">{resultS1.score_a}–{resultS1.score_b}</span>
+                                    </div>
+                                  )}
+                                  {hasScore(resultS2) && (
+                                    <div className="full-combined-score-line">
+                                      <span className={`wl-dot${wl2 ? ` wl-${wl2}` : ' wl-empty'}`}>{wl2 ?? ''}</span>
+                                      <span className="full-combined-score">{resultS2.score_a}–{resultS2.score_b}</span>
+                                    </div>
+                                  )}
                                 </div>
                               )}
                               {isEditable && <ChevronTiny />}
