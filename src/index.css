@@ -837,7 +837,7 @@ body {
 .result-match-row.clickable { cursor: pointer; }
 .result-match-row.clickable:active { background: var(--card-hover, rgba(0,0,0,0.04)); }
 .play-label { color: var(--div-accent) !important; }
-.match-court-label { display: flex; align-items: center; gap: 4px; min-width: 80px; flex-shrink: 0; font-size: 14px; font-weight: 600; color: var(--text); }
+.match-court-label { display: flex; align-items: center; justify-content: flex-end; gap: 4px; min-width: 80px; flex-shrink: 0; font-size: 14px; font-weight: 600; color: var(--text); }
 /* Inside week groups the header already provides the top border */
 .result-week-group .result-match-row { border-top: none; }
 .result-week-group .result-match-row + .result-match-row { border-top: 1px solid var(--border); }

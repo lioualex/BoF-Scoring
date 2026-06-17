@@ -261,7 +261,6 @@ export default function SchedulePage({
                       const resultS1 = k  ? gameResults[k]  : null
                       const resultS2 = k2 ? gameResults[k2] : null
                       const hasScore = r => r && (r.winner || r.score_a !== 4 || r.score_b !== 4)
-                      const matchDone = !!(resultS1?.winner || resultS2?.winner)
                       const perspective = g ? (mine(g.a) ? 'A' : mine(g.b) ? 'B' : 'A') : 'A'
                       const wl1 = resultS1?.winner ? (resultS1.winner === 'T' || resultS1.winner === perspective ? 'W' : 'L') : null
                       const wl2 = resultS2?.winner ? (resultS2.winner === 'T' || resultS2.winner === perspective ? 'W' : 'L') : null
@@ -283,7 +282,7 @@ className={`full-court court-${courtNum}${g && isEditable ? ' clickable' : ''}${
                               <WhistleIcon />
                               {getTeamName(div, g.ref)}
                               {live && <span className={`score-dot dot-${courtNum}`} />}
-                              {!matchDone && <span className="court-label">Court {courtNum}</span>}
+                              <span className="court-label">Court {courtNum}</span>
                             </div>
                           )}
 

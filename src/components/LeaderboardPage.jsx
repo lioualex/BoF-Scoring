@@ -224,6 +224,7 @@ function TeamModal({ div, team, standings, gameResults, onClose, onSelectGame, m
                   const theirS2 = side === 'A' ? r2?.score_b : r2?.score_a
                   const w1 = r1?.winner ? (r1.winner === 'T' || r1.winner === side ? 'W' : 'L') : null
                   const w2 = r2?.winner ? (r2.winner === 'T' || r2.winner === side ? 'W' : 'L') : null
+                  const matchDone = !!(r1?.winner || r2?.winner)
 
                   const handleMatchClick = onSelectGame ? () => {
                     const schedSlot = wk.slots[slotIdx]
@@ -260,7 +261,12 @@ function TeamModal({ div, team, standings, gameResults, onClose, onSelectGame, m
                           </div>
                         ) : null}
                       </div>
-                      {handleMatchClick && <span className="match-court-label">Court {courtNum}<ChevronRight /></span>}
+                      {handleMatchClick && (
+                        <span className="match-court-label">
+                          {!matchDone && `Court ${courtNum}`}
+                          <ChevronRight />
+                        </span>
+                      )}
                     </div>
                   )
                 }
