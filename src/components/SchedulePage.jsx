@@ -175,7 +175,7 @@ export default function SchedulePage({
               <div className="coach-tip-anchor">
                 <Tooltip
                   text="I see you ref team. Tap here to enter scores and all-stars live"
-                  tail="down-left"
+                  tail="down-center"
                   onDismiss={() => { localStorage.setItem(SCHED_TIP_KEY, '1'); setShowSchedTip(false) }}
                 />
               </div>

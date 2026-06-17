@@ -6,10 +6,10 @@ const CONFETTI = ['🏐', '⭐', '🎉', '✨', '🏆', '🌟', '🏐', '⭐']
 
 const TIP_ORDER = ['swap', 'score', 'set2', 'allstar']
 const TIP_TEXT = {
-  swap:    'Oops teams starting on opposite ends—swap their sides here.',
+  swap:    'Oops are teams starting on opposite ends? Swap sides here.',
   score:   'Points for you Glen Coco, good for you Glen Coco!',
   set2:    'Ugh about time for the second set. Tap to switch sides automatically.',
-  allstar: 'Slay queen give her that all star!',
+  allstar: 'Slay queen give her that all-star!',
 }
 const tipDismissed = id => localStorage.getItem('bof_tip_' + id) === '1'
 
@@ -226,6 +226,11 @@ export default function GameScorerModal({
       {/* ── FROZEN (non-scrolling) section ── */}
 
       {/* Team names — right below header */}
+      {tipStep === 'swap' && (
+        <div className="coach-tip-anchor">
+          <Tooltip text={TIP_TEXT.swap} tail="down-center" onDismiss={() => dismissTip('swap')} />
+        </div>
+      )}
       <div className={`scorer-names-row${flipping ? ' side-flipping' : ''}`}>
         <div className={`scorer-team-name${leftWin ? ' name-winner' : ''}`}>{leftTeam?.name}</div>
         <button
@@ -236,17 +241,17 @@ export default function GameScorerModal({
           <SwapIcon />
         </button>
         <div className={`scorer-team-name${rightWin ? ' name-winner' : ''}`}>{rightTeam?.name}</div>
-        {tipStep === 'swap' && (
-          <div className="coach-tip-float below-center">
-            <Tooltip text={TIP_TEXT.swap} tail="up-center" onDismiss={() => dismissTip('swap')} />
-          </div>
-        )}
       </div>
 
       {/* ── SCROLLABLE body ── */}
       <div className="scorer-body">
 
         {/* Score zones */}
+        {tipStep === 'score' && (
+          <div className="coach-tip-anchor">
+            <Tooltip text={TIP_TEXT.score} tail="down-right" onDismiss={() => dismissTip('score')} />
+          </div>
+        )}
         <div className={`scorer-zones${flipping ? ' side-flipping' : ''}`}>
           <div
             className={`score-zone${leftWin ? ' zone-winner' : ''}`}
@@ -264,14 +269,14 @@ export default function GameScorerModal({
             <div className="score-num">{rightScore}</div>
             <div className="score-zone-bot"><MinusIcon /></div>
           </div>
-          {tipStep === 'score' && (
-            <div className="coach-tip-float below-right">
-              <Tooltip text={TIP_TEXT.score} tail="up-right" onDismiss={() => dismissTip('score')} />
-            </div>
-          )}
         </div>
 
         {/* Set toggle */}
+        {tipStep === 'set2' && (
+          <div className="coach-tip-anchor">
+            <Tooltip text={TIP_TEXT.set2} tail="down-right" onDismiss={() => dismissTip('set2')} />
+          </div>
+        )}
         <div className="set-toggle">
           <button
             className={`set-btn${activeSet === 1 ? ' active' : ''}${winnerS1 ? ' done' : ''}`}
@@ -285,11 +290,6 @@ export default function GameScorerModal({
           >
             Set 2{winnerS2 ? ` · ${s2ScoreLeft}–${s2ScoreRight}` : ''}
           </button>
-          {tipStep === 'set2' && (
-            <div className="coach-tip-float below-right">
-              <Tooltip text={TIP_TEXT.set2} tail="up-right" onDismiss={() => dismissTip('set2')} />
-            </div>
-          )}
         </div>
 
         {/* Score rules */}
@@ -311,6 +311,11 @@ export default function GameScorerModal({
               <StarIcon />
               All-Stars
             </div>
+            {tipStep === 'allstar' && (
+              <div className="coach-tip-anchor">
+                <Tooltip text={TIP_TEXT.allstar} tail="down-right" onDismiss={() => dismissTip('allstar')} />
+              </div>
+            )}
             <div className={`allstar-mini-row${starBurstA ? ' star-selected' : ''}`}>
               <span className="allstar-mini-label">{teamA?.name}</span>
               <select
@@ -332,11 +337,6 @@ export default function GameScorerModal({
                 <option value="">Select player</option>
                 {teamB?.players.map(p => <option key={p} value={p}>{p}</option>)}
               </select>
-              {tipStep === 'allstar' && (
-                <div className="coach-tip-float above-right">
-                  <Tooltip text={TIP_TEXT.allstar} tail="down-right" onDismiss={() => dismissTip('allstar')} />
-                </div>
-              )}
             </div>
           </div>
         )}
