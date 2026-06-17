@@ -908,13 +908,120 @@ body {
 }
 .my-team-btn:active { opacity: 0.85; }
 
-/* Schedule highlighting */
-.full-court.my-team {
+/* Schedule highlighting — playing vs reffing */
+.full-court.my-team-play {
   background: var(--div-accent-dim, var(--gold-dim));
 }
-.full-court.my-team.clickable:active { background: var(--div-accent-dim, var(--gold-dim)); }
-.full-team-name.mine,
-.full-court-ref.mine,
+.full-court.my-team-play.clickable:active { background: var(--div-accent-dim, var(--gold-dim)); }
+.full-court.my-team-ref {
+  border-left-color: var(--div-accent, var(--gold)) !important;
+}
+.full-team-name.mine {
+  color: var(--div-accent, var(--gold)) !important; font-weight: 800;
+}
+.full-court-ref.mine {
+  color: var(--div-accent, var(--gold)) !important; font-weight: 700;
+}
 .duty-inline-team.mine {
   color: var(--div-accent, var(--gold)) !important; font-weight: 800;
 }
+
+/* ── Theme Settings Button ───────────────────────── */
+.theme-btn-wrap { position: relative; }
+.theme-icon-btn {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 1px solid var(--border); background: var(--card);
+  color: var(--text2); cursor: pointer; display: flex;
+  align-items: center; justify-content: center;
+  -webkit-tap-highlight-color: transparent; transition: color 0.15s;
+}
+.theme-icon-btn:active { color: var(--div-accent, var(--gold)); }
+.theme-popup {
+  position: absolute; top: calc(100% + 8px); right: 0;
+  background: var(--card); border: 1px solid var(--border2);
+  border-radius: 14px; padding: 14px 16px; z-index: 300;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  min-width: 160px;
+}
+.theme-popup-label {
+  font-size: 11px; font-weight: 800; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--text3); margin-bottom: 10px;
+}
+.theme-popup-options { display: flex; flex-direction: column; gap: 4px; }
+.theme-option {
+  width: 100%; padding: 9px 12px; border-radius: 9px;
+  border: none; background: none; text-align: left;
+  font-size: 15px; font-weight: 600; color: var(--text2); cursor: pointer;
+  -webkit-tap-highlight-color: transparent; transition: background 0.1s;
+}
+.theme-option:hover { background: var(--surface); }
+.theme-option.active {
+  background: var(--div-accent-dim, var(--gold-dim));
+  color: var(--div-accent, var(--gold));
+}
+
+/* ── Leaderboard header layout ───────────────────── */
+.lb-header {
+  display: flex; justify-content: space-between; align-items: flex-start;
+}
+
+/* ── Dark Mode ───────────────────────────────────── */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --gold:       #3B82F6;
+    --gold-light: #60A5FA;
+    --gold-dim:   rgba(59,130,246,0.15);
+    --bg:         #0F0F11;
+    --surface:    #1C1C1F;
+    --card:       #242428;
+    --card2:      #1C1C1F;
+    --border:     #323236;
+    --border2:    #48484E;
+    --text:       #F0F0F2;
+    --text2:      #A0A0AA;
+    --text3:      #66666E;
+    --red:        #F87171;
+    --green:      #4ADE80;
+  }
+  :root:not([data-theme="light"]) .div-adv {
+    --div-accent-dim: rgba(59,130,246,0.15);
+  }
+  :root:not([data-theme="light"]) .div-int {
+    --div-accent-dim: rgba(74,222,128,0.12);
+  }
+}
+
+[data-theme="dark"] {
+  --gold:       #3B82F6;
+  --gold-light: #60A5FA;
+  --gold-dim:   rgba(59,130,246,0.15);
+  --bg:         #0F0F11;
+  --surface:    #1C1C1F;
+  --card:       #242428;
+  --card2:      #1C1C1F;
+  --border:     #323236;
+  --border2:    #48484E;
+  --text:       #F0F0F2;
+  --text2:      #A0A0AA;
+  --text3:      #66666E;
+  --red:        #F87171;
+  --green:      #4ADE80;
+}
+[data-theme="dark"] .div-adv { --div-accent-dim: rgba(59,130,246,0.15); }
+[data-theme="dark"] .div-int { --div-accent-dim: rgba(74,222,128,0.12); }
+
+/* Dark: nav + header backgrounds */
+[data-theme="dark"] .nav,
+[data-theme="dark"] .header,
+[data-theme="dark"] .team-fullscreen { background: var(--bg); }
+[data-theme="dark"] .nav { border-top-color: var(--border); }
+[data-theme="dark"] .header { background: var(--surface); border-bottom-color: var(--border); }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .nav,
+  :root:not([data-theme="light"]) .header { background: var(--surface); border-bottom-color: var(--border); border-top-color: var(--border); }
+  :root:not([data-theme="light"]) .team-fullscreen { background: var(--bg); }
+}
+
+/* Dark: popup shadow needs to be darker */
+[data-theme="dark"] .theme-popup { box-shadow: 0 8px 24px rgba(0,0,0,0.4); }

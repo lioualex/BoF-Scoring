@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { supabase } from './lib/supabase'
 import { getEditableWeek } from './data/league'
 import { loadMyTeam, saveMyTeam } from './lib/myTeam'
+import { loadThemeOverride, saveThemeOverride, applyTheme } from './lib/theme'
 
 const SUPABASE_CONFIGURED =
   import.meta.env.VITE_SUPABASE_URL &&
@@ -31,6 +32,16 @@ export default function App() {
   const handleSetMyTeam = useCallback(next => {
     setMyTeam(next)
     saveMyTeam(next)
+  }, [])
+
+  // Theme override — null means follow system preference
+  const [themeOverride, setThemeOverride] = useState(() => loadThemeOverride())
+
+  useEffect(() => { applyTheme(themeOverride) }, [themeOverride])
+
+  const handleSetTheme = useCallback(v => {
+    setThemeOverride(v)
+    saveThemeOverride(v)
   }, [])
 
   // Keyed by game_key string
@@ -168,7 +179,7 @@ export default function App() {
 
       <div className="page">
         {tab === 'leaderboard' && (
-          <LeaderboardPage div={div} gameResults={gameResults} onDivChange={handleDivChange} onSelectGame={setSelectedGame} myTeam={myTeam} onSetMyTeam={handleSetMyTeam} />
+          <LeaderboardPage div={div} gameResults={gameResults} onDivChange={handleDivChange} onSelectGame={setSelectedGame} myTeam={myTeam} onSetMyTeam={handleSetMyTeam} theme={themeOverride} onSetTheme={handleSetTheme} />
         )}
         {tab === 'schedule' && (
           <SchedulePage
@@ -179,6 +190,8 @@ export default function App() {
             editableWeekInt={editableWeekInt}
             onSelectGame={setSelectedGame}
             myTeam={myTeam}
+            theme={themeOverride}
+            onSetTheme={handleSetTheme}
           />
         )}
         {tab === 'allstars' && (

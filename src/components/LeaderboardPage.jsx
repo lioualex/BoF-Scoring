@@ -1,8 +1,9 @@
 import { useState, useMemo } from 'react'
 import { computeStandings, getSchedule, getTeamName, getWeekDuties, gameKey } from '../data/league'
 import { isMyTeam } from '../lib/myTeam'
+import ThemeBtn from './ThemeBtn'
 
-export default function LeaderboardPage({ div, gameResults, onDivChange, onSelectGame, myTeam, onSetMyTeam }) {
+export default function LeaderboardPage({ div, gameResults, onDivChange, onSelectGame, myTeam, onSetMyTeam, theme, onSetTheme }) {
   const [selectedTeam, setSelectedTeam] = useState(null)
 
   const standings = useMemo(
@@ -16,9 +17,12 @@ export default function LeaderboardPage({ div, gameResults, onDivChange, onSelec
 
   return (
     <div className={`lb-wrap div-${div}`}>
-      <div className="header">
-        <div className="app-title">BoF <span>Scoring</span></div>
-        <div className="app-sub">Summer 2026 · St. Mary's Rec Center</div>
+      <div className="header lb-header">
+        <div>
+          <div className="app-title">BoF <span>Scoring</span></div>
+          <div className="app-sub">Summer 2026 · St. Mary's Rec Center</div>
+        </div>
+        <ThemeBtn theme={theme} onSetTheme={onSetTheme} />
       </div>
 
       <div className="div-toggle">

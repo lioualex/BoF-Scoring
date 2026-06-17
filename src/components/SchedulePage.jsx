@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { getSchedule, getTeamName, getWeekDuties, gameKey } from '../data/league'
 import { isMyTeam } from '../lib/myTeam'
+import ThemeBtn from './ThemeBtn'
 
 const DIV_KEY = 'bof_last_div'
 
@@ -82,6 +83,8 @@ export default function SchedulePage({
   editableWeekInt,
   onSelectGame,
   myTeam,
+  theme,
+  onSetTheme,
 }) {
   const mine = id => isMyTeam(myTeam, div, id)
   const [week, setWeek]         = useState(() => div === 'adv' ? editableWeekAdv : editableWeekInt)
@@ -151,9 +154,12 @@ export default function SchedulePage({
 {/* ── Header ── */}
       <div className="header sched-header-inline">
         <div className="app-title">BoF <span>Scoring</span></div>
-        <div className="div-toggle-mini">
-          <button className={`div-btn-mini ${div === 'adv' ? 'active' : ''}`} onClick={() => switchDiv('adv')}>ADV</button>
-          <button className={`div-btn-mini ${div === 'int' ? 'active' : ''}`} onClick={() => switchDiv('int')}>INT</button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div className="div-toggle-mini">
+            <button className={`div-btn-mini ${div === 'adv' ? 'active' : ''}`} onClick={() => switchDiv('adv')}>ADV</button>
+            <button className={`div-btn-mini ${div === 'int' ? 'active' : ''}`} onClick={() => switchDiv('int')}>INT</button>
+          </div>
+          <ThemeBtn theme={theme} onSetTheme={onSetTheme} />
         </div>
       </div>
 
@@ -265,12 +271,13 @@ export default function SchedulePage({
                       const wl1 = resultS1?.winner ? (resultS1.winner === 'T' || resultS1.winner === perspective ? 'W' : 'L') : null
                       const wl2 = resultS2?.winner ? (resultS2.winner === 'T' || resultS2.winner === perspective ? 'W' : 'L') : null
 
-                      const courtHasMine = g && (mine(g.a) || mine(g.b) || mine(g.ref))
+                      const courtMyPlay = g && (mine(g.a) || mine(g.b))
+                      const courtMyRef  = g && mine(g.ref) && !courtMyPlay
 
                       return (
                         <div
                           key={courtNum}
-className={`full-court court-${courtNum}${g && isEditable ? ' clickable' : ''}${live && g && !hasScore(resultS1) && !hasScore(resultS2) && !visitedGames.has(k) ? ' court-needs-score' : ''}${courtHasMine ? ' my-team' : ''}`}
+className={`full-court court-${courtNum}${g && isEditable ? ' clickable' : ''}${live && g && !hasScore(resultS1) && !hasScore(resultS2) && !visitedGames.has(k) ? ' court-needs-score' : ''}${courtMyPlay ? ' my-team-play' : courtMyRef ? ' my-team-ref' : ''}`}
                           onClick={() => g && isEditable && handleCourtClick(wkData, si, courtNum)}
                         >
                           {live && g && !hasScore(resultS1) && !hasScore(resultS2) && !visitedGames.has(k) && (
