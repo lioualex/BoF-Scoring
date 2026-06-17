@@ -236,8 +236,7 @@ export default function SchedulePage({
                       return (
                         <div
                           key={courtNum}
-                          className={`full-court court-${courtNum}${g && isEditable ? ' clickable' : ''}${live && g && !hasScore(resultS1) && !hasScore(resultS2) ? ' court-needs-score' : {courtHasMine ? ' my-team' : ''}` '}
-
+                          className={`full-court court-${courtNum}${g && isEditable ? ' clickable' : ''}${live && g && !hasScore(resultS1) && !hasScore(resultS2) ? ' court-needs-score' : ''}${courtHasMine ? ' my-team' : ''}`}
                           onClick={() => g && isEditable && handleCourtClick(wkData, si, courtNum)}
                         >
                           {/* Ref row — whistle icon + court number + chevron */}
