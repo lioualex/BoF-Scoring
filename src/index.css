@@ -755,3 +755,44 @@ body {
 }
 .empty-state { padding: 48px 20px; text-align: center; color: var(--text3); }
 .empty-state-title { font-size: 17px; font-weight: 600; margin-bottom: 8px; color: var(--text2); }
+
+/* ── My Team highlighting ────────────────────────── */
+/* Leaderboard card */
+.team-card.my-team {
+  border-color: var(--div-accent, var(--gold));
+  box-shadow: 0 0 0 1px var(--div-accent, var(--gold)), 0 0 0 4px var(--div-accent-dim, var(--gold-dim));
+  background: var(--div-accent-dim, var(--gold-dim));
+}
+.my-team-tag {
+  display: inline-block; margin-left: 8px; vertical-align: middle;
+  font-size: 11px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--div-accent, var(--gold));
+  background: var(--card); border: 1px solid var(--div-accent, var(--gold));
+  border-radius: 6px; padding: 2px 6px;
+}
+
+/* Mark-as-my-team button in team modal */
+.my-team-btn {
+  width: 100%; margin: 12px 0 4px; padding: 12px 16px;
+  font-size: 15px; font-weight: 700; letter-spacing: 0.04em;
+  border-radius: 12px; cursor: pointer;
+  -webkit-tap-highlight-color: transparent; transition: all 0.15s;
+  background: var(--card); color: var(--div-accent, var(--gold));
+  border: 1.5px solid var(--div-accent, var(--gold));
+}
+.my-team-btn.active {
+  background: var(--div-accent, var(--gold)); color: #fff;
+  border-color: var(--div-accent, var(--gold));
+}
+.my-team-btn:active { opacity: 0.85; }
+
+/* Schedule highlighting */
+.full-court.my-team {
+  background: var(--div-accent-dim, var(--gold-dim));
+}
+.full-court.my-team.clickable:active { background: var(--div-accent-dim, var(--gold-dim)); }
+.full-team-name.mine,
+.full-court-ref.mine,
+.duty-inline-team.mine {
+  color: var(--div-accent, var(--gold)) !important; font-weight: 800;
+}

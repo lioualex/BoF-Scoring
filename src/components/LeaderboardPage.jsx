@@ -1,7 +1,8 @@
 import { useState, useMemo } from 'react'
 import { computeStandings, getSchedule, getTeamName, getWeekDuties, gameKey } from '../data/league'
+import { isMyTeam } from '../lib/myTeam'
 
-export default function LeaderboardPage({ div, gameResults, onDivChange, onSelectGame }) {
+export default function LeaderboardPage({ div, gameResults, onDivChange, onSelectGame, myTeam, onSetMyTeam }) {
   const [selectedTeam, setSelectedTeam] = useState(null)
 
   const standings = useMemo(
@@ -32,13 +33,16 @@ export default function LeaderboardPage({ div, gameResults, onDivChange, onSelec
       <div className="section-label">Standings</div>
 
       {standings.map((team, idx) => (
-        <div key={team.id} className="team-card" onClick={() => setSelectedTeam(team)}>
+        <div key={team.id} className={`team-card${isMyTeam(myTeam, div, team.id) ? ' my-team' : ''}`} onClick={() => setSelectedTeam(team)}>
           {idx < 3
             ? <span className="medal-badge">{['🥇','🥈','🥉'][idx]}</span>
             : <div className="rank-badge">{idx + 1}</div>
           }
           <div style={{ flex: 1 }}>
-            <div className="team-name">{team.name}</div>
+            <div className="team-name">
+              {team.name}
+              {isMyTeam(myTeam, div, team.id) && <span className="my-team-tag">My Team</span>}
+            </div>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
             <span className="team-record">{team.wins}–{team.losses}</span>
@@ -60,13 +64,16 @@ export default function LeaderboardPage({ div, gameResults, onDivChange, onSelec
           gameResults={gameResults}
           onClose={() => setSelectedTeam(null)}
           onSelectGame={onSelectGame}
+          myTeam={myTeam}
+          onSetMyTeam={onSetMyTeam}
         />
       )}
     </div>
   )
 }
 
-function TeamModal({ div, team, standings, gameResults, onClose, onSelectGame }) {
+function TeamModal({ div, team, standings, gameResults, onClose, onSelectGame, myTeam, onSetMyTeam }) {
+  const mine = isMyTeam(myTeam, div, team.id)
   const rankOf = id => {
     const i = standings.findIndex(t => t.id === id)
     return i >= 0 ? i + 1 : null
@@ -165,6 +172,14 @@ function TeamModal({ div, team, standings, gameResults, onClose, onSelectGame })
 
       {/* Body */}
       <div className="team-modal-body">
+
+        {/* Mark as my team */}
+        <button
+          className={`my-team-btn${mine ? ' active' : ''}`}
+          onClick={() => onSetMyTeam(mine ? null : { div, id: team.id })}
+        >
+          {mine ? '✓ This is my team' : 'Mark this as my team'}
+        </button>
 
         {/* Next duty */}
         {nextDuty && (

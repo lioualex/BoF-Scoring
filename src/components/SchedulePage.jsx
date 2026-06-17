@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { getSchedule, getTeamName, getWeekDuties, gameKey } from '../data/league'
+import { isMyTeam } from '../lib/myTeam'
 
 const DIV_KEY = 'bof_last_div'
 
@@ -80,7 +81,9 @@ export default function SchedulePage({
   editableWeekAdv,
   editableWeekInt,
   onSelectGame,
+  myTeam,
 }) {
+  const mine = id => isMyTeam(myTeam, div, id)
   const [week, setWeek]         = useState(() => div === 'adv' ? editableWeekAdv : editableWeekInt)
   const [slideDir, setSlideDir] = useState(null)
   const [animKey, setAnimKey]   = useState(0)
@@ -160,7 +163,7 @@ export default function SchedulePage({
                 <span className="duty-inline-label">Net Setup</span>
                 <div className="duty-inline-teams">
                   {duties.setup.map(id => (
-                    <div key={id} className="duty-inline-team">{getTeamName(div, id)}</div>
+                    <div key={id} className={`duty-inline-team${mine(id) ? ' mine' : ''}`}>{getTeamName(div, id)}</div>
                   ))}
                 </div>
               </div>
@@ -228,15 +231,17 @@ export default function SchedulePage({
                       const resultS2 = k2 ? gameResults[k2] : null
                       const hasScore = r => r && (r.winner || r.score_a !== 4 || r.score_b !== 4)
 
+                      const courtHasMine = g && (mine(g.a) || mine(g.b) || mine(g.ref))
+
                       return (
                         <div
                           key={courtNum}
-                          className={`full-court court-${courtNum}${g && isEditable ? ' clickable' : ''}`}
+                          className={`full-court court-${courtNum}${g && isEditable ? ' clickable' : ''}${courtHasMine ? ' my-team' : ''}`}
                           onClick={() => g && isEditable && handleCourtClick(wkData, si, courtNum)}
                         >
                           {/* Ref row — whistle icon + court number + chevron */}
                           {g && (
-                            <div className="full-court-ref">
+                            <div className={`full-court-ref${mine(g.ref) ? ' mine' : ''}`}>
                               <WhistleIcon />
                               {getTeamName(div, g.ref)}
                               {live && <span className={`score-dot dot-${courtNum}`} />}
@@ -247,7 +252,7 @@ export default function SchedulePage({
                           {g ? (
                             <div className="full-match-layout">
                               <div className="full-match-team-row">
-                                <div className="full-team-name">{getTeamName(div, g.a)}</div>
+                                <div className={`full-team-name${mine(g.a) ? ' mine' : ''}`}>{getTeamName(div, g.a)}</div>
                                 {(hasScore(resultS1) || hasScore(resultS2)) && (
                                   <div className="full-set-scores">
                                     {hasScore(resultS1) && <span className={`full-team-score${resultS1.winner === 'A' ? ' score-winner' : ''}`}>{resultS1.score_a}</span>}
@@ -257,7 +262,7 @@ export default function SchedulePage({
                               </div>
                               <div className="full-vs">vs</div>
                               <div className="full-match-team-row">
-                                <div className="full-team-name">{getTeamName(div, g.b)}</div>
+                                <div className={`full-team-name${mine(g.b) ? ' mine' : ''}`}>{getTeamName(div, g.b)}</div>
                                 {(resultS1 || resultS2) && (
                                   <div className="full-set-scores">
                                     {resultS1 && <span className={`full-team-score${resultS1.winner === 'B' ? ' score-winner' : ''}`}>{resultS1.score_b}</span>}
@@ -284,7 +289,7 @@ export default function SchedulePage({
                 <span className="duty-inline-label">Nets Down</span>
                 <div className="duty-inline-teams">
                   {duties.teardown.map(id => (
-                    <div key={id} className="duty-inline-team">{getTeamName(div, id)}</div>
+                    <div key={id} className={`duty-inline-team${mine(id) ? ' mine' : ''}`}>{getTeamName(div, id)}</div>
                   ))}
                 </div>
               </div>
