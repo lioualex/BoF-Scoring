@@ -258,8 +258,8 @@ function TeamModal({ div, team, standings, gameResults, onClose, onSelectGame })
                 }
 
                 return (
-                  <div key={i} className="result-match-row" style={{ color: 'var(--text3)' }}>
-                    <div className="result-opp">Off</div>
+                  <div key={i} className="result-match-row">
+                    <div className="result-opp" style={{ color: 'var(--text3)', fontWeight: 400 }}>Off</div>
                   </div>
                 )
               })}
