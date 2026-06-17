@@ -285,7 +285,7 @@ body {
   font-size: 18px; font-weight: 600; color: var(--text2);
 }
 .duty-inline-teardown { margin-top: 4px; margin-bottom: 0; }
-.duty-block { margin: 36px 0; padding: 16px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.duty-block { margin: 18px 0; padding: 8px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 
 .full-schedule-week { margin: 0 20px 28px; }
 
