@@ -159,7 +159,7 @@ export default function App() {
 
       <div className="page">
         {tab === 'leaderboard' && (
-          <LeaderboardPage div={div} gameResults={gameResults} onDivChange={handleDivChange} />
+          <LeaderboardPage div={div} gameResults={gameResults} onDivChange={handleDivChange} onSelectGame={setSelectedGame} />
         )}
         {tab === 'schedule' && (
           <SchedulePage

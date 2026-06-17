@@ -708,6 +708,8 @@ body {
   gap: 12px;
 }
 .result-match-row:last-child { border-bottom: none; }
+.result-match-row.clickable { cursor: pointer; }
+.result-match-row.clickable:active { background: var(--card-hover, rgba(0,0,0,0.04)); }
 /* Inside week groups the header already provides the top border */
 .result-week-group .result-match-row { border-top: none; }
 .result-week-group .result-match-row + .result-match-row { border-top: 1px solid var(--border); }

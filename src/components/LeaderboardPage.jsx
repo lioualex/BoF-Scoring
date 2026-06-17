@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react'
 import { computeStandings, getSchedule, getTeamName, getWeekDuties, gameKey } from '../data/league'
 
-export default function LeaderboardPage({ div, gameResults, onDivChange }) {
+export default function LeaderboardPage({ div, gameResults, onDivChange, onSelectGame }) {
   const [selectedTeam, setSelectedTeam] = useState(null)
 
   const standings = useMemo(
@@ -59,13 +59,14 @@ export default function LeaderboardPage({ div, gameResults, onDivChange }) {
           standings={standings}
           gameResults={gameResults}
           onClose={() => setSelectedTeam(null)}
+          onSelectGame={onSelectGame}
         />
       )}
     </div>
   )
 }
 
-function TeamModal({ div, team, standings, gameResults, onClose }) {
+function TeamModal({ div, team, standings, gameResults, onClose, onSelectGame }) {
   const rankOf = id => {
     const i = standings.findIndex(t => t.id === id)
     return i >= 0 ? i + 1 : null
@@ -99,7 +100,7 @@ function TeamModal({ div, team, standings, gameResults, onClose }) {
         if (hasR2) { totalPts += side === 'A' ? r2.score_a : r2.score_b; totalPtsAgainst += side === 'A' ? r2.score_b : r2.score_a }
 
         if (!byWeek[wk.week]) byWeek[wk.week] = { wk, matches: [] }
-        byWeek[wk.week].matches.push({ oppId, side, r1, r2 })
+        byWeek[wk.week].matches.push({ oppId, side, r1, r2, slotIdx: si, courtNum, g })
       })
     })
   })
@@ -190,7 +191,7 @@ function TeamModal({ div, team, standings, gameResults, onClose }) {
                 )}
               </div>
 
-              {matches.map(({ oppId, side, r1, r2 }, i) => {
+              {matches.map(({ oppId, side, r1, r2, slotIdx, courtNum, g }, i) => {
                 const myS1    = side === 'A' ? r1?.score_a : r1?.score_b
                 const theirS1 = side === 'A' ? r1?.score_b : r1?.score_a
                 const myS2    = side === 'A' ? r2?.score_a : r2?.score_b
@@ -199,8 +200,25 @@ function TeamModal({ div, team, standings, gameResults, onClose }) {
                 const w2 = r2?.winner ? (r2.winner === 'T' || r2.winner === side ? 'W' : 'L') : null
                 const hasAnyResult = r1?.winner || r2?.winner
 
+                const handleMatchClick = onSelectGame ? () => {
+                  const wkData = byWeek[wkNum].wk
+                  const slot = wkData.slots[slotIdx]
+                  const otherKey = courtNum === 1 ? 'court2' : 'court1'
+                  const otherMatch = slot[otherKey] ?? null
+                  const gk = gameKey(div, wkNum, slotIdx, courtNum)
+                  const otherGk = otherMatch ? gameKey(div, wkNum, slotIdx, courtNum === 1 ? 2 : 1) : null
+                  onClose()
+                  onSelectGame({
+                    div, week: wkNum, slotIdx, court: courtNum,
+                    match: g, otherMatch,
+                    gameKey: gk, gameKey2: gk + '_s2',
+                    otherGameKey: otherGk, otherGameKey2: otherGk ? otherGk + '_s2' : null,
+                    time: slot.time,
+                  })
+                } : null
+
                 return (
-                  <div key={i} className="result-match-row">
+                  <div key={i} className={`result-match-row${handleMatchClick ? ' clickable' : ''}`} onClick={handleMatchClick ?? undefined}>
                     <div className="result-opp">
                       vs {getTeamName(div, oppId)}
                     </div>
@@ -220,6 +238,7 @@ function TeamModal({ div, team, standings, gameResults, onClose }) {
                         </div>
                       ) : null}
                     </div>
+                    {handleMatchClick && <ChevronRight />}
                   </div>
                 )
               })}
