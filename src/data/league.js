@@ -1,23 +1,23 @@
 // =================== TEAMS ===================
 
 export const ADV_TEAMS = [
-  { id: 1, name: 'Jollibeetches', players: ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5', 'Player 6', 'Player 7', 'Player 8'] },
-  { id: 2, name: 'Ball Handlers', players: ['Player 9', 'Player 10', 'Player 11', 'Player 12', 'Player 13', 'Player 14', 'Player 15', 'Player 16'] },
-  { id: 3, name: 'Volhalla', players: ['Player 17', 'Player 18', 'Player 19', 'Player 20', 'Player 21', 'Player 22', 'Player 23', 'Player 24'] },
-  { id: 4, name: 'Keta Mean Girls', players: ['Player 25', 'Player 26', 'Player 27', 'Player 28', 'Player 29', 'Player 30', 'Player 31', 'Player 32'] },
-  { id: 5, name: 'Hole Foods', players: ['Player 33', 'Player 34', 'Player 35', 'Player 36', 'Player 37', 'Player 38', 'Player 39', 'Player 40'] },
-  { id: 6, name: 'Gay Straight Alliance', players: ['Player 41', 'Player 42', 'Player 43', 'Player 44', 'Player 45', 'Player 46', 'Player 47', 'Player 48'] },
-  { id: 7, name: 'Jaylen\'s Grey Sweatpants', players: ['Player 49', 'Player 50', 'Player 51', 'Player 52', 'Player 53', 'Player 54', 'Player 55', 'Player 56'] },
+  { id: 1, name: 'Jollibeetches',           players: ['Rhenard Leclair','Jack Connolly','David Solomon','Jon Birchler','Alex Pacheco','Arslan Kasimov','Danyion Reagan'] },
+  { id: 2, name: 'Ball Handlers',           players: ['Ricardo Alves','Brandon Styles','Blake Van Grouw','Ethan Dressen','Johnathan Wang','Cesar Arada','Jamil Al-Ghosein'] },
+  { id: 3, name: 'Volhalla',                players: ['Teddy Luther','Christian Monaghan','Iris Brewer','Dorian Dorsey','Kae Saetern','Stefan "Steffy" Wojkowski','Enzo Arada'] },
+  { id: 4, name: 'Keta Mean Girls',         players: ['Alexander Bast','Alan Zhou','Matt Merritt','Alex Wu','Kwok "Chris" Im','Xavier Tenorio','Kyle Reiley'] },
+  { id: 5, name: 'Hole Foods',              players: ['Chen-Chen Huo','Aidan Dillon','Cody Howard','Patrick Godfrey','Immy Martiniano','Tali Swisher','Thomas Leech'] },
+  { id: 6, name: 'Gay Straight Alliance',   players: ['Andrew Fischer','Connor Graflund','Ryan Grasell','Alex Schlick','Spencer Bundoc','Quinton Walker','Brian Kim'] },
+  { id: 7, name: "Jaylen's Grey Sweatpants", players: ['Joseph Barkus','Jason Giblin','Trey Godfrey','Nathan Draper','Diego Almodiel','Scott Faludi','Ryan Schleeter'] },
 ];
 
 export const INT_TEAMS = [
-  { id: 1, name: 'Open.Gay.Thigh.', players: ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5', 'Player 6', 'Player 7', 'Player 8'] },
-  { id: 2, name: 'Ugly But Legal', players: ['Player 9', 'Player 10', 'Player 11', 'Player 12', 'Player 13', 'Player 14', 'Player 15', 'Player 16'] },
-  { id: 3, name: 'Team 3', players: ['Player 17', 'Player 18', 'Player 19', 'Player 20', 'Player 21', 'Player 22', 'Player 23', 'Player 24'] },
-  { id: 4, name: 'Whorio Karts', players: ['Player 25', 'Player 26', 'Player 27', 'Player 28', 'Player 29', 'Player 30', 'Player 31', 'Player 32'] },
-  { id: 5, name: 'NKOTB', players: ['Player 33', 'Player 34', 'Player 35', 'Player 36', 'Player 37', 'Player 38', 'Player 39', 'Player 40'] },
-  { id: 6, name: 'Bump Set Ooops', players: ['Player 41', 'Player 42', 'Player 43', 'Player 44', 'Player 45', 'Player 46', 'Player 47', 'Player 48'] },
-  { id: 7, name: 'Mortal Cumbacks', players: ['Player 49', 'Player 50', 'Player 51', 'Player 52', 'Player 53', 'Player 54', 'Player 55', 'Player 56'] },
+  { id: 1, name: 'Open.Gay.Thighs.',        players: ['JJ Chun','Hosea Lee','Jeremy Wang','James Mullen','Tony Wu','Ben Ng','Jonny Hsieh','Kerry Phomtavang'] },
+  { id: 2, name: 'Ugly But Legal',          players: ['Ari Fontanilla','Jocelyn Ho','Weston White','Kevin Normoyle','Abby Arcilla','Ricky Irizarry Caro','Andrew Aquino','Tommy Cu'] },
+  { id: 3, name: 'Celebrity Trait-Whores',  players: ['Timothy Dy Guani','Brett Kellaher','Taylor Horn','Son Quyen Dinh','Brenda Young','Patrick Chiang','AJ Martins','Jason Malabed'] },
+  { id: 4, name: 'Whorio Karts',            players: ['Kyle Rosenthal','Vigo Jiang','Alex Liou','Austin Lam','Mark Salzer','Derrick Hau','Jake Castrejon'] },
+  { id: 5, name: 'NKOTB',                   players: ['Thang Huynh','Robert Peralta','Kyle Miller','Adam La Mar','Jeff Ng','Tony Tran','Go Takei','Cesar Cardona'] },
+  { id: 6, name: 'Bump Set Ooops',          players: ['Robbie Wise','Richard Sucre','David Sechko','Shayne OBrien','Adrian Sanborn','Kevin Kuo','Lorenzo Labitigan'] },
+  { id: 7, name: 'Mortal Cumbacks',         players: ['Eric Ricker','Danny Chin','Willow Taylor','Jihwan Kim','Eric Gaudet','Andy Yeo','TJ Bleichner','Brian Tang'] },
 ];
 
 // =================== SCHEDULES ===================
