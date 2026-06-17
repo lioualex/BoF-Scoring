@@ -225,7 +225,7 @@ function TeamModal({ div, team, standings, gameResults, onClose, onSelectGame })
                   return (
                     <div key={i} className={`result-match-row${handleMatchClick ? ' clickable' : ''}`} onClick={handleMatchClick ?? undefined}>
                       <div className="result-opp">
-                        Play vs {getTeamName(div, oppId)}
+                        <span style={{ color: 'var(--div-accent)' }}>Play</span> vs {getTeamName(div, oppId)}
                       </div>
                       <div className="result-sets">
                         {(r1?.winner || (r1 && (r1.score_a !== 4 || r1.score_b !== 4))) ? (
