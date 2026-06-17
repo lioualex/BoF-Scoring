@@ -291,7 +291,10 @@ export default function SchedulePage({
                                   </div>
                                 )}
                               </div>
-                              <div className="full-vs">vs</div>
+                              <div className="full-vs-row">
+                                <span className="full-vs">vs</span>
+                                {isEditable && <ChevronTiny />}
+                              </div>
                               <div className="full-match-team-row">
                                 <div className={`full-team-name${mine(g.b) ? ' mine' : ''}`}>{getTeamName(div, g.b)}</div>
                                 {(resultS1 || resultS2) && (
@@ -301,7 +304,6 @@ export default function SchedulePage({
                                   </div>
                                 )}
                               </div>
-                              {isEditable && <ChevronTiny />}
                             </div>
                           ) : (
                             <div className="full-no-match">No match</div>
