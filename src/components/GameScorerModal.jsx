@@ -6,10 +6,10 @@ const CONFETTI = ['🏐', '⭐', '🎉', '✨', '🏆', '🌟', '🏐', '⭐']
 
 const TIP_ORDER = ['swap', 'score', 'set2', 'allstar']
 const TIP_TEXT = {
-  swap:    'Oops are teams starting on opposite ends? Swap sides here.',
+  swap:    'Oops teams starting on opposite ends—swap their sides here.',
   score:   'Points for you Glen Coco, good for you Glen Coco!',
   set2:    'Ugh about time for the second set. Tap to switch sides automatically.',
-  allstar: 'Slay queen give her that all-star!',
+  allstar: 'Slay queen give her that all star!',
 }
 const tipDismissed = id => localStorage.getItem('bof_tip_' + id) === '1'
 

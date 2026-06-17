@@ -200,7 +200,7 @@ export default function SchedulePage({
               <div className="scorer-tooltip-anchor">
                 <div className="scorer-tooltip-fixed" onClick={dismissTooltip}>
                   <div className="scorer-tooltip">
-                    <div className="scorer-tooltip-text">Tap any match card to enter scores and all-stars live!</div>
+                    <div className="scorer-tooltip-text">I see you ref team. Tap here to enter scores and all-stars live</div>
                     <button className="scorer-tooltip-btn" onClick={e => { e.stopPropagation(); dismissTooltip() }}>Got it</button>
                     <div className="scorer-tooltip-arrow" />
                   </div>
