@@ -300,7 +300,7 @@ export default function SchedulePage({
                                   </div>
                                 )}
                               </div>
-                              {isEditable && <div className="tap-to-score-pill">Tap to score &rsaquo;</div>}
+                              {isEditable && <ChevronTiny />}
                             </div>
                           ) : (
                             <div className="full-no-match">No match</div>
