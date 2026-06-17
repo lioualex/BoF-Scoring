@@ -225,8 +225,7 @@ function TeamModal({ div, team, standings, gameResults, onClose, onSelectGame })
                   return (
                     <div key={i} className={`result-match-row${handleMatchClick ? ' clickable' : ''}`} onClick={handleMatchClick ?? undefined}>
                       <div className="result-opp">
-                        <span style={{ color: 'var(--text3)', fontSize: 12, marginRight: 6 }}>Play</span>
-                        vs {getTeamName(div, oppId)}
+                        Play vs {getTeamName(div, oppId)}
                       </div>
                       <div className="result-sets">
                         {(r1?.winner || (r1 && (r1.score_a !== 4 || r1.score_b !== 4))) ? (
@@ -244,7 +243,7 @@ function TeamModal({ div, team, standings, gameResults, onClose, onSelectGame })
                           </div>
                         ) : null}
                       </div>
-                      {handleMatchClick && <span style={{ display: 'flex', alignItems: 'center', gap: 4, color: 'var(--text3)', fontSize: 12 }}>Court {courtNum}<ChevronRight /></span>}
+                      {handleMatchClick && <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>Court {courtNum}<ChevronRight /></span>}
                     </div>
                   )
                 }
@@ -252,7 +251,8 @@ function TeamModal({ div, team, standings, gameResults, onClose, onSelectGame })
                 if (slot.type === 'ref') {
                   return (
                     <div key={i} className="result-match-row" style={{ color: 'var(--text3)' }}>
-                      <div className="result-opp">Ref · Court {slot.courtNum}</div>
+                      <div className="result-opp">Ref</div>
+                      <span>Court {slot.courtNum}</span>
                     </div>
                   )
                 }
