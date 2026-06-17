@@ -136,8 +136,8 @@ function TeamModal({ div, team, standings, gameResults, onClose }) {
       {/* Header */}
       <div className="team-modal-header">
         <div>
-          <div className="team-modal-div">{div === 'adv' ? 'Advanced' : 'Intermediate'}</div>
           <div className="team-modal-name">{team.name}</div>
+          <div className="team-modal-div">{div === 'adv' ? 'Advanced' : 'Intermediate'}</div>
           <div className="team-modal-record">
             {rankOf(team.id) && <><span className="record-rank">#{rankOf(team.id)}</span><span className="record-sep"> · </span></>}
             <span className="record-label">Record: </span>

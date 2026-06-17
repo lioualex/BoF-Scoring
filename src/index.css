@@ -649,11 +649,11 @@ body {
   flex-shrink: 0;
 }
 .team-modal-div {
-  font-size: 16px; font-weight: 700; letter-spacing: 0.12em;
-  text-transform: uppercase; color: var(--div-accent, var(--gold)); margin-bottom: 4px;
+  font-size: 13px; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--div-accent, var(--gold)); margin-top: 4px; margin-bottom: 2px;
 }
-.team-modal-name { font-size: 15px; font-weight: 800; color: var(--text); }
-.team-modal-record { margin-top: 6px; font-size: 20px; font-weight: 700; }
+.team-modal-name { font-size: 22px; font-weight: 800; color: var(--text); }
+.team-modal-record { margin-top: 4px; font-size: 13px; font-weight: 700; letter-spacing: 0.04em; }
 .record-win  { color: var(--div-accent, var(--green)); }
 .record-loss { color: var(--text2); }
 .record-sep  { color: var(--text3); }
