@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { getSchedule, getTeamName, getWeekDuties, gameKey } from '../data/league'
+import Tooltip from './Tooltip'
 
 const DIV_KEY = 'bof_last_div'
+const SCHED_TIP_KEY = 'bof_tip_schedule_ref'
 
 const fmtTime = t => `${t} pm`
 
@@ -84,6 +86,7 @@ export default function SchedulePage({
   const [week, setWeek]         = useState(() => div === 'adv' ? editableWeekAdv : editableWeekInt)
   const [slideDir, setSlideDir] = useState(null)
   const [animKey, setAnimKey]   = useState(0)
+  const [showSchedTip, setShowSchedTip] = useState(() => localStorage.getItem(SCHED_TIP_KEY) !== '1')
 
   const editableWeek = div === 'adv' ? editableWeekAdv : editableWeekInt
   const schedule     = getSchedule(div)
@@ -167,6 +170,16 @@ export default function SchedulePage({
             )}
 
             <div className="section-label">Scoring</div>
+
+            {showSchedTip && wkData.week === editableWeek && (
+              <div className="coach-tip-anchor">
+                <Tooltip
+                  text="I see you ref team. Tap here to enter scores and all-stars live"
+                  tail="down-left"
+                  onDismiss={() => { localStorage.setItem(SCHED_TIP_KEY, '1'); setShowSchedTip(false) }}
+                />
+              </div>
+            )}
 
             {wkData.slots.map((slot, si) => {
               const live       = gameDay && isSlotLive(slot.time)
