@@ -225,7 +225,7 @@ function TeamModal({ div, team, standings, gameResults, onClose, onSelectGame })
                   return (
                     <div key={i} className={`result-match-row${handleMatchClick ? ' clickable' : ''}`} onClick={handleMatchClick ?? undefined}>
                       <div className="result-opp">
-                        <span style={{ color: 'var(--text3)', fontSize: 12, marginRight: 6 }}>C{courtNum}</span>
+                        <span style={{ color: 'var(--text3)', fontSize: 12, marginRight: 6 }}>Play</span>
                         vs {getTeamName(div, oppId)}
                       </div>
                       <div className="result-sets">
@@ -244,7 +244,7 @@ function TeamModal({ div, team, standings, gameResults, onClose, onSelectGame })
                           </div>
                         ) : null}
                       </div>
-                      {handleMatchClick && <ChevronRight />}
+                      {handleMatchClick && <span style={{ display: 'flex', alignItems: 'center', gap: 4, color: 'var(--text3)', fontSize: 12 }}>Court {courtNum}<ChevronRight /></span>}
                     </div>
                   )
                 }
