@@ -97,7 +97,7 @@ body {
 /* ── Scorer Tooltip ─────────────────────────────── */
 .scorer-tooltip {
   position: relative;
-  margin: 0 16px 8px;
+  margin: 0;
   background: #1e293b;
   color: #fff;
   border-radius: 10px;

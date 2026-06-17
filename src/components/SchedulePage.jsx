@@ -190,14 +190,6 @@ export default function SchedulePage({
 
             <div className="section-label">Scoring</div>
 
-            {showTooltip && (
-              <div className="scorer-tooltip">
-                <div className="scorer-tooltip-text">Tap any match card to open the scorer and enter scores.</div>
-                <button className="scorer-tooltip-btn" onClick={dismissTooltip}>Got it</button>
-                <div className="scorer-tooltip-arrow" />
-              </div>
-            )}
-
             {wkData.slots.map((slot, si) => {
               const live       = gameDay && isSlotLive(slot.time)
               // Only collapse past slots once the full game day is over (not mid-day)
@@ -249,6 +241,13 @@ export default function SchedulePage({
                     )}
                   </div>
                   <div className="full-slot-courts">
+                    {si === 0 && showTooltip && (
+                      <div className="scorer-tooltip">
+                        <div className="scorer-tooltip-text">Tap any match card to enter scores and all-stars live!</div>
+                        <button className="scorer-tooltip-btn" onClick={dismissTooltip}>Got it</button>
+                        <div className="scorer-tooltip-arrow" />
+                      </div>
+                    )}
                     {[1, 2].map(courtNum => {
                       const ctKey   = courtNum === 1 ? 'court1' : 'court2'
                       const g       = slot[ctKey]
