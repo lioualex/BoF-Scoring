@@ -300,8 +300,8 @@ body {
 }
 .court-1 { border-left: 3px solid transparent; }
 .court-2 { border-left: 3px solid transparent; }
-.slot-live .court-1 { border-left-color: var(--court1-color, var(--gold)); }
-.slot-live .court-2 { border-left-color: var(--court2-color, var(--gold)); }
+.court-1.clickable { border-left-color: var(--court1-color, var(--gold)); }
+.court-2.clickable { border-left-color: var(--court2-color, var(--gold)); }
 
 .full-court-ref {
   font-size: 18px; color: var(--text3); font-weight: 500;
@@ -313,8 +313,14 @@ body {
   font-size: 16px; font-weight: 700; letter-spacing: 0.06em;
   text-transform: uppercase; color: var(--text3);
 }
+.clickable .court-label {
+  color: var(--div-accent, var(--gold));
+}
 .court-chevron {
   flex-shrink: 0; color: var(--text3); margin-left: 2px;
+}
+.clickable .court-chevron {
+  color: var(--div-accent, var(--gold));
 }
 .score-dot {
   width: 7px; height: 7px; border-radius: 50%; background: var(--div-accent);
