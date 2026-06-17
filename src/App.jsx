@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { supabase } from './lib/supabase'
 import { getEditableWeek } from './data/league'
+import { loadMyTeam, saveMyTeam } from './lib/myTeam'
 
 const SUPABASE_CONFIGURED =
   import.meta.env.VITE_SUPABASE_URL &&
@@ -15,7 +16,7 @@ const DIV_KEY = 'bof_last_div'
 
 export default function App() {
   const [tab, setTab] = useState(() =>
-    window.location.hash === '#allstars' ? 'allstars' : 'leaderboard'
+    window.location.hash === '#allstars' ? 'allstars' : 'schedule'
   )
   const [div, setDiv] = useState(() => localStorage.getItem(DIV_KEY) || 'adv')
 
@@ -23,6 +24,14 @@ export default function App() {
     setDiv(d)
     localStorage.setItem(DIV_KEY, d)
   }
+
+  // The user's own team — persisted in localStorage as { div, id }
+  const [myTeam, setMyTeam] = useState(() => loadMyTeam())
+
+  const handleSetMyTeam = useCallback(next => {
+    setMyTeam(next)
+    saveMyTeam(next)
+  }, [])
 
   // Keyed by game_key string
   const [gameResults, setGameResults] = useState({})
@@ -159,7 +168,7 @@ export default function App() {
 
       <div className="page">
         {tab === 'leaderboard' && (
-          <LeaderboardPage div={div} gameResults={gameResults} onDivChange={handleDivChange} />
+          <LeaderboardPage div={div} gameResults={gameResults} onDivChange={handleDivChange} onSelectGame={setSelectedGame} myTeam={myTeam} onSetMyTeam={handleSetMyTeam} />
         )}
         {tab === 'schedule' && (
           <SchedulePage
@@ -169,6 +178,7 @@ export default function App() {
             editableWeekAdv={editableWeekAdv}
             editableWeekInt={editableWeekInt}
             onSelectGame={setSelectedGame}
+            myTeam={myTeam}
           />
         )}
         {tab === 'allstars' && (

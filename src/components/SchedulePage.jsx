@@ -1,9 +1,8 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { getSchedule, getTeamName, getWeekDuties, gameKey } from '../data/league'
-import Tooltip from './Tooltip'
+import { isMyTeam } from '../lib/myTeam'
 
 const DIV_KEY = 'bof_last_div'
-const SCHED_TIP_KEY = 'bof_tip_schedule_ref'
 
 const fmtTime = t => `${t} pm`
 
@@ -82,11 +81,25 @@ export default function SchedulePage({
   editableWeekAdv,
   editableWeekInt,
   onSelectGame,
+  myTeam,
 }) {
+  const mine = id => isMyTeam(myTeam, div, id)
   const [week, setWeek]         = useState(() => div === 'adv' ? editableWeekAdv : editableWeekInt)
   const [slideDir, setSlideDir] = useState(null)
   const [animKey, setAnimKey]   = useState(0)
-  const [showSchedTip, setShowSchedTip] = useState(() => localStorage.getItem(SCHED_TIP_KEY) !== '1')
+  const [visitedGames, setVisitedGames] = useState(() => {
+    try { return new Set(JSON.parse(localStorage.getItem('bof_visited_games') || '[]')) }
+    catch { return new Set() }
+  })
+  const [showTooltip, setShowTooltip] = useState(() => {
+    try { return !localStorage.getItem('bof_scorer_tooltip_seen') }
+    catch { return true }
+  })
+
+  function dismissTooltip() {
+    try { localStorage.setItem('bof_scorer_tooltip_seen', '1') } catch {}
+    setShowTooltip(false)
+  }
 
   const editableWeek = div === 'adv' ? editableWeekAdv : editableWeekInt
   const schedule     = getSchedule(div)
@@ -112,6 +125,12 @@ export default function SchedulePage({
     const otherGk = otherMatch
       ? gameKey(div, wkData.week, slotIdx, courtNum === 1 ? 2 : 1)
       : null
+
+    setVisitedGames(prev => {
+      const next = new Set(prev).add(gk)
+      try { localStorage.setItem('bof_visited_games', JSON.stringify([...next])) } catch {}
+      return next
+    })
 
     onSelectGame({
       div, week: wkData.week, slotIdx, court: courtNum,
@@ -163,7 +182,7 @@ export default function SchedulePage({
                 <span className="duty-inline-label">Net Setup</span>
                 <div className="duty-inline-teams">
                   {duties.setup.map(id => (
-                    <div key={id} className="duty-inline-team">{getTeamName(div, id)}</div>
+                    <div key={id} className={`duty-inline-team${mine(id) ? ' mine' : ''}`}>{getTeamName(div, id)}</div>
                   ))}
                 </div>
               </div>
@@ -171,13 +190,15 @@ export default function SchedulePage({
 
             <div className="section-label">Scoring</div>
 
-            {showSchedTip && wkData.week === editableWeek && (
-              <div className="coach-tip-anchor">
-                <Tooltip
-                  text="I see you ref team. Tap here to enter scores and all-stars live"
-                  tail="down-center"
-                  onDismiss={() => { localStorage.setItem(SCHED_TIP_KEY, '1'); setShowSchedTip(false) }}
-                />
+            {showTooltip && (
+              <div className="scorer-tooltip-anchor">
+                <div className="scorer-tooltip-fixed" onClick={dismissTooltip}>
+                  <div className="scorer-tooltip">
+                    <div className="scorer-tooltip-text">Tap any match card to enter scores and all-stars live!</div>
+                    <button className="scorer-tooltip-btn" onClick={e => { e.stopPropagation(); dismissTooltip() }}>Got it</button>
+                    <div className="scorer-tooltip-arrow" />
+                  </div>
+                </div>
               </div>
             )}
 
@@ -241,15 +262,20 @@ export default function SchedulePage({
                       const resultS2 = k2 ? gameResults[k2] : null
                       const hasScore = r => r && (r.winner || r.score_a !== 4 || r.score_b !== 4)
 
+                      const courtHasMine = g && (mine(g.a) || mine(g.b) || mine(g.ref))
+
                       return (
                         <div
                           key={courtNum}
-                          className={`full-court court-${courtNum}${g && isEditable ? ' clickable' : ''}`}
+className={`full-court court-${courtNum}${g && isEditable ? ' clickable' : ''}${live && g && !hasScore(resultS1) && !hasScore(resultS2) && !visitedGames.has(k) ? ' court-needs-score' : ''}${courtHasMine ? ' my-team' : ''}`}
                           onClick={() => g && isEditable && handleCourtClick(wkData, si, courtNum)}
                         >
+                          {live && g && !hasScore(resultS1) && !hasScore(resultS2) && !visitedGames.has(k) && (
+                            <span className="court-ripple" aria-hidden="true" />
+                          )}
                           {/* Ref row — whistle icon + court number + chevron */}
                           {g && (
-                            <div className="full-court-ref">
+                            <div className={`full-court-ref${mine(g.ref) ? ' mine' : ''}`}>
                               <WhistleIcon />
                               {getTeamName(div, g.ref)}
                               {live && <span className={`score-dot dot-${courtNum}`} />}
@@ -260,7 +286,7 @@ export default function SchedulePage({
                           {g ? (
                             <div className="full-match-layout">
                               <div className="full-match-team-row">
-                                <div className="full-team-name">{getTeamName(div, g.a)}</div>
+                                <div className={`full-team-name${mine(g.a) ? ' mine' : ''}`}>{getTeamName(div, g.a)}</div>
                                 {(hasScore(resultS1) || hasScore(resultS2)) && (
                                   <div className="full-set-scores">
                                     {hasScore(resultS1) && <span className={`full-team-score${resultS1.winner === 'A' ? ' score-winner' : ''}`}>{resultS1.score_a}</span>}
@@ -268,9 +294,12 @@ export default function SchedulePage({
                                   </div>
                                 )}
                               </div>
-                              <div className="full-vs">vs</div>
+                              <div className="full-vs-row">
+                                <span className="full-vs">vs</span>
+                                {isEditable && <ChevronTiny />}
+                              </div>
                               <div className="full-match-team-row">
-                                <div className="full-team-name">{getTeamName(div, g.b)}</div>
+                                <div className={`full-team-name${mine(g.b) ? ' mine' : ''}`}>{getTeamName(div, g.b)}</div>
                                 {(resultS1 || resultS2) && (
                                   <div className="full-set-scores">
                                     {resultS1 && <span className={`full-team-score${resultS1.winner === 'B' ? ' score-winner' : ''}`}>{resultS1.score_b}</span>}
@@ -278,7 +307,6 @@ export default function SchedulePage({
                                   </div>
                                 )}
                               </div>
-                              {isEditable && <ChevronTiny />}
                             </div>
                           ) : (
                             <div className="full-no-match">No match</div>
@@ -297,7 +325,7 @@ export default function SchedulePage({
                 <span className="duty-inline-label">Nets Down</span>
                 <div className="duty-inline-teams">
                   {duties.teardown.map(id => (
-                    <div key={id} className="duty-inline-team">{getTeamName(div, id)}</div>
+                    <div key={id} className={`duty-inline-team${mine(id) ? ' mine' : ''}`}>{getTeamName(div, id)}</div>
                   ))}
                 </div>
               </div>
