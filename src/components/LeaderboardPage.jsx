@@ -250,19 +250,19 @@ function TeamModal({ div, team, standings, gameResults, onClose, onSelectGame, m
                       <div className="result-sets">
                         {(r1?.winner || (r1 && (r1.score_a !== 4 || r1.score_b !== 4))) ? (
                           <div className="result-set-line">
-                            <span className="result-set-scores">{myS1}–{theirS1}</span>
                             <span className={`wl-dot${w1 ? ` wl-${w1}` : ' wl-empty'}`}>{w1 ?? ''}</span>
+                            <span className="result-set-scores">{myS1}–{theirS1}</span>
                           </div>
                         ) : null}
                         {(r2?.winner || (r2 && (r2.score_a !== 4 || r2.score_b !== 4))) ? (
                           <div className="result-set-line">
-                            <span className="result-set-scores">{myS2}–{theirS2}</span>
                             <span className={`wl-dot${w2 ? ` wl-${w2}` : ' wl-empty'}`}>{w2 ?? ''}</span>
+                            <span className="result-set-scores">{myS2}–{theirS2}</span>
                           </div>
                         ) : null}
                       </div>
                       {handleMatchClick && (
-                        <span className="match-court-label">
+                        <span className={`match-court-label${matchDone ? ' chevron-only' : ''}`}>
                           {!matchDone && `Court ${courtNum}`}
                           <ChevronRight />
                         </span>
