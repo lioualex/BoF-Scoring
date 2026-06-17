@@ -32,7 +32,7 @@ function WhistleIcon() {
 function ChevronTiny() {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
-      strokeLinecap="round" strokeLinejoin="round" className="court-chevron" style={{ width: 13, height: 13 }}>
+      strokeLinecap="round" strokeLinejoin="round" className="court-chevron" style={{ width: 18, height: 18 }}>
       <path d="m9 18 6-6-6-6"/>
     </svg>
   )
