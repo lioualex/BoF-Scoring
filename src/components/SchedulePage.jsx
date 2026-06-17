@@ -241,7 +241,6 @@ export default function SchedulePage({
                               {getTeamName(div, g.ref)}
                               {live && <span className={`score-dot dot-${courtNum}`} />}
                               <span className="court-label">Court {courtNum}</span>
-                              {isEditable && <ChevronTiny />}
                             </div>
                           )}
 
@@ -266,6 +265,7 @@ export default function SchedulePage({
                                   </div>
                                 )}
                               </div>
+                              {isEditable && <ChevronTiny />}
                             </div>
                           ) : (
                             <div className="full-no-match">No match</div>
