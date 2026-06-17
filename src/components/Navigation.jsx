@@ -2,20 +2,20 @@ export default function Navigation({ tab, setTab, scheduleAccent = '#C8A946', lb
   return (
     <nav className="nav">
       <button
-        className={`nav-btn ${tab === 'leaderboard' ? 'active' : ''}`}
-        style={tab === 'leaderboard' ? { color: lbAccent } : undefined}
-        onClick={() => setTab('leaderboard')}
-      >
-        <IconTrophy />
-        <span className="nav-label">Leaderboard</span>
-      </button>
-      <button
         className={`nav-btn ${tab === 'schedule' ? 'active' : ''}`}
         style={tab === 'schedule' ? { color: scheduleAccent } : undefined}
         onClick={() => setTab('schedule')}
       >
         <IconCalendar />
         <span className="nav-label">Scoring</span>
+      </button>
+      <button
+        className={`nav-btn ${tab === 'leaderboard' ? 'active' : ''}`}
+        style={tab === 'leaderboard' ? { color: lbAccent } : undefined}
+        onClick={() => setTab('leaderboard')}
+      >
+        <IconTrophy />
+        <span className="nav-label">Leaderboard</span>
       </button>
     </nav>
   )
