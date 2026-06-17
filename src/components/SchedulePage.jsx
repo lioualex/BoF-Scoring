@@ -285,28 +285,24 @@ className={`full-court court-${courtNum}${g && isEditable ? ' clickable' : ''}${
 
                           {g ? (
                             <div className="full-match-layout">
-                              <div className="full-match-team-row">
-                                <div className={`full-team-name${mine(g.a) ? ' mine' : ''}`}>{getTeamName(div, g.a)}</div>
-                                {(hasScore(resultS1) || hasScore(resultS2)) && (
-                                  <div className="full-set-scores">
-                                    {hasScore(resultS1) && <span className={`full-team-score${resultS1.winner === 'A' ? ' score-winner' : ''}`}>{resultS1.score_a}</span>}
-                                    {hasScore(resultS2) && <span className={`full-team-score s2${resultS2.winner === 'A' ? ' score-winner' : ''}`}>{resultS2.score_a}</span>}
-                                  </div>
-                                )}
+                              <div className="full-match-info">
+                                <div className="full-match-team-row">
+                                  <div className={`full-team-name${mine(g.a) ? ' mine' : ''}`}>{getTeamName(div, g.a)}</div>
+                                </div>
+                                <div className="full-vs-row">
+                                  <span className="full-vs">vs</span>
+                                </div>
+                                <div className="full-match-team-row">
+                                  <div className={`full-team-name${mine(g.b) ? ' mine' : ''}`}>{getTeamName(div, g.b)}</div>
+                                </div>
                               </div>
-                              <div className="full-vs-row">
-                                <span className="full-vs">vs</span>
-                                {isEditable && <ChevronTiny />}
-                              </div>
-                              <div className="full-match-team-row">
-                                <div className={`full-team-name${mine(g.b) ? ' mine' : ''}`}>{getTeamName(div, g.b)}</div>
-                                {(resultS1 || resultS2) && (
-                                  <div className="full-set-scores">
-                                    {resultS1 && <span className={`full-team-score${resultS1.winner === 'B' ? ' score-winner' : ''}`}>{resultS1.score_b}</span>}
-                                    {resultS2 && <span className={`full-team-score s2${resultS2.winner === 'B' ? ' score-winner' : ''}`}>{resultS2.score_b}</span>}
-                                  </div>
-                                )}
-                              </div>
+                              {(hasScore(resultS1) || hasScore(resultS2)) && (
+                                <div className="full-combined-scores">
+                                  {hasScore(resultS1) && <span className="full-combined-score">{resultS1.score_a}–{resultS1.score_b}</span>}
+                                  {hasScore(resultS2) && <span className="full-combined-score">{resultS2.score_a}–{resultS2.score_b}</span>}
+                                </div>
+                              )}
+                              {isEditable && <ChevronTiny />}
                             </div>
                           ) : (
                             <div className="full-no-match">No match</div>
