@@ -95,10 +95,17 @@ body {
 }
 
 /* ── Scorer Tooltip ─────────────────────────────── */
+.scorer-tooltip-anchor {
+  position: relative;
+  height: 0;
+  overflow: visible;
+  z-index: 500;
+}
 .scorer-tooltip-fixed {
-  position: fixed;
+  position: absolute;
   left: 16px;
   right: 16px;
+  bottom: 8px;
   transform: translateY(-100%);
   z-index: 500;
 }
@@ -414,7 +421,7 @@ body {
 }
 /* Two-set score display in schedule */
 .full-set-scores {
-  display: flex; align-items: center; flex-shrink: 0;
+  display: flex; align-items: center; flex-shrink: 0; margin-right: 22px;
 }
 .full-team-score {
   font-size: 36px; font-weight: 900; letter-spacing: -1px;

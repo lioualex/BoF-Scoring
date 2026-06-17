@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from 'react'
-import { createPortal } from 'react-dom'
 import { getSchedule, getTeamName, getWeekDuties, gameKey } from '../data/league'
 import { isMyTeam } from '../lib/myTeam'
 
@@ -96,14 +95,6 @@ export default function SchedulePage({
     try { return !localStorage.getItem('bof_scorer_tooltip_seen') }
     catch { return true }
   })
-  const [tooltipTop, setTooltipTop] = useState(null)
-  const firstCardRef = useRef(null)
-
-  useEffect(() => {
-    if (!showTooltip || !firstCardRef.current) return
-    const rect = firstCardRef.current.getBoundingClientRect()
-    setTooltipTop(rect.top)
-  }, [showTooltip])
 
   function dismissTooltip() {
     try { localStorage.setItem('bof_scorer_tooltip_seen', '1') } catch {}
@@ -241,6 +232,17 @@ export default function SchedulePage({
               // ── Full slot ──
               return (
                 <div key={si} className={`full-slot${live ? ' slot-live' : ''}`}>
+                  {si === 0 && showTooltip && (
+                    <div className="scorer-tooltip-anchor">
+                      <div className="scorer-tooltip-fixed" onClick={dismissTooltip}>
+                        <div className="scorer-tooltip">
+                          <div className="scorer-tooltip-text">Tap any match card to enter scores and all-stars live!</div>
+                          <button className="scorer-tooltip-btn" onClick={e => { e.stopPropagation(); dismissTooltip() }}>Got it</button>
+                          <div className="scorer-tooltip-arrow" />
+                        </div>
+                      </div>
+                    </div>
+                  )}
                   <div className={`full-slot-time${live ? ' slot-time-live' : ''}`}>
                     {fmtTime(slot.time)}
                     {live && (
@@ -264,8 +266,7 @@ export default function SchedulePage({
                       return (
                         <div
                           key={courtNum}
-                          ref={si === 0 && courtNum === 1 ? firstCardRef : null}
-                          className={`full-court court-${courtNum}${g && isEditable ? ' clickable' : ''}${live && g && !hasScore(resultS1) && !hasScore(resultS2) && !visitedGames.has(k) ? ' court-needs-score' : ''}${courtHasMine ? ' my-team' : ''}`}
+className={`full-court court-${courtNum}${g && isEditable ? ' clickable' : ''}${live && g && !hasScore(resultS1) && !hasScore(resultS2) && !visitedGames.has(k) ? ' court-needs-score' : ''}${courtHasMine ? ' my-team' : ''}`}
                           onClick={() => g && isEditable && handleCourtClick(wkData, si, courtNum)}
                         >
                           {live && g && !hasScore(resultS1) && !hasScore(resultS2) && !visitedGames.has(k) && (
@@ -330,16 +331,6 @@ export default function SchedulePage({
             )}
           </div>
         </div>
-      )}
-      {showTooltip && tooltipTop !== null && createPortal(
-        <div className="scorer-tooltip-fixed" style={{ top: tooltipTop - 8 }} onClick={dismissTooltip}>
-          <div className="scorer-tooltip">
-            <div className="scorer-tooltip-text">Tap any match card to enter scores and all-stars live!</div>
-            <button className="scorer-tooltip-btn" onClick={e => { e.stopPropagation(); dismissTooltip() }}>Got it</button>
-            <div className="scorer-tooltip-arrow" />
-          </div>
-        </div>,
-        document.body
       )}
     </div>
   )
