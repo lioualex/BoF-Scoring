@@ -15,7 +15,7 @@ const DIV_KEY = 'bof_last_div'
 
 export default function App() {
   const [tab, setTab] = useState(() =>
-    window.location.hash === '#allstars' ? 'allstars' : 'leaderboard'
+    window.location.hash === '#allstars' ? 'allstars' : 'schedule'
   )
   const [div, setDiv] = useState(() => localStorage.getItem(DIV_KEY) || 'adv')
 
