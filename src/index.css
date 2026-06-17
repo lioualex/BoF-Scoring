@@ -394,13 +394,10 @@ body {
   display: flex; justify-content: space-between; align-items: flex-start;
   flex-shrink: 0; gap: 12px;
 }
-.scorer-ref-row {
-  padding: 10px 20px 0;
-  display: flex; flex-shrink: 0;
-}
 .scorer-ref-inline {
   display: flex; align-items: center; gap: 6px;
   font-size: 15px; font-weight: 600; color: var(--text2);
+  margin-top: 6px;
 }
 .scorer-match-title {
   font-size: 26px; font-weight: 800; color: var(--text); letter-spacing: -0.3px;
@@ -497,10 +494,10 @@ body {
 }
 .side-flipping { animation: sideFlip 0.36s ease-in-out; }
 
-/* Team names row with swap button — frozen below ref row */
+/* Team names row with swap button — frozen below header */
 .scorer-names-row {
   display: flex; align-items: center; gap: 8px;
-  padding: 8px 20px 8px;
+  padding: 14px 20px 8px;
   flex-shrink: 0;
 }
 .scorer-names-row .scorer-team-name { flex: 1; }

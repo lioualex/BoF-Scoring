@@ -190,7 +190,7 @@ export default function GameScorerModal({
         </div>
       )}
 
-      {/* Header — match info left, close right */}
+      {/* Header — match info + ref left, close right */}
       <div className="scorer-header">
         <div>
           <div className="scorer-match-title">
@@ -199,21 +199,17 @@ export default function GameScorerModal({
           <div className="scorer-match-sub">
             Week {game.week} · {wkDate}
           </div>
+          <div className="scorer-ref-inline">
+            <WhistleIcon />
+            <span>{refName}</span>
+          </div>
         </div>
         <button className="modal-close" onClick={onClose}>✕</button>
       </div>
 
       {/* ── FROZEN (non-scrolling) section ── */}
 
-      {/* Ref — left-aligned, right above team names */}
-      <div className="scorer-ref-row">
-        <div className="scorer-ref-inline">
-          <WhistleIcon />
-          <span>{refName}</span>
-        </div>
-      </div>
-
-      {/* Team names — right below ref row */}
+      {/* Team names — right below header */}
       <div className={`scorer-names-row${flipping ? ' side-flipping' : ''}`}>
         <div className={`scorer-team-name${leftWin ? ' name-winner' : ''}`}>{leftTeam?.name}</div>
         <button
