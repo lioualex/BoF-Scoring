@@ -291,21 +291,21 @@ body {
 .full-court:last-child { border-bottom: none; }
 .full-court.clickable { cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .full-court.clickable:active { background: var(--border); }
-.full-court.court-needs-score { position: relative; }
-.full-court.court-needs-score::after {
-  content: '';
+.court-ripple {
   position: absolute;
-  top: 12px; right: 12px;
-  width: 10px; height: 10px;
+  top: 50%; left: 50%;
+  width: 32px; height: 32px;
+  margin: -16px 0 0 -16px;
   border-radius: 50%;
   background: var(--div-accent, var(--gold));
-  animation: pulse-ring 1.6s ease-out infinite;
-  box-shadow: 0 0 0 0 var(--div-accent-dim, var(--gold-dim));
+  opacity: 0;
+  pointer-events: none;
+  animation: court-ripple 2s ease-out infinite;
 }
-@keyframes pulse-ring {
-  0%   { box-shadow: 0 0 0 0 var(--div-accent, var(--gold)); opacity: 1; }
-  70%  { box-shadow: 0 0 0 8px transparent; opacity: 0.6; }
-  100% { box-shadow: 0 0 0 0 transparent; opacity: 1; }
+@keyframes court-ripple {
+  0%   { transform: scale(0); opacity: 0.5; }
+  80%  { transform: scale(8); opacity: 0; }
+  100% { transform: scale(8); opacity: 0; }
 }
 
 /* Court cards — color distinction via left border, no court number label */

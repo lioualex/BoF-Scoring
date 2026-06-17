@@ -84,6 +84,10 @@ export default function SchedulePage({
   const [week, setWeek]         = useState(() => div === 'adv' ? editableWeekAdv : editableWeekInt)
   const [slideDir, setSlideDir] = useState(null)
   const [animKey, setAnimKey]   = useState(0)
+  const [visitedGames, setVisitedGames] = useState(() => {
+    try { return new Set(JSON.parse(localStorage.getItem('bof_visited_games') || '[]')) }
+    catch { return new Set() }
+  })
 
   const editableWeek = div === 'adv' ? editableWeekAdv : editableWeekInt
   const schedule     = getSchedule(div)
@@ -109,6 +113,12 @@ export default function SchedulePage({
     const otherGk = otherMatch
       ? gameKey(div, wkData.week, slotIdx, courtNum === 1 ? 2 : 1)
       : null
+
+    setVisitedGames(prev => {
+      const next = new Set(prev).add(gk)
+      try { localStorage.setItem('bof_visited_games', JSON.stringify([...next])) } catch {}
+      return next
+    })
 
     onSelectGame({
       div, week: wkData.week, slotIdx, court: courtNum,
@@ -231,9 +241,12 @@ export default function SchedulePage({
                       return (
                         <div
                           key={courtNum}
-                          className={`full-court court-${courtNum}${g && isEditable ? ' clickable' : ''}${live && g && !hasScore(resultS1) && !hasScore(resultS2) ? ' court-needs-score' : ''}`}
+                          className={`full-court court-${courtNum}${g && isEditable ? ' clickable' : ''}${live && g && !hasScore(resultS1) && !hasScore(resultS2) && !visitedGames.has(k) ? ' court-needs-score' : ''}`}
                           onClick={() => g && isEditable && handleCourtClick(wkData, si, courtNum)}
                         >
+                          {live && g && !hasScore(resultS1) && !hasScore(resultS2) && !visitedGames.has(k) && (
+                            <span className="court-ripple" aria-hidden="true" />
+                          )}
                           {/* Ref row — whistle icon + court number + chevron */}
                           {g && (
                             <div className="full-court-ref">
