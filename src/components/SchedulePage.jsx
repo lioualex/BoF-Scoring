@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { getSchedule, getTeamName, getWeekDuties, gameKey } from '../data/league'
 import { isMyTeam } from '../lib/myTeam'
 
@@ -330,14 +331,15 @@ export default function SchedulePage({
           </div>
         </div>
       )}
-      {showTooltip && tooltipTop !== null && (
+      {showTooltip && tooltipTop !== null && createPortal(
         <div className="scorer-tooltip-fixed" style={{ top: tooltipTop - 8 }} onClick={dismissTooltip}>
           <div className="scorer-tooltip">
             <div className="scorer-tooltip-text">Tap any match card to enter scores and all-stars live!</div>
             <button className="scorer-tooltip-btn" onClick={e => { e.stopPropagation(); dismissTooltip() }}>Got it</button>
             <div className="scorer-tooltip-arrow" />
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   )
