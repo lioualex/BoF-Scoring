@@ -91,6 +91,15 @@ export default function SchedulePage({
     try { return new Set(JSON.parse(localStorage.getItem('bof_visited_games') || '[]')) }
     catch { return new Set() }
   })
+  const [showTooltip, setShowTooltip] = useState(() => {
+    try { return !localStorage.getItem('bof_scorer_tooltip_seen') }
+    catch { return true }
+  })
+
+  function dismissTooltip() {
+    try { localStorage.setItem('bof_scorer_tooltip_seen', '1') } catch {}
+    setShowTooltip(false)
+  }
 
   const editableWeek = div === 'adv' ? editableWeekAdv : editableWeekInt
   const schedule     = getSchedule(div)
@@ -180,6 +189,14 @@ export default function SchedulePage({
             )}
 
             <div className="section-label">Scoring</div>
+
+            {showTooltip && (
+              <div className="scorer-tooltip">
+                <div className="scorer-tooltip-text">Tap any match card to open the scorer and enter scores.</div>
+                <button className="scorer-tooltip-btn" onClick={dismissTooltip}>Got it</button>
+                <div className="scorer-tooltip-arrow" />
+              </div>
+            )}
 
             {wkData.slots.map((slot, si) => {
               const live       = gameDay && isSlotLive(slot.time)
