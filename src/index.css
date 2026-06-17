@@ -3,7 +3,7 @@
 html { height: 100%; }
 body {
   height: 100%;
-  background: #FFFFFF;
+  background: #F0F0F2;
   color: #1A1A1A;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -16,7 +16,7 @@ body {
   --gold:       #2563EB;
   --gold-light: #3B82F6;
   --gold-dim:   rgba(37,99,235,0.10);
-  --bg:         #FFFFFF;
+  --bg:         #F0F0F2;
   --surface:    #F5F5F7;
   --card:       #FFFFFF;
   --card2:      #F0F0F2;
