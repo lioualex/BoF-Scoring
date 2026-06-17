@@ -79,45 +79,51 @@ function TeamModal({ div, team, standings, gameResults, onClose, onSelectGame })
   let totalPts = 0, totalPtsAgainst = 0
 
   schedule.forEach(wk => {
+    if (!byWeek[wk.week]) byWeek[wk.week] = { wk, slots: [] }
     wk.slots.forEach((slot, si) => {
-      ['court1', 'court2'].forEach((ct, ci) => {
-        const g = slot[ct]
-        if (!g || (g.a !== team.id && g.b !== team.id)) return
+      const slotEntry = { time: slot.time, type: 'off', courtNum: null, oppId: null, side: null, r1: null, r2: null, slotIdx: si, g: null }
 
+      const playing = ['court1', 'court2'].find((ct, ci) => {
+        const g = slot[ct]
+        return g && (g.a === team.id || g.b === team.id)
+      })
+
+      if (playing) {
+        const ci = playing === 'court1' ? 0 : 1
+        const g = slot[playing]
         const courtNum = ci + 1
-        const bk   = gameKey(div, wk.week, si, courtNum)
-        const r1   = gameResults[bk]        ?? null
-        const r2   = gameResults[bk + '_s2'] ?? null
+        const bk = gameKey(div, wk.week, si, courtNum)
+        const r1 = gameResults[bk] ?? null
+        const r2 = gameResults[bk + '_s2'] ?? null
         const side = g.a === team.id ? 'A' : 'B'
         const oppId = g.a === team.id ? g.b : g.a
 
         if (r1?.winner) { if (r1.winner === 'T' || r1.winner === side) totalWins++; else totalLosses++ }
         if (r2?.winner) { if (r2.winner === 'T' || r2.winner === side) totalWins++; else totalLosses++ }
-
         const hasR1 = r1 && (r1.winner || r1.score_a !== 4 || r1.score_b !== 4)
         const hasR2 = r2 && (r2.winner || r2.score_a !== 4 || r2.score_b !== 4)
         if (hasR1) { totalPts += side === 'A' ? r1.score_a : r1.score_b; totalPtsAgainst += side === 'A' ? r1.score_b : r1.score_a }
         if (hasR2) { totalPts += side === 'A' ? r2.score_a : r2.score_b; totalPtsAgainst += side === 'A' ? r2.score_b : r2.score_a }
 
-        if (!byWeek[wk.week]) byWeek[wk.week] = { wk, matches: [] }
-        byWeek[wk.week].matches.push({ oppId, side, r1, r2, slotIdx: si, courtNum, g })
-      })
+        Object.assign(slotEntry, { type: 'play', courtNum, oppId, side, r1, r2, slotIdx: si, g })
+      } else {
+        const reffing = ['court1', 'court2'].find((ct, ci) => {
+          const g = slot[ct]
+          return g && g.ref === team.id
+        })
+        if (reffing) {
+          const courtNum = reffing === 'court1' ? 1 : 2
+          Object.assign(slotEntry, { type: 'ref', courtNum })
+        }
+      }
+
+      byWeek[wk.week].slots.push(slotEntry)
     })
   })
 
   const weekNums = Object.keys(byWeek).map(Number).sort((a, b) => a - b)
+  // byWeek now always populated for all weeks since we loop full schedule
 
-  // Role sequence per week: P = playing, R = reffing, O = off
-  const weekRoles = {}
-  schedule.forEach(wk => {
-    const roles = wk.slots.map(slot => {
-      const courts = ['court1', 'court2'].map(ct => slot[ct]).filter(Boolean)
-      if (courts.some(g => g.a === team.id || g.b === team.id)) return 'P'
-      if (courts.some(g => g.ref === team.id)) return 'R'
-      return 'O'
-    })
-    weekRoles[wk.week] = roles
-  })
 
   // Net duties — find the next upcoming one
   const allDuties = []
@@ -175,70 +181,85 @@ function TeamModal({ div, team, standings, gameResults, onClose, onSelectGame })
         )}
 
         {weekNums.map(wkNum => {
-          const { wk, matches } = byWeek[wkNum]
+          const { wk, slots } = byWeek[wkNum]
           const datePart = wk.date.split(' ')[1] ?? wk.date
+          const roleTags = slots.map(s => s.type === 'play' ? 'P' : s.type === 'ref' ? 'R' : 'O')
 
           return (
             <div key={wkNum} className="result-week-group">
               <div className="result-week-header">
                 <span>Week {wkNum} · {datePart}</span>
-                {weekRoles[wkNum] && (
-                  <span className="week-role-tags">
-                    {weekRoles[wkNum].map((r, i) => (
-                      <span key={i} className={`week-role-tag week-role-${r}`}>{r}</span>
-                    ))}
-                  </span>
-                )}
+                <span className="week-role-tags">
+                  {roleTags.map((r, i) => (
+                    <span key={i} className={`week-role-tag week-role-${r}`}>{r}</span>
+                  ))}
+                </span>
               </div>
 
-              {matches.map(({ oppId, side, r1, r2, slotIdx, courtNum, g }, i) => {
-                const myS1    = side === 'A' ? r1?.score_a : r1?.score_b
-                const theirS1 = side === 'A' ? r1?.score_b : r1?.score_a
-                const myS2    = side === 'A' ? r2?.score_a : r2?.score_b
-                const theirS2 = side === 'A' ? r2?.score_b : r2?.score_a
-                const w1 = r1?.winner ? (r1.winner === 'T' || r1.winner === side ? 'W' : 'L') : null
-                const w2 = r2?.winner ? (r2.winner === 'T' || r2.winner === side ? 'W' : 'L') : null
-                const hasAnyResult = r1?.winner || r2?.winner
+              {slots.map((slot, i) => {
+                if (slot.type === 'play') {
+                  const { oppId, side, r1, r2, slotIdx, courtNum, g } = slot
+                  const myS1    = side === 'A' ? r1?.score_a : r1?.score_b
+                  const theirS1 = side === 'A' ? r1?.score_b : r1?.score_a
+                  const myS2    = side === 'A' ? r2?.score_a : r2?.score_b
+                  const theirS2 = side === 'A' ? r2?.score_b : r2?.score_a
+                  const w1 = r1?.winner ? (r1.winner === 'T' || r1.winner === side ? 'W' : 'L') : null
+                  const w2 = r2?.winner ? (r2.winner === 'T' || r2.winner === side ? 'W' : 'L') : null
 
-                const handleMatchClick = onSelectGame ? () => {
-                  const wkData = byWeek[wkNum].wk
-                  const slot = wkData.slots[slotIdx]
-                  const otherKey = courtNum === 1 ? 'court2' : 'court1'
-                  const otherMatch = slot[otherKey] ?? null
-                  const gk = gameKey(div, wkNum, slotIdx, courtNum)
-                  const otherGk = otherMatch ? gameKey(div, wkNum, slotIdx, courtNum === 1 ? 2 : 1) : null
-                  onClose()
-                  onSelectGame({
-                    div, week: wkNum, slotIdx, court: courtNum,
-                    match: g, otherMatch,
-                    gameKey: gk, gameKey2: gk + '_s2',
-                    otherGameKey: otherGk, otherGameKey2: otherGk ? otherGk + '_s2' : null,
-                    time: slot.time,
-                  })
-                } : null
+                  const handleMatchClick = onSelectGame ? () => {
+                    const schedSlot = wk.slots[slotIdx]
+                    const otherKey = courtNum === 1 ? 'court2' : 'court1'
+                    const otherMatch = schedSlot[otherKey] ?? null
+                    const gk = gameKey(div, wkNum, slotIdx, courtNum)
+                    const otherGk = otherMatch ? gameKey(div, wkNum, slotIdx, courtNum === 1 ? 2 : 1) : null
+                    onClose()
+                    onSelectGame({
+                      div, week: wkNum, slotIdx, court: courtNum,
+                      match: g, otherMatch,
+                      gameKey: gk, gameKey2: gk + '_s2',
+                      otherGameKey: otherGk, otherGameKey2: otherGk ? otherGk + '_s2' : null,
+                      time: schedSlot.time,
+                    })
+                  } : null
+
+                  return (
+                    <div key={i} className={`result-match-row${handleMatchClick ? ' clickable' : ''}`} onClick={handleMatchClick ?? undefined}>
+                      <div className="result-opp">
+                        <span style={{ color: 'var(--text3)', fontSize: 12, marginRight: 6 }}>C{courtNum}</span>
+                        vs {getTeamName(div, oppId)}
+                      </div>
+                      <div className="result-sets">
+                        {(r1?.winner || (r1 && (r1.score_a !== 4 || r1.score_b !== 4))) ? (
+                          <div className="result-set-line">
+                            <span className="result-set-tag">S1</span>
+                            <span className="result-set-scores">{myS1}–{theirS1}</span>
+                            <span className={`wl-dot${w1 ? ` wl-${w1}` : ' wl-empty'}`}>{w1 ?? ''}</span>
+                          </div>
+                        ) : null}
+                        {(r2?.winner || (r2 && (r2.score_a !== 4 || r2.score_b !== 4))) ? (
+                          <div className="result-set-line">
+                            <span className="result-set-tag">S2</span>
+                            <span className="result-set-scores">{myS2}–{theirS2}</span>
+                            <span className={`wl-dot${w2 ? ` wl-${w2}` : ' wl-empty'}`}>{w2 ?? ''}</span>
+                          </div>
+                        ) : null}
+                      </div>
+                      {handleMatchClick && <ChevronRight />}
+                    </div>
+                  )
+                }
+
+                if (slot.type === 'ref') {
+                  return (
+                    <div key={i} className="result-match-row" style={{ color: 'var(--text3)' }}>
+                      <div className="result-opp">Ref · Court {slot.courtNum}</div>
+                    </div>
+                  )
+                }
 
                 return (
-                  <div key={i} className={`result-match-row${handleMatchClick ? ' clickable' : ''}`} onClick={handleMatchClick ?? undefined}>
-                    <div className="result-opp">
-                      vs {getTeamName(div, oppId)}
-                    </div>
-                    <div className="result-sets">
-                      {(r1?.winner || (r1 && (r1.score_a !== 4 || r1.score_b !== 4))) ? (
-                        <div className="result-set-line">
-                          <span className="result-set-tag">S1</span>
-                          <span className="result-set-scores">{myS1}–{theirS1}</span>
-                          <span className={`wl-dot${w1 ? ` wl-${w1}` : ' wl-empty'}`}>{w1 ?? ''}</span>
-                        </div>
-                      ) : null}
-                      {(r2?.winner || (r2 && (r2.score_a !== 4 || r2.score_b !== 4))) ? (
-                        <div className="result-set-line">
-                          <span className="result-set-tag">S2</span>
-                          <span className="result-set-scores">{myS2}–{theirS2}</span>
-                          <span className={`wl-dot${w2 ? ` wl-${w2}` : ' wl-empty'}`}>{w2 ?? ''}</span>
-                        </div>
-                      ) : null}
-                    </div>
-                    {handleMatchClick && <ChevronRight />}
+                  <div key={i} className="result-match-row" style={{ color: 'var(--text3)' }}>
+                    <div className="result-opp">Off</div>
                   </div>
                 )
               })}
