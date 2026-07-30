@@ -160,10 +160,10 @@ export default function App() {
     }))
     if (!SUPABASE_CONFIGURED) return
     await supabase.from('game_results').upsert(
-      { game_key: key, ...data, updated_at: new Date().toISOString() },
+      { game_key: key, ...data, updated_at: new Date().toISOString(), updated_by: user?.email ?? null },
       { onConflict: 'game_key' }
     )
-  }, [])
+  }, [user])
 
   const updateAllStar = useCallback(async (key, data) => {
     setAllStars(prev => ({
@@ -172,10 +172,10 @@ export default function App() {
     }))
     if (!SUPABASE_CONFIGURED) return
     await supabase.from('allstars').upsert(
-      { game_key: key, ...data, updated_at: new Date().toISOString() },
+      { game_key: key, ...data, updated_at: new Date().toISOString(), updated_by: user?.email ?? null },
       { onConflict: 'game_key' }
     )
-  }, [])
+  }, [user])
 
   // ── Render ────────────────────────────────────────────────
   if (loading) {
