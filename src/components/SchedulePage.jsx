@@ -85,6 +85,7 @@ export default function SchedulePage({
   myTeam,
   theme,
   onSetTheme,
+  isAdmin,
 }) {
   const mine = id => isMyTeam(myTeam, div, id)
   const [week, setWeek]         = useState(() => div === 'adv' ? editableWeekAdv : editableWeekInt)
@@ -212,7 +213,7 @@ export default function SchedulePage({
               const live       = gameDay && isSlotLive(slot.time)
               // Only collapse past slots once the full game day is over (not mid-day)
               const isPast     = false
-              const isEditable = wkData.week === editableWeek
+              const isEditable = isAdmin || wkData.week === editableWeek
 
               // ── Collapsed past slot ──
               if (isPast) {

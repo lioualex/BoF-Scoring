@@ -64,6 +64,54 @@ body {
 .nav-btn-allstars { flex: 0 0 44px; opacity: 0.4; }
 .nav-btn-allstars.active { opacity: 1; }
 
+/* Account button — compact, right-anchored */
+.nav-btn-account { flex: 0 0 56px; }
+.nav-btn-account.account-active { color: var(--gold); }
+
+/* ── Settings panel ─────────────────────────────── */
+.nav-settings-backdrop {
+  position: fixed; inset: 0;
+  bottom: calc(var(--nav-h) + env(safe-area-inset-bottom));
+  z-index: 150;
+}
+.nav-settings-panel {
+  position: fixed;
+  bottom: calc(var(--nav-h) + env(safe-area-inset-bottom) + 10px);
+  right: 12px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 18px 16px 14px;
+  min-width: 240px;
+  box-shadow: 0 -2px 24px rgba(0,0,0,0.10), 0 4px 12px rgba(0,0,0,0.06);
+  z-index: 200;
+}
+.nav-settings-title { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+.nav-settings-subtitle { font-size: 13px; color: var(--text3); margin-bottom: 14px; }
+.nav-settings-divider { height: 1px; background: var(--border); margin: 10px 0; }
+.nav-settings-user {
+  display: flex; align-items: center; gap: 10px;
+  color: var(--gold); padding-bottom: 2px;
+}
+.nav-settings-email { font-size: 14px; font-weight: 600; color: var(--text2); word-break: break-all; }
+.nav-settings-note { font-size: 13px; color: var(--text3); line-height: 1.5; }
+.nav-settings-btn {
+  width: 100%; display: flex; align-items: center; justify-content: center;
+  gap: 8px; border: none; border-radius: 12px;
+  font-size: 15px; font-weight: 600; cursor: pointer; padding: 11px 16px;
+  -webkit-tap-highlight-color: transparent;
+}
+.nav-settings-google {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.nav-settings-signout {
+  background: transparent;
+  color: var(--red);
+  border: 1px solid var(--border);
+}
+
 /* ── Header ─────────────────────────────────────── */
 .header {
   padding: 18px 20px 12px;

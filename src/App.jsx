@@ -6,7 +6,9 @@ import { loadThemeOverride, saveThemeOverride, applyTheme } from './lib/theme'
 
 const SUPABASE_CONFIGURED =
   import.meta.env.VITE_SUPABASE_URL &&
-  !import.meta.env.VITE_SUPABASE_URL.startsWith('your_')
+  !import.meta.env.VITE_SUPABASE_URL.startsWith('your_') &&
+  import.meta.env.VITE_SUPABASE_ANON_KEY &&
+  !import.meta.env.VITE_SUPABASE_ANON_KEY.startsWith('your_')
 import Navigation    from './components/Navigation'
 import LeaderboardPage from './components/LeaderboardPage'
 import SchedulePage    from './components/SchedulePage'
@@ -48,6 +50,31 @@ export default function App() {
   const [gameResults, setGameResults] = useState({})
   const [allStars,    setAllStars]    = useState({})
   const [loading,     setLoading]     = useState(true)
+
+  // Auth
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    if (!SUPABASE_CONFIGURED) return
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null)
+    })
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null)
+    })
+    return () => subscription.unsubscribe()
+  }, [])
+
+  const handleLogin = useCallback(() => {
+    supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo: window.location.origin },
+    })
+  }, [])
+
+  const handleLogout = useCallback(() => {
+    supabase.auth.signOut()
+  }, [])
 
   // The game currently open for scoring (null = none)
   const [selectedGame, setSelectedGame] = useState(null)
@@ -192,6 +219,7 @@ export default function App() {
             myTeam={myTeam}
             theme={themeOverride}
             onSetTheme={handleSetTheme}
+            isAdmin={!!user}
           />
         )}
         {tab === 'allstars' && (
@@ -204,6 +232,9 @@ export default function App() {
         setTab={setTab}
         scheduleAccent={div === 'int' ? '#16A34A' : '#2563EB'}
         lbAccent={div === 'int' ? '#16A34A' : '#2563EB'}
+        user={user}
+        onLogin={SUPABASE_CONFIGURED ? handleLogin : null}
+        onLogout={handleLogout}
       />
     </div>
   )
