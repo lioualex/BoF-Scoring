@@ -233,7 +233,7 @@ export default function App() {
         scheduleAccent={div === 'int' ? '#16A34A' : '#2563EB'}
         lbAccent={div === 'int' ? '#16A34A' : '#2563EB'}
         user={user}
-        onLogin={SUPABASE_CONFIGURED ? handleLogin : null}
+        onLogin={handleLogin}
         onLogout={handleLogout}
       />
     </div>
