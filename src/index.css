@@ -990,7 +990,22 @@ body {
   background: var(--card); border: 1px solid var(--border2);
   border-radius: 14px; padding: 14px 16px; z-index: 300;
   box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-  min-width: 160px;
+  min-width: 180px;
+}
+.theme-popup-divider { height: 1px; background: var(--border); margin: 12px 0; }
+.theme-popup-email { font-size: 13px; color: var(--text2); margin-bottom: 10px; word-break: break-all; }
+.theme-popup-signout {
+  width: 100%; padding: 9px 12px; border-radius: 9px;
+  border: 1px solid var(--border); background: none; text-align: center;
+  font-size: 14px; font-weight: 600; color: var(--red); cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.theme-popup-google {
+  width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 9px 12px; border-radius: 9px;
+  border: 1px solid var(--border); background: var(--surface);
+  font-size: 14px; font-weight: 600; color: var(--text); cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 .theme-popup-label {
   font-size: 11px; font-weight: 800; letter-spacing: 0.12em;

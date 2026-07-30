@@ -3,7 +3,7 @@ import { computeStandings, getSchedule, getTeamName, getWeekDuties, gameKey } fr
 import { isMyTeam } from '../lib/myTeam'
 import ThemeBtn from './ThemeBtn'
 
-export default function LeaderboardPage({ div, gameResults, onDivChange, onSelectGame, myTeam, onSetMyTeam, theme, onSetTheme }) {
+export default function LeaderboardPage({ div, gameResults, onDivChange, onSelectGame, myTeam, onSetMyTeam, theme, onSetTheme, user, onLogin, onLogout }) {
   const [selectedTeam, setSelectedTeam] = useState(null)
 
   const standings = useMemo(
@@ -22,7 +22,7 @@ export default function LeaderboardPage({ div, gameResults, onDivChange, onSelec
           <div className="app-title">BoF <span>Scoring</span></div>
           <div className="app-sub">Summer 2026 · St. Mary's Rec Center</div>
         </div>
-        <ThemeBtn theme={theme} onSetTheme={onSetTheme} />
+        <ThemeBtn theme={theme} onSetTheme={onSetTheme} user={user} onLogin={onLogin} onLogout={onLogout} />
       </div>
 
       <div className="div-toggle">

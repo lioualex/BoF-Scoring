@@ -206,7 +206,7 @@ export default function App() {
 
       <div className="page">
         {tab === 'leaderboard' && (
-          <LeaderboardPage div={div} gameResults={gameResults} onDivChange={handleDivChange} onSelectGame={setSelectedGame} myTeam={myTeam} onSetMyTeam={handleSetMyTeam} theme={themeOverride} onSetTheme={handleSetTheme} />
+          <LeaderboardPage div={div} gameResults={gameResults} onDivChange={handleDivChange} onSelectGame={setSelectedGame} myTeam={myTeam} onSetMyTeam={handleSetMyTeam} theme={themeOverride} onSetTheme={handleSetTheme} user={user} onLogin={handleLogin} onLogout={handleLogout} />
         )}
         {tab === 'schedule' && (
           <SchedulePage
@@ -220,6 +220,9 @@ export default function App() {
             theme={themeOverride}
             onSetTheme={handleSetTheme}
             isAdmin={!!user}
+            user={user}
+            onLogin={handleLogin}
+            onLogout={handleLogout}
           />
         )}
         {tab === 'allstars' && (
@@ -232,9 +235,6 @@ export default function App() {
         setTab={setTab}
         scheduleAccent={div === 'int' ? '#16A34A' : '#2563EB'}
         lbAccent={div === 'int' ? '#16A34A' : '#2563EB'}
-        user={user}
-        onLogin={handleLogin}
-        onLogout={handleLogout}
       />
     </div>
   )

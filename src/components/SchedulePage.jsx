@@ -86,6 +86,9 @@ export default function SchedulePage({
   theme,
   onSetTheme,
   isAdmin,
+  user,
+  onLogin,
+  onLogout,
 }) {
   const mine = id => isMyTeam(myTeam, div, id)
   const [week, setWeek]         = useState(() => div === 'adv' ? editableWeekAdv : editableWeekInt)
@@ -160,7 +163,7 @@ export default function SchedulePage({
             <button className={`div-btn-mini ${div === 'adv' ? 'active' : ''}`} onClick={() => switchDiv('adv')}>ADV</button>
             <button className={`div-btn-mini ${div === 'int' ? 'active' : ''}`} onClick={() => switchDiv('int')}>INT</button>
           </div>
-          <ThemeBtn theme={theme} onSetTheme={onSetTheme} />
+          <ThemeBtn theme={theme} onSetTheme={onSetTheme} user={user} onLogin={onLogin} onLogout={onLogout} />
         </div>
       </div>
 
