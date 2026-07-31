@@ -187,16 +187,16 @@ export function computeStandings(div, results) {
         const g = slot[ct];
         if (!g) return;
         const k = gameKey(div, wk.week, si, ci + 1);
-        // Count both set 1 and set 2 separately
         for (const rk of [k, k + '_s2']) {
           const r = results[rk];
-          if (r?.winner) {
-            if (r.winner === 'T') {
+          const w = r?.winner ?? (r ? checkWinner(r.score_a ?? 4, r.score_b ?? 4) : null);
+          if (w) {
+            if (w === 'T') {
               if (rec[g.a]) rec[g.a].wins++;
               if (rec[g.b]) rec[g.b].wins++;
             } else {
-              const winnerId = r.winner === 'A' ? g.a : g.b;
-              const loserId  = r.winner === 'A' ? g.b : g.a;
+              const winnerId = w === 'A' ? g.a : g.b;
+              const loserId  = w === 'A' ? g.b : g.a;
               if (rec[winnerId]) rec[winnerId].wins++;
               if (rec[loserId])  rec[loserId].losses++;
             }

@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import { computeStandings, getSchedule, getTeamName, getWeekDuties, gameKey } from '../data/league'
+import { computeStandings, getSchedule, getTeamName, getWeekDuties, gameKey, checkWinner } from '../data/league'
 import { isMyTeam } from '../lib/myTeam'
 import ThemeBtn from './ThemeBtn'
 
@@ -109,8 +109,10 @@ function TeamModal({ div, team, standings, gameResults, onClose, onSelectGame, m
         const side = g.a === team.id ? 'A' : 'B'
         const oppId = g.a === team.id ? g.b : g.a
 
-        if (r1?.winner) { if (r1.winner === 'T' || r1.winner === side) totalWins++; else totalLosses++ }
-        if (r2?.winner) { if (r2.winner === 'T' || r2.winner === side) totalWins++; else totalLosses++ }
+        const ew1 = r1?.winner ?? (r1 ? checkWinner(r1.score_a ?? 4, r1.score_b ?? 4) : null)
+        const ew2 = r2?.winner ?? (r2 ? checkWinner(r2.score_a ?? 4, r2.score_b ?? 4) : null)
+        if (ew1) { if (ew1 === 'T' || ew1 === side) totalWins++; else totalLosses++ }
+        if (ew2) { if (ew2 === 'T' || ew2 === side) totalWins++; else totalLosses++ }
         const hasR1 = r1 && (r1.winner || r1.score_a !== 4 || r1.score_b !== 4)
         const hasR2 = r2 && (r2.winner || r2.score_a !== 4 || r2.score_b !== 4)
         if (hasR1) { totalPts += side === 'A' ? r1.score_a : r1.score_b; totalPtsAgainst += side === 'A' ? r1.score_b : r1.score_a }
@@ -226,9 +228,11 @@ function TeamModal({ div, team, standings, gameResults, onClose, onSelectGame, m
                   const theirS1 = side === 'A' ? r1?.score_b : r1?.score_a
                   const myS2    = side === 'A' ? r2?.score_a : r2?.score_b
                   const theirS2 = side === 'A' ? r2?.score_b : r2?.score_a
-                  const w1 = r1?.winner ? (r1.winner === 'T' || r1.winner === side ? 'W' : 'L') : null
-                  const w2 = r2?.winner ? (r2.winner === 'T' || r2.winner === side ? 'W' : 'L') : null
-                  const matchDone = !!(r1?.winner || r2?.winner)
+                  const ew1 = r1?.winner ?? (r1 ? checkWinner(r1.score_a ?? 4, r1.score_b ?? 4) : null)
+                  const ew2 = r2?.winner ?? (r2 ? checkWinner(r2.score_a ?? 4, r2.score_b ?? 4) : null)
+                  const w1 = ew1 ? (ew1 === 'T' || ew1 === side ? 'W' : 'L') : null
+                  const w2 = ew2 ? (ew2 === 'T' || ew2 === side ? 'W' : 'L') : null
+                  const matchDone = !!(ew1 || ew2)
 
                   const handleMatchClick = onSelectGame ? () => {
                     const schedSlot = wk.slots[slotIdx]
