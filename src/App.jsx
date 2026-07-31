@@ -159,10 +159,11 @@ export default function App() {
       [key]: { game_key: key, ...prev[key], ...data },
     }))
     if (!SUPABASE_CONFIGURED) return
-    await supabase.from('game_results').upsert(
+    const { error } = await supabase.from('game_results').upsert(
       { game_key: key, ...data, updated_at: new Date().toISOString(), updated_by: user?.email ?? null },
       { onConflict: 'game_key' }
     )
+    if (error) console.error('game_results upsert failed:', error.message)
   }, [user])
 
   const updateAllStar = useCallback(async (key, data) => {
@@ -171,10 +172,11 @@ export default function App() {
       [key]: { game_key: key, ...prev[key], ...data },
     }))
     if (!SUPABASE_CONFIGURED) return
-    await supabase.from('allstars').upsert(
+    const { error } = await supabase.from('allstars').upsert(
       { game_key: key, ...data, updated_at: new Date().toISOString(), updated_by: user?.email ?? null },
       { onConflict: 'game_key' }
     )
+    if (error) console.error('allstars upsert failed:', error.message)
   }, [user])
 
   // ── Render ────────────────────────────────────────────────
