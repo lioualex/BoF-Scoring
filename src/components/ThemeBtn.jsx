@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 
-export default function ThemeBtn({ theme, onSetTheme, user, onLogin, onLogout }) {
+export default function ThemeBtn({ theme, onSetTheme, user, onLogin, onLogout, onSync, syncing, syncResult }) {
   const [open, setOpen] = useState(false)
   const ref = useRef(null)
 
@@ -45,6 +45,13 @@ export default function ThemeBtn({ theme, onSetTheme, user, onLogin, onLogout })
             <>
               <div className="theme-popup-label">Signed in as admin</div>
               <div className="theme-popup-email">{user.email}</div>
+              <button
+                className="theme-popup-sync"
+                onClick={() => onSync?.()}
+                disabled={syncing}
+              >
+                {syncing ? 'Syncing…' : syncResult === 'ok' ? '✓ Synced' : syncResult === 'err' ? '✗ Sync failed' : 'Sync scores to database'}
+              </button>
               <button
                 className="theme-popup-signout"
                 onClick={() => { onLogout?.(); setOpen(false) }}

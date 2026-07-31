@@ -152,6 +152,38 @@ export default function App() {
     }
   }
 
+  // ── Sync local state → DB (admin recovery) ───────────────
+  const [syncing, setSyncing] = useState(false)
+  const [syncResult, setSyncResult] = useState(null) // 'ok' | 'err'
+
+  const syncToDatabase = useCallback(async () => {
+    if (!SUPABASE_CONFIGURED) return
+    setSyncing(true)
+    setSyncResult(null)
+    try {
+      const results = Object.values(gameResults)
+      const stars   = Object.values(allStars)
+      const stamp   = { updated_at: new Date().toISOString(), updated_by: user?.email ?? null }
+      const [{ error: e1 }, { error: e2 }] = await Promise.all([
+        results.length
+          ? supabase.from('game_results').upsert(results.map(r => ({ ...r, ...stamp })), { onConflict: 'game_key' })
+          : { error: null },
+        stars.length
+          ? supabase.from('allstars').upsert(stars.map(a => ({ ...a, ...stamp })), { onConflict: 'game_key' })
+          : { error: null },
+      ])
+      if (e1 || e2) {
+        console.error('Sync errors:', e1?.message, e2?.message)
+        setSyncResult('err')
+      } else {
+        setSyncResult('ok')
+      }
+    } finally {
+      setSyncing(false)
+      setTimeout(() => setSyncResult(null), 3000)
+    }
+  }, [gameResults, allStars, user])
+
   // ── Mutations ─────────────────────────────────────────────
   const updateGameResult = useCallback(async (key, data) => {
     setGameResults(prev => ({
@@ -208,7 +240,7 @@ export default function App() {
 
       <div className="page">
         {tab === 'leaderboard' && (
-          <LeaderboardPage div={div} gameResults={gameResults} onDivChange={handleDivChange} onSelectGame={setSelectedGame} myTeam={myTeam} onSetMyTeam={handleSetMyTeam} theme={themeOverride} onSetTheme={handleSetTheme} user={user} onLogin={handleLogin} onLogout={handleLogout} />
+          <LeaderboardPage div={div} gameResults={gameResults} onDivChange={handleDivChange} onSelectGame={setSelectedGame} myTeam={myTeam} onSetMyTeam={handleSetMyTeam} theme={themeOverride} onSetTheme={handleSetTheme} user={user} onLogin={handleLogin} onLogout={handleLogout} onSync={syncToDatabase} syncing={syncing} syncResult={syncResult} />
         )}
         {tab === 'schedule' && (
           <SchedulePage
@@ -225,6 +257,9 @@ export default function App() {
             user={user}
             onLogin={handleLogin}
             onLogout={handleLogout}
+            onSync={syncToDatabase}
+            syncing={syncing}
+            syncResult={syncResult}
           />
         )}
         {tab === 'allstars' && (

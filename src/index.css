@@ -994,6 +994,13 @@ body {
 }
 .theme-popup-divider { height: 1px; background: var(--border); margin: 12px 0; }
 .theme-popup-email { font-size: 13px; color: var(--text2); margin-bottom: 10px; word-break: break-all; }
+.theme-popup-sync {
+  width: 100%; padding: 9px 12px; border-radius: 9px; margin-bottom: 8px;
+  border: 1px solid var(--border); background: none; text-align: center;
+  font-size: 13px; font-weight: 600; color: var(--text1); cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.theme-popup-sync:disabled { opacity: 0.5; cursor: default; }
 .theme-popup-signout {
   width: 100%; padding: 9px 12px; border-radius: 9px;
   border: 1px solid var(--border); background: none; text-align: center;
