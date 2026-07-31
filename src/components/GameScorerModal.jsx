@@ -34,6 +34,7 @@ export default function GameScorerModal({
   onUpdateResult,
   onUpdateAllStar,
   onClose,
+  isAdmin,
 }) {
   const gk1 = game.gameKey
   const gk2 = game.gameKey2 ?? (game.gameKey + '_s2')
@@ -304,8 +305,8 @@ export default function GameScorerModal({
           </div>
         )}
 
-        {/* All-Stars — hidden for past weeks */}
-        {!isPast && (
+        {/* All-Stars — hidden for past weeks unless admin */}
+        {(!isPast || isAdmin) && (
           <div className="allstar-mini">
             <div className="allstar-mini-header">
               <StarIcon />

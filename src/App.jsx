@@ -235,6 +235,7 @@ export default function App() {
           onUpdateResult={updateGameResult}
           onUpdateAllStar={updateAllStar}
           onClose={() => setSelectedGame(null)}
+          isAdmin={!!user}
         />
       )}
 
