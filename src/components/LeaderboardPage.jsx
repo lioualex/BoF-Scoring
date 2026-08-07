@@ -50,8 +50,8 @@ export default function LeaderboardPage({ div, gameResults, onDivChange, onSelec
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
             <span className="team-record">{team.wins}–{team.losses}</span>
-            {team.wins + team.losses > 0 && (
-              <span className="team-pct">{(team.pct * 100).toFixed(0)}%</span>
+            {team.ptsFor > 0 && (
+              <span className="team-pct">{team.ptsFor} pts</span>
             )}
             <ChevronRight />
           </div>

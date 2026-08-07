@@ -179,7 +179,7 @@ export function computeStandings(div, results) {
   const teams = getTeams(div);
   const schedule = getSchedule(div);
   const rec = {};
-  teams.forEach(t => { rec[t.id] = { wins: 0, losses: 0 }; });
+  teams.forEach(t => { rec[t.id] = { wins: 0, losses: 0, ptsFor: 0, ptsAgainst: 0 }; });
 
   schedule.forEach(wk => {
     wk.slots.forEach((slot, si) => {
@@ -200,6 +200,10 @@ export function computeStandings(div, results) {
               if (rec[winnerId]) rec[winnerId].wins++;
               if (rec[loserId])  rec[loserId].losses++;
             }
+            const sA = r?.score_a ?? 4;
+            const sB = r?.score_b ?? 4;
+            if (rec[g.a]) { rec[g.a].ptsFor += sA; rec[g.a].ptsAgainst += sB; }
+            if (rec[g.b]) { rec[g.b].ptsFor += sB; rec[g.b].ptsAgainst += sA; }
           }
         }
       });
@@ -208,8 +212,10 @@ export function computeStandings(div, results) {
 
   return teams.map(t => ({
     ...t,
-    wins:   rec[t.id].wins,
-    losses: rec[t.id].losses,
+    wins:       rec[t.id].wins,
+    losses:     rec[t.id].losses,
+    ptsFor:     rec[t.id].ptsFor,
+    ptsAgainst: rec[t.id].ptsAgainst,
     pct: rec[t.id].wins + rec[t.id].losses === 0
       ? 0
       : rec[t.id].wins / (rec[t.id].wins + rec[t.id].losses),
