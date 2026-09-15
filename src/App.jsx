@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { supabase } from './lib/supabase'
-import { getEditableWeek } from './data/league'
+import { getEditableWeek, isCurrentSeason } from './data/league'
 import { loadMyTeam, saveMyTeam } from './lib/myTeam'
 import { loadThemeOverride, saveThemeOverride, applyTheme } from './lib/theme'
 
@@ -161,8 +161,8 @@ export default function App() {
     setSyncing(true)
     setSyncResult(null)
     try {
-      const results = Object.values(gameResults)
-      const stars   = Object.values(allStars)
+      const results = Object.values(gameResults).filter(r => isCurrentSeason(r.game_key))
+      const stars   = Object.values(allStars).filter(a => isCurrentSeason(a.game_key))
       const stamp   = { updated_at: new Date().toISOString(), updated_by: user?.email ?? null }
       const [{ error: e1 }, { error: e2 }] = await Promise.all([
         results.length

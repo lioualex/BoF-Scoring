@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { getTeams, getTeamName } from '../data/league'
+import { getTeams, getTeamName, isCurrentSeason } from '../data/league'
 
 export default function AllStarsPage({ div, allStars, onDivChange }) {
   const tally = useMemo(() => {
@@ -12,6 +12,7 @@ export default function AllStarsPage({ div, allStars, onDivChange }) {
     })
 
     Object.values(allStars).forEach(row => {
+      if (!isCurrentSeason(row.game_key)) return
       if (row.division !== div) return
       if (row.team_a_allstar) counts[row.team_a_allstar] = (counts[row.team_a_allstar] ?? 0) + 1
       if (row.team_b_allstar) counts[row.team_b_allstar] = (counts[row.team_b_allstar] ?? 0) + 1

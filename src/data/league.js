@@ -126,6 +126,10 @@ export const SEASON = 'f26';
 export const gameKey = (div, week, slotIdx, court) =>
   `${SEASON}_${div}_w${week}_s${slotIdx}_c${court}`;
 
+// Rows are looked up by key almost everywhere, which scopes them to the season
+// for free. Use this wherever code scans all loaded rows instead.
+export const isCurrentSeason = (key) => typeof key === 'string' && key.startsWith(`${SEASON}_`);
+
 export function checkWinner(sA, sB) {
   if (sA >= 27 && sB >= 27) return 'T';
   if (sA >= 27) return 'A';
