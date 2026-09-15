@@ -1,6 +1,10 @@
 // Persisted "my team" selection — stored as { div, id } in localStorage.
 
-const MY_TEAM_KEY = 'bof_my_team'
+import { SEASON } from '../data/league'
+
+// Season-scoped: team ids are reused each season, so a stale selection would
+// otherwise silently point at a different team.
+const MY_TEAM_KEY = `bof_my_team_${SEASON}`
 
 export function loadMyTeam() {
   try {

@@ -1,65 +1,65 @@
 // =================== TEAMS ===================
 
 export const ADV_TEAMS = [
-  { id: 1, name: 'Jollibeetches',           players: ['Rhenard Leclair','Jack Connolly','David Solomon','Jon Birchler','Alex Pacheco','Arslan Kasimov','Danyion Reagan'] },
-  { id: 2, name: 'Ball Handlers',           players: ['Ricardo Alves','Brandon Styles','Blake Van Grouw','Ethan Dressen','Johnathan Wang','Cesar Arada','Jamil Al-Ghosein'] },
-  { id: 3, name: 'Volhalla',                players: ['Teddy Luther','Christian Monaghan','Iris Brewer','Dorian Dorsey','Kae Saetern','Stefan "Steffy" Wojkowski','Enzo Arada'] },
-  { id: 4, name: 'Keta Mean Girls',         players: ['Alexander Bast','Alan Zhou','Matt Merritt','Alex Wu','Kwok "Chris" Im','Xavier Tenorio','Kyle Reiley'] },
-  { id: 5, name: 'Hole Foods',              players: ['Chen-Chen Huo','Aidan Dillon','Cody Howard','Patrick Godfrey','Immy Martiniano','Tali Swisher','Thomas Leech'] },
-  { id: 6, name: 'Gay Straight Alliance',   players: ['Andrew Fischer','Connor Graflund','Ryan Grasell','Alex Schlick','Spencer Bundoc','Quinton Walker','Brian Kim'] },
-  { id: 7, name: "Jaylen's Grey Sweatpants", players: ['Joseph Barkus','Jason Giblin','Trey Godfrey','Nathan Draper','Diego Almodiel','Scott Faludi','Ryan Schleeter'] },
+  { id: 1, name: 'BBO',                players: ['Iris Brewer','Jimmy Leyden','Dorian Dorsey','Nathan Draper','Christian Gilbertson','Johnathan Wang','Tali Swisher','Dan Fraguglia'] },
+  { id: 2, name: 'Only A Little Gay',  players: ['Andrew Fischer','Matt Gelsomino','Ryan Grasell','Tom Leech','Tony Ding','Amy Hu','Danyion Reagan','Spencer Bundoc'] },
+  { id: 3, name: 'Heated Spikealry',   players: ['Rhen LeClair','Oscar Ramos','Alex Schlick','Franco Castillo','Arslan Kasimov','JJ Chun','Marcus Abad','Cesar Arada'] },
+  { id: 4, name: 'Ella Got Swindled',  players: ['Joe Barkus','Jason Giblin','Trey Godfrey','James Prietto','Aaron Lee','Colin Rosenow','Jeremy Wang','James Mullen'] },
+  { id: 5, name: 'Laying Pipe',        players: ['Nick Wise','Alex Bast','Garrick Monaghan','Patrick Godfrey','Rian Cagang','Kae Saeturn','Brian Kim','Jamil Al-Ghosein'] },
+  { id: 6, name: 'Hit It & Quit It',   players: ['Brett Kellaher','Daniel Quade','Connor Graflund','Jon Birchler',"Shayne O'Brien",'Eric Ricker','Jimmy Jin','Teddy Luther'] },
+  { id: 7, name: 'Ball Handlers',      players: ['Brandon Styles','Ethan Dressen','Sai Sunga','David Solomon','Chris Im','Roel Robleza','Matt Merritt','Ohu Phomtavang'] },
 ];
 
 export const INT_TEAMS = [
-  { id: 1, name: 'Open.Gay.Thighs.',        players: ['JJ Chun','Hosea Lee','Jeremy Wang','James Mullen','Tony Wu','Ben Ng','Jonny Hsieh','Kerry Phomtavang'] },
-  { id: 2, name: 'Ugly But Legal',          players: ['Ari Fontanilla','Jocelyn Ho','Weston White','Kevin Normoyle','Abby Arcilla','Ricky Irizarry Caro','Andrew Aquino','Tommy Cu'] },
-  { id: 3, name: 'Celebrity Trait-Whores',  players: ['Timothy Dy Guani','Brett Kellaher','Taylor Horn','Son Quyen Dinh','Brenda Young','Patrick Chiang','AJ Martins','Jason Malabed'] },
-  { id: 4, name: 'Whorio Karts',            players: ['Kyle Rosenthal','Vigo Jiang','Alex Liou','Austin Lam','Mark Salzer','Derrick Hau','Jake Castrejon'] },
-  { id: 5, name: 'NKOTB',                   players: ['Thang Huynh','Robert Peralta','Kyle Miller','Adam La Mar','Jeff Ng','Tony Tran','Go Takei','Cesar Cardona'] },
-  { id: 6, name: 'Bump Set Ooops',          players: ['Robbie Wise','Richard Sucre','David Sechko','Shayne OBrien','Adrian Sanborn','Kevin Kuo','Lorenzo Labitigan'] },
-  { id: 7, name: 'Mortal Cumbacks',         players: ['Eric Ricker','Danny Chin','Willow Taylor','Jihwan Kim','Eric Gaudet','Andy Yeo','TJ Bleichner','Brian Tang'] },
+  { id: 1, name: 'Big Digs Energy',          players: ['AJ Martins','Rox Guo','Andy Yeo','Kevin Normoyle','Wellington Chang','Matt Solomon','Jonny Hsieh','TJ Bleichner'] },
+  { id: 2, name: "Gotta Catch 'Em Balls",    players: ['Son Dinh','Alex Liou','Tim Dy Guani','Kyle Rosenthal','Taylor Horn','Jonathan Tang','Brian Tang','Eric Tang'] },
+  { id: 3, name: 'Victorious Secret',        players: ['Ari Fontanilla','Jocelyn Ho','Adam LaMar','Rich Sucre','Jared Chu','DaShaunn Woolard','Jason Malabed','Tony Wu'] },
+  { id: 4, name: 'Ace Hardware',             players: ['Diego Almodiel','Lorenzo Labitigan','Adrian Sanborn','Kevin Kuo','Ryan Sue','Patrick Chiang','Ben Ng','Go Takei'] },
+  { id: 5, name: 'New Kids On The Block',    players: ['Thang Huynh','Travis Beck','Jeffrey Ng','Androgony King','Aaron Liu','Jake Castrejon','Derrick Hau','Abby Arcilla'] },
+  { id: 6, name: 'A Little Bit Verse',       players: ['Danny Chin','Austin Lam','Jihwan Kim','Abel Reyna','Mark Salzer','Vigo Jiang','Brenda Young'] },
+  { id: 7, name: 'Douched & Dangerous "DnD"', players: ['Hosea Lee','Sia Assar','Rob Peralta','Diego Perez','Evan Yang','Weston White','Eric Gaudet','Tony Tran'] },
 ];
 
 // =================== SCHEDULES ===================
 
 export const ADV_SCHEDULE = [
-  { week: 1, date: 'Wed 06/17', slots: [
+  { week: 1, date: 'Wed 09/16', slots: [
     { time: '6:20', court1: { a:7, b:3, ref:4 }, court2: { a:2, b:5, ref:1 } },
     { time: '7:00', court1: { a:2, b:4, ref:5 }, court2: { a:6, b:1, ref:3 } },
     { time: '7:40', court1: { a:1, b:5, ref:6 }, court2: { a:2, b:7, ref:3 } },
     { time: '8:20', court1: { a:3, b:6, ref:2 }, court2: { a:1, b:4, ref:7 } },
   ]},
-  { week: 2, date: 'Wed 06/24', slots: [
+  { week: 2, date: 'Wed 09/23', slots: [
     { time: '6:20', court1: { a:5, b:6, ref:3 }, court2: { a:1, b:4, ref:7 } },
     { time: '7:00', court1: { a:2, b:7, ref:5 }, court2: { a:3, b:4, ref:6 } },
     { time: '7:40', court1: { a:1, b:3, ref:2 }, court2: { a:4, b:6, ref:7 } },
     { time: '8:20', court1: { a:7, b:3, ref:1 }, court2: { a:2, b:5, ref:4 } },
   ]},
-  { week: 3, date: 'Wed 07/08', slots: [
+  { week: 3, date: 'Wed 09/30', slots: [
     { time: '6:20', court1: { a:1, b:5, ref:6 }, court2: { a:2, b:3, ref:4 } },
     { time: '7:00', court1: { a:6, b:7, ref:1 }, court2: { a:4, b:5, ref:2 } },
     { time: '7:40', court1: { a:7, b:1, ref:3 }, court2: { a:4, b:6, ref:5 } },
     { time: '8:20', court1: { a:6, b:2, ref:7 }, court2: { a:3, b:5, ref:4 } },
   ]},
-  { week: 4, date: 'Wed 07/15', slots: [
+  { week: 4, date: 'Wed 10/07', slots: [
     { time: '6:20', court1: { a:1, b:3, ref:2 }, court2: { a:6, b:7, ref:5 } },
     { time: '7:00', court1: { a:3, b:5, ref:7 }, court2: { a:1, b:6, ref:4 } },
     { time: '7:40', court1: { a:5, b:7, ref:1 }, court2: { a:2, b:4, ref:6 } },
     { time: '8:20', court1: { a:1, b:2, ref:3 }, court2: { a:4, b:7, ref:6 } },
   ]},
-  { week: 5, date: 'Wed 07/22', slots: [
+  { week: 5, date: 'Wed 10/14', slots: [
     { time: '6:20', court1: { a:2, b:6, ref:1 }, court2: { a:3, b:4, ref:5 } },
     { time: '7:00', court1: { a:5, b:7, ref:3 }, court2: { a:1, b:2, ref:4 } },
     { time: '7:40', court1: { a:6, b:3, ref:7 }, court2: { a:4, b:5, ref:2 } },
     { time: '8:20', court1: { a:2, b:3, ref:6 }, court2: { a:7, b:1, ref:5 } },
   ]},
-  { week: 6, date: 'Wed 07/29', slots: [
+  { week: 6, date: 'Wed 10/21', slots: [
     { time: '6:20', court1: { a:5, b:6, ref:3 }, court2: { a:2, b:4, ref:7 } },
     { time: '7:00', court1: { a:1, b:5, ref:6 }, court2: { a:2, b:3, ref:4 } },
     { time: '7:40', court1: { a:7, b:3, ref:1 }, court2: { a:4, b:5, ref:2 } },
     { time: '8:20', court1: { a:1, b:6, ref:5 }, court2: { a:4, b:7, ref:2 } },
   ]},
-  { week: 7, date: 'Wed 08/05', slots: [
+  { week: 7, date: 'Wed 10/28', slots: [
     { time: '6:20', court1: { a:1, b:3, ref:2 }, court2: { a:4, b:7, ref:6 } },
     { time: '7:00', court1: { a:2, b:5, ref:7 }, court2: { a:4, b:6, ref:1 } },
     { time: '7:40', court1: { a:7, b:1, ref:5 }, court2: { a:3, b:6, ref:4 } },
@@ -68,43 +68,43 @@ export const ADV_SCHEDULE = [
 ];
 
 export const INT_SCHEDULE = [
-  { week: 1, date: 'Thu 06/18', slots: [
+  { week: 1, date: 'Thu 09/17', slots: [
     { time: '6:20', court1: { a:7, b:3, ref:4 }, court2: { a:2, b:5, ref:1 } },
     { time: '7:00', court1: { a:2, b:4, ref:5 }, court2: { a:6, b:1, ref:3 } },
     { time: '7:40', court1: { a:1, b:5, ref:6 }, court2: { a:2, b:7, ref:3 } },
     { time: '8:20', court1: { a:3, b:6, ref:2 }, court2: { a:1, b:4, ref:7 } },
   ]},
-  { week: 2, date: 'Thu 06/25', slots: [
+  { week: 2, date: 'Thu 09/24', slots: [
     { time: '6:20', court1: { a:5, b:6, ref:3 }, court2: { a:1, b:4, ref:7 } },
     { time: '7:00', court1: { a:2, b:7, ref:5 }, court2: { a:3, b:4, ref:6 } },
     { time: '7:40', court1: { a:1, b:3, ref:2 }, court2: { a:4, b:6, ref:7 } },
     { time: '8:20', court1: { a:7, b:3, ref:1 }, court2: { a:2, b:5, ref:4 } },
   ]},
-  { week: 3, date: 'Thu 07/09', slots: [
+  { week: 3, date: 'Thu 10/01', slots: [
     { time: '6:20', court1: { a:1, b:5, ref:6 }, court2: { a:2, b:3, ref:4 } },
     { time: '7:00', court1: { a:6, b:7, ref:1 }, court2: { a:4, b:5, ref:2 } },
     { time: '7:40', court1: { a:7, b:1, ref:3 }, court2: { a:4, b:6, ref:5 } },
     { time: '8:20', court1: { a:6, b:2, ref:7 }, court2: { a:3, b:5, ref:4 } },
   ]},
-  { week: 4, date: 'Thu 07/16', slots: [
+  { week: 4, date: 'Thu 10/08', slots: [
     { time: '6:20', court1: { a:1, b:3, ref:2 }, court2: { a:6, b:7, ref:5 } },
     { time: '7:00', court1: { a:3, b:5, ref:7 }, court2: { a:1, b:6, ref:4 } },
     { time: '7:40', court1: { a:5, b:7, ref:1 }, court2: { a:2, b:4, ref:6 } },
     { time: '8:20', court1: { a:1, b:2, ref:3 }, court2: { a:4, b:7, ref:6 } },
   ]},
-  { week: 5, date: 'Thu 07/23', slots: [
+  { week: 5, date: 'Thu 10/15', slots: [
     { time: '6:20', court1: { a:2, b:6, ref:1 }, court2: { a:3, b:4, ref:5 } },
     { time: '7:00', court1: { a:5, b:7, ref:3 }, court2: { a:1, b:2, ref:4 } },
     { time: '7:40', court1: { a:6, b:3, ref:7 }, court2: { a:4, b:5, ref:2 } },
     { time: '8:20', court1: { a:2, b:3, ref:6 }, court2: { a:7, b:1, ref:5 } },
   ]},
-  { week: 6, date: 'Thu 07/30', slots: [
+  { week: 6, date: 'Thu 10/22', slots: [
     { time: '6:20', court1: { a:5, b:6, ref:3 }, court2: { a:2, b:4, ref:7 } },
     { time: '7:00', court1: { a:1, b:5, ref:6 }, court2: { a:2, b:3, ref:4 } },
     { time: '7:40', court1: { a:7, b:3, ref:1 }, court2: { a:4, b:5, ref:2 } },
     { time: '8:20', court1: { a:1, b:6, ref:5 }, court2: { a:4, b:7, ref:2 } },
   ]},
-  { week: 7, date: 'Thu 08/06', slots: [
+  { week: 7, date: 'Thu 10/29', slots: [
     { time: '6:20', court1: { a:1, b:3, ref:2 }, court2: { a:4, b:7, ref:6 } },
     { time: '7:00', court1: { a:2, b:5, ref:7 }, court2: { a:4, b:6, ref:1 } },
     { time: '7:40', court1: { a:7, b:1, ref:5 }, court2: { a:3, b:6, ref:4 } },
@@ -119,8 +119,12 @@ export const getTeam  = (div, id) => getTeams(div).find(t => t.id === id);
 export const getTeamName = (div, id) => getTeam(div, id)?.name ?? `Team ${id}`;
 export const getSchedule = (div) => div === 'adv' ? ADV_SCHEDULE : INT_SCHEDULE;
 
+// Bump this each season. Prior seasons' rows stay in the database under their
+// own prefix — a new season starts with an empty board rather than deleting them.
+export const SEASON = 'f26';
+
 export const gameKey = (div, week, slotIdx, court) =>
-  `${div}_w${week}_s${slotIdx}_c${court}`;
+  `${SEASON}_${div}_w${week}_s${slotIdx}_c${court}`;
 
 export function checkWinner(sA, sB) {
   if (sA >= 27 && sB >= 27) return 'T';

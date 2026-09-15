@@ -20,7 +20,7 @@ export default function LeaderboardPage({ div, gameResults, onDivChange, onSelec
       <div className="header lb-header">
         <div>
           <div className="app-title">BoF <span>Scoring</span></div>
-          <div className="app-sub">Summer 2026 · St. Mary's Rec Center</div>
+          <div className="app-sub">Fall 2026 · St. Mary's Rec Center</div>
         </div>
         <ThemeBtn theme={theme} onSetTheme={onSetTheme} user={user} onLogin={onLogin} onLogout={onLogout} onSync={onSync} syncing={syncing} syncResult={syncResult} />
       </div>
