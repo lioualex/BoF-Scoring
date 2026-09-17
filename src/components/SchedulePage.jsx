@@ -274,9 +274,39 @@ export default function SchedulePage({
                       const resultS1 = k  ? gameResults[k]  : null
                       const resultS2 = k2 ? gameResults[k2] : null
                       const hasScore = r => r && (r.winner || r.score_a !== 4 || r.score_b !== 4)
-                      const perspective = g ? (mine(g.a) ? 'A' : mine(g.b) ? 'B' : 'A') : 'A'
-                      const wl1 = resultS1?.winner ? (resultS1.winner === 'T' || resultS1.winner === perspective ? 'W' : 'L') : null
-                      const wl2 = resultS2?.winner ? (resultS2.winner === 'T' || resultS2.winner === perspective ? 'W' : 'L') : null
+                      const sets = [resultS1, resultS2].filter(hasScore)
+                      const anyScore = sets.length > 0
+
+                      // Sets won by each side, so the W/L badge sits on its own team's row
+                      let setsA = 0, setsB = 0
+                      sets.forEach(r => {
+                        if (r.winner === 'T') { setsA++; setsB++ }
+                        else if (r.winner === 'A') setsA++
+                        else if (r.winner === 'B') setsB++
+                      })
+                      const matchWL = side => {
+                        const [me, them] = side === 'A' ? [setsA, setsB] : [setsB, setsA]
+                        return me === them ? null : me > them ? 'W' : 'L'
+                      }
+
+                      // One column per set, that team's own score in each
+                      const teamResult = side => (
+                        <span className="team-result">
+                          {matchWL(side) && (
+                            <span className={`wl-dot wl-${matchWL(side)}`}>{matchWL(side)}</span>
+                          )}
+                          <span className="team-set-scores">
+                            {[resultS1, resultS2].map((r, i) => hasScore(r) && (
+                              <span
+                                key={i}
+                                className={`set-score${r.winner === side || r.winner === 'T' ? ' won' : ''}`}
+                              >
+                                {side === 'A' ? r.score_a : r.score_b}
+                              </span>
+                            ))}
+                          </span>
+                        </span>
+                      )
 
                       const courtMyPlay = g && (mine(g.a) || mine(g.b))
                       const courtMyRef  = g && mine(g.ref) && !courtMyPlay
@@ -305,30 +335,16 @@ className={`full-court court-${courtNum}${g && isEditable ? ' clickable' : ''}${
                               <div className="full-match-info">
                                 <div className="full-match-team-row">
                                   <div className={`full-team-name${mine(g.a) ? ' mine' : ''}`}>{getTeamName(div, g.a)}</div>
+                                  {anyScore && teamResult('A')}
                                 </div>
                                 <div className="full-vs-row">
                                   <span className="full-vs">vs</span>
                                 </div>
                                 <div className="full-match-team-row">
                                   <div className={`full-team-name${mine(g.b) ? ' mine' : ''}`}>{getTeamName(div, g.b)}</div>
+                                  {anyScore && teamResult('B')}
                                 </div>
                               </div>
-                              {(hasScore(resultS1) || hasScore(resultS2)) && (
-                                <div className="full-combined-scores">
-                                  {hasScore(resultS1) && (
-                                    <div className="full-combined-score-line">
-                                      <span className={`wl-dot${wl1 ? ` wl-${wl1}` : ' wl-empty'}`}>{wl1 ?? ''}</span>
-                                      <span className="full-combined-score">{resultS1.score_a}–{resultS1.score_b}</span>
-                                    </div>
-                                  )}
-                                  {hasScore(resultS2) && (
-                                    <div className="full-combined-score-line">
-                                      <span className={`wl-dot${wl2 ? ` wl-${wl2}` : ' wl-empty'}`}>{wl2 ?? ''}</span>
-                                      <span className="full-combined-score">{resultS2.score_a}–{resultS2.score_b}</span>
-                                    </div>
-                                  )}
-                                </div>
-                              )}
                               {isEditable && <ChevronTiny />}
                             </div>
                           ) : (
