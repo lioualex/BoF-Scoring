@@ -1,26 +1,35 @@
--- VolleyScore BoF — New Season Reset
--- Run this in your Supabase SQL editor at: Project > SQL Editor > New query
+-- ⚠️  SUPERSEDED — DO NOT RUN. Kept for reference only.
 --
--- This archives the previous season's live data into snapshot tables
--- (the full history already lives in game_results_history, which is
--- never touched) and clears the live tables so the UI starts fresh
--- with the new "Team 1".."Team 8" rosters/schedules.
+-- This was the old season-reset approach, from back when a new season meant
+-- wiping the live tables. It is no longer how BoF Scoring rolls over, and
+-- running it now would DESTROY DATA:
+--
+--   * Its archive step snapshots whatever is currently in game_results /
+--     allstars. Those tables now hold Summer AND Fall rows together, so the
+--     snapshot would be a mix of two seasons, not a clean summer archive.
+--   * Its TRUNCATE would then delete BOTH seasons, including the Fall scores
+--     being entered right now.
+--
+-- WHAT REPLACED IT
+--
+-- Seasons are now separated by a key prefix instead of by deletion. Game keys
+-- carry SEASON from src/data/league.js ('f26_adv_w1_s0_c1'), so a new season
+-- starts on an empty board while every prior season stays in place, untouched.
+-- Rolling over is a one-line change to that constant — no SQL, nothing dropped.
+--
+-- To store a finished season separately, use:
+--     supabase-archive-summer-2026.sql
+-- which COPIES the prior-season rows into game_results_archive / allstars_archive
+-- tagged with the season, and deletes nothing.
+--
+-- The original statements are left below, commented out, purely as a record of
+-- the old process. Un-commenting them will lose data.
 
--- ═══════════════════════════════════════════════════
--- 1. ARCHIVE — snapshot the current season's data
--- ═══════════════════════════════════════════════════
+-- CREATE TABLE IF NOT EXISTS game_results_season1 AS
+--   SELECT * FROM game_results;
 
-CREATE TABLE IF NOT EXISTS game_results_season1 AS
-  SELECT * FROM game_results;
+-- CREATE TABLE IF NOT EXISTS allstars_season1 AS
+--   SELECT * FROM allstars;
 
-CREATE TABLE IF NOT EXISTS allstars_season1 AS
-  SELECT * FROM allstars;
-
--- ═══════════════════════════════════════════════════
--- 2. RESET — clear live tables for the new season
--- (game_results_history retains the full audit trail
--- of every score ever entered and is left untouched)
--- ═══════════════════════════════════════════════════
-
-TRUNCATE TABLE game_results;
-TRUNCATE TABLE allstars;
+-- TRUNCATE TABLE game_results;
+-- TRUNCATE TABLE allstars;
