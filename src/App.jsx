@@ -185,6 +185,10 @@ export default function App() {
   }, [gameResults, allStars, user])
 
   // ── Mutations ─────────────────────────────────────────────
+  // Local state updates optimistically, so a rejected write is invisible
+  // without this — scores look entered until the page is reloaded.
+  const [saveError, setSaveError] = useState(null)
+
   const updateGameResult = useCallback(async (key, data) => {
     setGameResults(prev => ({
       ...prev,
@@ -195,7 +199,12 @@ export default function App() {
       { game_key: key, ...data, updated_at: new Date().toISOString(), updated_by: user?.email ?? null },
       { onConflict: 'game_key' }
     )
-    if (error) console.error('game_results upsert failed:', error.message)
+    if (error) {
+      console.error('game_results upsert failed:', error.message)
+      setSaveError(error.message)
+    } else {
+      setSaveError(null)
+    }
   }, [user])
 
   const updateAllStar = useCallback(async (key, data) => {
@@ -208,7 +217,12 @@ export default function App() {
       { game_key: key, ...data, updated_at: new Date().toISOString(), updated_by: user?.email ?? null },
       { onConflict: 'game_key' }
     )
-    if (error) console.error('allstars upsert failed:', error.message)
+    if (error) {
+      console.error('allstars upsert failed:', error.message)
+      setSaveError(error.message)
+    } else {
+      setSaveError(null)
+    }
   }, [user])
 
   // ── Render ────────────────────────────────────────────────
@@ -225,6 +239,11 @@ export default function App() {
       {!SUPABASE_CONFIGURED && (
         <div style={{ background: '#7B3F00', color: '#FFD580', fontSize: 13, fontWeight: 600, textAlign: 'center', padding: '8px 16px', paddingTop: 'calc(8px + env(safe-area-inset-top))', flexShrink: 0 }}>
           ⚠ Supabase not configured — scores save locally only
+        </div>
+      )}
+      {saveError && (
+        <div onClick={() => setSaveError(null)} style={{ background: '#7F1D1D', color: '#FECACA', fontSize: 13, fontWeight: 600, textAlign: 'center', padding: '8px 16px', paddingTop: 'calc(8px + env(safe-area-inset-top))', flexShrink: 0, cursor: 'pointer' }}>
+          ⚠ Not saved — {saveError} (tap to dismiss)
         </div>
       )}
       {selectedGame && (
