@@ -274,37 +274,26 @@ export default function SchedulePage({
                       const resultS1 = k  ? gameResults[k]  : null
                       const resultS2 = k2 ? gameResults[k2] : null
                       const hasScore = r => r && (r.winner || r.score_a !== 4 || r.score_b !== 4)
-                      const sets = [resultS1, resultS2].filter(hasScore)
-                      const anyScore = sets.length > 0
+                      const anyScore = hasScore(resultS1) || hasScore(resultS2)
+                      // Null while a set is still in progress — no winner to badge yet
+                      const setWL = (r, side) =>
+                        !r?.winner ? null : (r.winner === 'T' || r.winner === side ? 'W' : 'L')
 
-                      // Sets won by each side, so the W/L badge sits on its own team's row
-                      let setsA = 0, setsB = 0
-                      sets.forEach(r => {
-                        if (r.winner === 'T') { setsA++; setsB++ }
-                        else if (r.winner === 'A') setsA++
-                        else if (r.winner === 'B') setsB++
-                      })
-                      const matchWL = side => {
-                        const [me, them] = side === 'A' ? [setsA, setsB] : [setsB, setsA]
-                        return me === them ? null : me > them ? 'W' : 'L'
-                      }
-
-                      // One column per set, that team's own score in each
+                      // One column per set: that team's own score, badged with its own result
                       const teamResult = side => (
-                        <span className="team-result">
-                          {matchWL(side) && (
-                            <span className={`wl-dot wl-${matchWL(side)}`}>{matchWL(side)}</span>
-                          )}
-                          <span className="team-set-scores">
-                            {[resultS1, resultS2].map((r, i) => hasScore(r) && (
-                              <span
-                                key={i}
-                                className={`set-score${r.winner === side || r.winner === 'T' ? ' won' : ''}`}
-                              >
-                                {side === 'A' ? r.score_a : r.score_b}
+                        <span className="team-set-scores">
+                          {[resultS1, resultS2].map((r, i) => {
+                            if (!hasScore(r)) return null
+                            const wl = setWL(r, side)
+                            return (
+                              <span key={i} className="set-cell">
+                                <span className={`wl-dot${wl ? ` wl-${wl}` : ' wl-empty'}`}>{wl ?? ''}</span>
+                                <span className={`set-score${wl === 'W' ? ' won' : ''}`}>
+                                  {side === 'A' ? r.score_a : r.score_b}
+                                </span>
                               </span>
-                            ))}
-                          </span>
+                            )
+                          })}
                         </span>
                       )
 

@@ -486,14 +486,14 @@ body {
   font-size: 14px; font-weight: 600; color: var(--text3);
 }
 /* Combined per-set score display — Set 1 aligned with team A's row, Set 2 with team B's row */
-.team-result {
-  display: flex; align-items: center; gap: 8px; flex-shrink: 0;
-}
-.team-set-scores { display: flex; gap: 12px; }
+.team-set-scores { display: flex; gap: 8px; flex-shrink: 0; }
+.set-cell { display: flex; align-items: center; gap: 4px; }
+/* Smaller than the leaderboard's badge — four of these sit in one match */
+.set-cell .wl-dot { width: 21px; height: 21px; font-size: 11px; }
 /* Fixed width + tabular figures so set columns align across both team rows */
 .set-score {
-  font-size: 20px; font-weight: 600; line-height: 1; color: var(--text3);
-  min-width: 26px; text-align: right; font-variant-numeric: tabular-nums;
+  font-size: 19px; font-weight: 600; line-height: 1; color: var(--text3);
+  min-width: 24px; text-align: right; font-variant-numeric: tabular-nums;
 }
 .set-score.won { color: var(--text); font-weight: 800; }
 .full-no-match { font-size: 14px; color: var(--text3); font-style: italic; }
