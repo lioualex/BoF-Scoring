@@ -95,6 +95,13 @@ export default function GameScorerModal({
   const scoreB = activeSet === 1 ? scoreB_s1 : scoreB_s2
   const activeGk = activeSet === 1 ? gk1 : gk2
 
+  // A winner the score itself earns, vs one awarded because time ran out.
+  // If there's a winner but the score doesn't justify it, it was awarded.
+  const naturalWinner = checkWinner(scoreA, scoreB)
+  const startedSet = scoreA !== 4 || scoreB !== 4
+  const endedEarly = !!winner && !naturalWinner
+  const leaderName = getTeamName(game.div, scoreA > scoreB ? game.match.a : game.match.b)
+
   // Display order — left/right swapped when flipped
   const leftSide   = flipped ? 'B' : 'A'
   const rightSide  = flipped ? 'A' : 'B'
@@ -124,8 +131,8 @@ export default function GameScorerModal({
   const wkDate = getWeekDate(game.div, game.week)
   const isPast = isWeekPast(game.div, game.week)
 
-  function pushUpdate(newA, newB) {
-    const newWinner = checkWinner(newA, newB)
+  function pushUpdate(newA, newB, winnerOverride) {
+    const newWinner = winnerOverride === undefined ? checkWinner(newA, newB) : winnerOverride
     onUpdateResult(activeGk, {
       division:    game.div,
       week:        game.week,
@@ -138,6 +145,17 @@ export default function GameScorerModal({
       winner:      newWinner,
       is_complete: !!newWinner,
     })
+  }
+
+  // Time ran out before the set was played out — award it to whoever leads.
+  // Ties are never awarded; they get played out to a deciding point.
+  function endSet() {
+    if (scoreA === scoreB) return
+    pushUpdate(scoreA, scoreB, scoreA > scoreB ? 'A' : 'B')
+  }
+
+  function reopenSet() {
+    pushUpdate(scoreA, scoreB, null)
   }
 
   function adjust(side, delta) {
@@ -297,6 +315,23 @@ export default function GameScorerModal({
         <div className="score-note-top">
           Start 4-4 · Win by 2 from 25 · Cap 27
         </div>
+
+        {/* End-set — only while the set is live and has actually been played */}
+        {startedSet && !naturalWinner && (
+          endedEarly ? (
+            <button className="end-set-btn reopen" onClick={reopenSet}>
+              Reopen set · currently {leaderName} {Math.max(scoreA, scoreB)}–{Math.min(scoreA, scoreB)}
+            </button>
+          ) : scoreA === scoreB ? (
+            <button className="end-set-btn" disabled>
+              Tied {scoreA}–{scoreB} · play a point to break it
+            </button>
+          ) : (
+            <button className="end-set-btn" onClick={endSet}>
+              End set · {leaderName} wins {Math.max(scoreA, scoreB)}–{Math.min(scoreA, scoreB)}
+            </button>
+          )
+        )}
 
         {/* Win banner */}
         {winner && (

@@ -566,6 +566,17 @@ body {
   letter-spacing: 0.04em;
 }
 
+/* End-set — awards an unfinished set to whoever leads when time runs out */
+.end-set-btn {
+  display: block; width: calc(100% - 40px); margin: 4px 20px 2px;
+  padding: 12px 16px; border-radius: 12px;
+  border: 1px solid var(--border); background: var(--surface);
+  color: var(--text); font-size: 15px; font-weight: 700;
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.end-set-btn:disabled { color: var(--text3); font-weight: 600; cursor: default; }
+.end-set-btn.reopen { color: var(--text3); font-weight: 600; }
+
 /* Set toggle */
 .set-toggle {
   display: flex; gap: 8px; padding: 14px 20px 0;
